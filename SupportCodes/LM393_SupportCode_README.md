@@ -42,7 +42,7 @@ sudo apt install gpiod libgpiod-dev
 g++ -o flame_sensor flame_sensor.cpp -lgpiod
 ```
 
-###Run the Application: Run the executable as root to access GPIO:
+### Run the Application: Run the executable as root to access GPIO:
 
 ``` bash
 sudo ./LM393_SupportCode_Read.cpp
