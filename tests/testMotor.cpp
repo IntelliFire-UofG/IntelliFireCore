@@ -3,6 +3,7 @@
 #include <unistd.h> // For sleep functions
 
 // Define motor control pins
+
 #define ENA 12 // PWM pin for Motor A speed
 #define IN1 5  // Motor A direction pin 1
 #define IN2 6  // Motor A direction pin 2
@@ -16,6 +17,7 @@ void setupMotors()
 {
     if (gpioInitialise() < 0)
     {
+
         std::cerr << "Failed to initialize GPIO!" << std::endl;
         exit(1);
     }
@@ -107,4 +109,5 @@ int main()
 
     gpioTerminate(); // Clean up GPIO
     return 0;
+
 }
