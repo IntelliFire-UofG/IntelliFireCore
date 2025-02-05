@@ -1,3 +1,4 @@
+# _**Welcome to IntelliFire UofG Core Repository**_
 # 🚒 Autonomous Fire Truck Control System 🔥  
 
 ### **Real-Time Fire Detection & Response System for Raspberry Pi**  
@@ -10,7 +11,7 @@
 ## 📌 **Project Description**  
 The **Autonomous Fire Truck Control System** is an **embedded real-time application** designed for **fire detection and autonomous movement**. Running on a **Raspberry Pi** with **Linux**, this system utilizes an **event-driven architecture** to detect flames via **LM393 flame sensors** (connected through an **ADS1015/ADS1115 ADC**) and control **four motors** via an **L298N motor driver**.  
 
-🔥 **Main Features:**  
+## 🔥 **Main Features:**  
 ✅ **Event-driven architecture** (using threads, callbacks, and interrupts).  
 ✅ **Motor control** for movement based on flame detection.  
 ✅ **Real-time sensor data processing** using an ADC.  
