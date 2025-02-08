@@ -7,10 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/mo/IntelliFireCore/src/IntelliFireUI/CMakeLists.txt"
+  "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/CMakeLists.txt"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
+  "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc"
   "/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ModuleLocation.cmake"
@@ -161,13 +162,14 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
-  "CMakeFiles/IntellifireUI_autogen.dir/AutogenInfo.json"
+  "resources.qrc.depends"
+  "CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/IntellifireUI.dir/DependInfo.cmake"
-  "CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/DependInfo.cmake"
-  "CMakeFiles/IntellifireUI_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/IntelliFireUI.dir/DependInfo.cmake"
+  "CMakeFiles/IntelliFireUI_autogen_timestamp_deps.dir/DependInfo.cmake"
+  "CMakeFiles/IntelliFireUI_autogen.dir/DependInfo.cmake"
   )

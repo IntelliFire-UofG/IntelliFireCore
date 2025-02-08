@@ -1,4 +1,4 @@
-# Install script for directory: /home/mo/IntelliFireCore/src/IntelliFireUI
+# Install script for directory: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/mo/IntelliFireCore/src/IntelliFireUI/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

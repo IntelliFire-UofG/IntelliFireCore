@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI
+CMAKE_SOURCE_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI/build
+CMAKE_BINARY_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles /home/mo/IntelliFireCore/src/IntelliFireUI/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,74 +117,74 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named IntellifireUI
+# Target rules for targets named IntelliFireUI
 
 # Build rule for target.
-IntellifireUI: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntellifireUI
-.PHONY : IntellifireUI
+IntelliFireUI: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntelliFireUI
+.PHONY : IntelliFireUI
 
 # fast build rule for target.
-IntellifireUI/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/build
-.PHONY : IntellifireUI/fast
+IntelliFireUI/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/build
+.PHONY : IntelliFireUI/fast
 
 #=============================================================================
-# Target rules for targets named IntellifireUI_autogen_timestamp_deps
+# Target rules for targets named IntelliFireUI_autogen_timestamp_deps
 
 # Build rule for target.
-IntellifireUI_autogen_timestamp_deps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntellifireUI_autogen_timestamp_deps
-.PHONY : IntellifireUI_autogen_timestamp_deps
+IntelliFireUI_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntelliFireUI_autogen_timestamp_deps
+.PHONY : IntelliFireUI_autogen_timestamp_deps
 
 # fast build rule for target.
-IntellifireUI_autogen_timestamp_deps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/build.make CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/build
-.PHONY : IntellifireUI_autogen_timestamp_deps/fast
+IntelliFireUI_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI_autogen_timestamp_deps.dir/build.make CMakeFiles/IntelliFireUI_autogen_timestamp_deps.dir/build
+.PHONY : IntelliFireUI_autogen_timestamp_deps/fast
 
 #=============================================================================
-# Target rules for targets named IntellifireUI_autogen
+# Target rules for targets named IntelliFireUI_autogen
 
 # Build rule for target.
-IntellifireUI_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntellifireUI_autogen
-.PHONY : IntellifireUI_autogen
+IntelliFireUI_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IntelliFireUI_autogen
+.PHONY : IntelliFireUI_autogen
 
 # fast build rule for target.
-IntellifireUI_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI_autogen.dir/build.make CMakeFiles/IntellifireUI_autogen.dir/build
-.PHONY : IntellifireUI_autogen/fast
+IntelliFireUI_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI_autogen.dir/build.make CMakeFiles/IntelliFireUI_autogen.dir/build
+.PHONY : IntelliFireUI_autogen/fast
 
-IntellifireUI_autogen/mocs_compilation.o: IntellifireUI_autogen/mocs_compilation.cpp.o
-.PHONY : IntellifireUI_autogen/mocs_compilation.o
+IntelliFireUI_autogen/mocs_compilation.o: IntelliFireUI_autogen/mocs_compilation.cpp.o
+.PHONY : IntelliFireUI_autogen/mocs_compilation.o
 
 # target to build an object file
-IntellifireUI_autogen/mocs_compilation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o
-.PHONY : IntellifireUI_autogen/mocs_compilation.cpp.o
+IntelliFireUI_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o
+.PHONY : IntelliFireUI_autogen/mocs_compilation.cpp.o
 
-IntellifireUI_autogen/mocs_compilation.i: IntellifireUI_autogen/mocs_compilation.cpp.i
-.PHONY : IntellifireUI_autogen/mocs_compilation.i
+IntelliFireUI_autogen/mocs_compilation.i: IntelliFireUI_autogen/mocs_compilation.cpp.i
+.PHONY : IntelliFireUI_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-IntellifireUI_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.i
-.PHONY : IntellifireUI_autogen/mocs_compilation.cpp.i
+IntelliFireUI_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.i
+.PHONY : IntelliFireUI_autogen/mocs_compilation.cpp.i
 
-IntellifireUI_autogen/mocs_compilation.s: IntellifireUI_autogen/mocs_compilation.cpp.s
-.PHONY : IntellifireUI_autogen/mocs_compilation.s
+IntelliFireUI_autogen/mocs_compilation.s: IntelliFireUI_autogen/mocs_compilation.cpp.s
+.PHONY : IntelliFireUI_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-IntellifireUI_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.s
-.PHONY : IntellifireUI_autogen/mocs_compilation.cpp.s
+IntelliFireUI_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.s
+.PHONY : IntelliFireUI_autogen/mocs_compilation.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -192,7 +192,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -200,7 +200,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 mainwindow.o: mainwindow.cpp.o
@@ -208,7 +208,7 @@ mainwindow.o: mainwindow.cpp.o
 
 # target to build an object file
 mainwindow.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.o
 .PHONY : mainwindow.cpp.o
 
 mainwindow.i: mainwindow.cpp.i
@@ -216,7 +216,7 @@ mainwindow.i: mainwindow.cpp.i
 
 # target to preprocess a source file
 mainwindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/mainwindow.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.i
 .PHONY : mainwindow.cpp.i
 
 mainwindow.s: mainwindow.cpp.s
@@ -224,15 +224,39 @@ mainwindow.s: mainwindow.cpp.s
 
 # target to generate assembly for a file
 mainwindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/mainwindow.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.s
 .PHONY : mainwindow.cpp.s
+
+qrc_resources.o: qrc_resources.cpp.o
+.PHONY : qrc_resources.o
+
+# target to build an object file
+qrc_resources.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o
+.PHONY : qrc_resources.cpp.o
+
+qrc_resources.i: qrc_resources.cpp.i
+.PHONY : qrc_resources.i
+
+# target to preprocess a source file
+qrc_resources.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.i
+.PHONY : qrc_resources.cpp.i
+
+qrc_resources.s: qrc_resources.cpp.s
+.PHONY : qrc_resources.s
+
+# target to generate assembly for a file
+qrc_resources.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.s
+.PHONY : qrc_resources.cpp.s
 
 sensorContainer.o: sensorContainer.cpp.o
 .PHONY : sensorContainer.o
 
 # target to build an object file
 sensorContainer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.o
 .PHONY : sensorContainer.cpp.o
 
 sensorContainer.i: sensorContainer.cpp.i
@@ -240,7 +264,7 @@ sensorContainer.i: sensorContainer.cpp.i
 
 # target to preprocess a source file
 sensorContainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.i
 .PHONY : sensorContainer.cpp.i
 
 sensorContainer.s: sensorContainer.cpp.s
@@ -248,7 +272,7 @@ sensorContainer.s: sensorContainer.cpp.s
 
 # target to generate assembly for a file
 sensorContainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntellifireUI.dir/build.make CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.s
 .PHONY : sensorContainer.cpp.s
 
 # Help Target
@@ -259,18 +283,21 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... IntellifireUI_autogen"
-	@echo "... IntellifireUI_autogen_timestamp_deps"
-	@echo "... IntellifireUI"
-	@echo "... IntellifireUI_autogen/mocs_compilation.o"
-	@echo "... IntellifireUI_autogen/mocs_compilation.i"
-	@echo "... IntellifireUI_autogen/mocs_compilation.s"
+	@echo "... IntelliFireUI_autogen"
+	@echo "... IntelliFireUI_autogen_timestamp_deps"
+	@echo "... IntelliFireUI"
+	@echo "... IntelliFireUI_autogen/mocs_compilation.o"
+	@echo "... IntelliFireUI_autogen/mocs_compilation.i"
+	@echo "... IntelliFireUI_autogen/mocs_compilation.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... mainwindow.o"
 	@echo "... mainwindow.i"
 	@echo "... mainwindow.s"
+	@echo "... qrc_resources.o"
+	@echo "... qrc_resources.i"
+	@echo "... qrc_resources.s"
 	@echo "... sensorContainer.o"
 	@echo "... sensorContainer.i"
 	@echo "... sensorContainer.s"
