@@ -8,10 +8,16 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
-    // Image placeholder (blue square)
+    // Load the corresponding icon
     QLabel *image = new QLabel;
-    QPixmap pixmap(64, 64);
-    pixmap.fill(Qt::blue);
+    QPixmap pixmap(QString(":/assets/icon%1.png").arg(containerNumber)); // Adjust path if needed
+    
+    if (pixmap.isNull()) {
+        // If image fails to load, use a blue square as a placeholder
+        pixmap = QPixmap(64, 64);
+        pixmap.fill(Qt::blue);
+    }
+
     image->setPixmap(pixmap);
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
