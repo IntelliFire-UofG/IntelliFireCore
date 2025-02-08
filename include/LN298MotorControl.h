@@ -5,12 +5,12 @@
 
 /**
  * @class MotorController
- * @brief Controls 4 motors using L298N motor driver via Raspberry Pi GPIO.
+ * @brief Controls a motor using L298N motor driver via libgpiod.
  *
  * This class provides methods to move the motors forward, backward, and stop. It also
  * supports event-driven callbacks for dynamic motor control.
  *
- * @author Misael Rivera
+ * @author Misael Rivera, Brenda Camacho
  * @date 2025-02-01
  */
 class MotorController {
@@ -18,49 +18,20 @@ public:
     /**
      * @brief Constructs a MotorController object and initializes motor control pins.
      * 
-     * @param enA GPIO pin for left motor speed control (PWM).
+     * @param en GPIO pin for left motor speed control (PWM).
      * @param in1 GPIO pin for left motor direction.
      * @param in2 GPIO pin for left motor direction.
-     * @param enB GPIO pin for right motor speed control (PWM).
-     * @param in3 GPIO pin for right motor direction.
-     * @param in4 GPIO pin for right motor direction.
      */
-    MotorController(int enA, int in1, int in2, int enB, int in3, int in4);
-
+    MotorController(int enA, int in1, int in2);
+    
     /**
-     * @brief Moves the fire truck forward at a specified speed.
+     * @brief Activates motor b to move at certain speed (0-100%).
      * 
      * @param speed Speed of the motors (0-100%).
      */
-    void moveForward(int speed);
+    void setMotorSpeed(int8 speed);
 
-    /**
-     * @brief Moves the fire truck backward at a specified speed.
-     * 
-     * @param speed Speed of the motors (0-100%).
-     */
-    void moveBackward(int speed);
-
-    /**
-     * @brief Moves the fire truck left at a specified speed.
-     * 
-     * @param speed Speed of the motors (0-100%).
-     */
-    void moveLeft(int speed);
-
-    /**
-     * @brief Moves the fire truck right at a specified speed.
-     * 
-     * @param speed Speed of the motors (0-100%).
-     */
-    void moveRight(int speed);
-
-    /**
-     * @brief Stops all motors.
-     */
-    void stop();
-
-    /**
+      /**
      * @brief Registers a callback for event-driven motor actions.
      * 
      * @param callback Function to execute when an event occurs.
@@ -68,15 +39,34 @@ public:
     void registerCallback(std::function<void()> callback);
 
 private:
-    int ENA, IN1, IN2, ENB, IN3, IN4;
+   
+    enum class Direction
+    {
+        POSITIVE,
+        NEGATIVE,
+    };
+    // TODO: Change to whatever makes sense for gpiod
+    int enablePin;
+    int in1;
+    int in2;
+
     std::function<void()> motorEventCallback;
 
     /**
-     * @brief Sets the motor direction.
+     * @brief General function to configure PWM duty cycle in the enable pin
+     * to achieve the desired speed percentage.
      * 
-     * @param forward True for forward, false for backward.
+     * @param speed Speed of the motors (0-100%).
      */
-    void setMotorState(bool forward);
+    void setPWMDuty(int8 duty);
+
+    /**
+     * @brief General function to configure inX GPIOs to set rotation direction of the motors
+     * 
+     * @param speed Speed of the motors (0-100%).
+     */
+    void setMotorDirection(Direction dir)
+
 };
 
 #endif // LN298MOTORCONTROL_H
