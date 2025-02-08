@@ -1,6 +1,6 @@
-/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.h \
-  /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/moc_predefs.h \
-  /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.h \
+/home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: /home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.h \
+  /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/moc_predefs.h \
+  /home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/assert.h \

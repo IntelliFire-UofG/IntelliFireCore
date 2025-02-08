@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI
+CMAKE_SOURCE_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build
+CMAKE_BINARY_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/IntellifireUI.dir/depend.make
@@ -71,65 +71,65 @@ include CMakeFiles/IntellifireUI.dir/flags.make
 
 IntellifireUI_autogen/timestamp: /usr/lib/qt5/bin/moc
 IntellifireUI_autogen/timestamp: CMakeFiles/IntellifireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntellifireUI"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntellifireUI"
+	/usr/bin/cmake -E cmake_autogen /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/timestamp
 
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: CMakeFiles/IntellifireUI.dir/flags.make
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: IntellifireUI_autogen/mocs_compilation.cpp
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: CMakeFiles/IntellifireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o -MF CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o -MF CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o.d -o CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o -c /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp
 
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp > CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp > CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.i
 
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp -o CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp -o CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.s
 
 CMakeFiles/IntellifireUI.dir/main.cpp.o: CMakeFiles/IntellifireUI.dir/flags.make
-CMakeFiles/IntellifireUI.dir/main.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp
+CMakeFiles/IntellifireUI.dir/main.cpp.o: /home/mo/IntelliFireCore/src/IntelliFireUI/main.cpp
 CMakeFiles/IntellifireUI.dir/main.cpp.o: CMakeFiles/IntellifireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/IntellifireUI.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/main.cpp.o -MF CMakeFiles/IntellifireUI.dir/main.cpp.o.d -o CMakeFiles/IntellifireUI.dir/main.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/IntellifireUI.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/main.cpp.o -MF CMakeFiles/IntellifireUI.dir/main.cpp.o.d -o CMakeFiles/IntellifireUI.dir/main.cpp.o -c /home/mo/IntelliFireCore/src/IntelliFireUI/main.cpp
 
 CMakeFiles/IntellifireUI.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntellifireUI.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp > CMakeFiles/IntellifireUI.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mo/IntelliFireCore/src/IntelliFireUI/main.cpp > CMakeFiles/IntellifireUI.dir/main.cpp.i
 
 CMakeFiles/IntellifireUI.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntellifireUI.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp -o CMakeFiles/IntellifireUI.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mo/IntelliFireCore/src/IntelliFireUI/main.cpp -o CMakeFiles/IntellifireUI.dir/main.cpp.s
 
 CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o: CMakeFiles/IntellifireUI.dir/flags.make
-CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp
+CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o: /home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp
 CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o: CMakeFiles/IntellifireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o -MF CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o.d -o CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o -MF CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o.d -o CMakeFiles/IntellifireUI.dir/mainwindow.cpp.o -c /home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp
 
 CMakeFiles/IntellifireUI.dir/mainwindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntellifireUI.dir/mainwindow.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp > CMakeFiles/IntellifireUI.dir/mainwindow.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp > CMakeFiles/IntellifireUI.dir/mainwindow.cpp.i
 
 CMakeFiles/IntellifireUI.dir/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntellifireUI.dir/mainwindow.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp -o CMakeFiles/IntellifireUI.dir/mainwindow.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp -o CMakeFiles/IntellifireUI.dir/mainwindow.cpp.s
 
 CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o: CMakeFiles/IntellifireUI.dir/flags.make
-CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
+CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o: /home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
 CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o: CMakeFiles/IntellifireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o -MF CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o.d -o CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o -MF CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o.d -o CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.o -c /home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
 
 CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp > CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp > CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.i
 
 CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp -o CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp -o CMakeFiles/IntellifireUI.dir/sensorContainer.cpp.s
 
 # Object files for target IntellifireUI
 IntellifireUI_OBJECTS = \
@@ -150,7 +150,7 @@ IntellifireUI: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
 IntellifireUI: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
 IntellifireUI: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
 IntellifireUI: CMakeFiles/IntellifireUI.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable IntellifireUI"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable IntellifireUI"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/IntellifireUI.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -162,6 +162,6 @@ CMakeFiles/IntellifireUI.dir/clean:
 .PHONY : CMakeFiles/IntellifireUI.dir/clean
 
 CMakeFiles/IntellifireUI.dir/depend: IntellifireUI_autogen/timestamp
-	cd /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/mo/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/IntellifireUI.dir/depend
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI
+CMAKE_SOURCE_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build
+CMAKE_BINARY_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI/build
 
 # Utility rule file for IntellifireUI_autogen_timestamp_deps.
 
@@ -82,6 +82,6 @@ CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/depend:
-	cd /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/mo/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/IntellifireUI_autogen_timestamp_deps.dir/depend
 

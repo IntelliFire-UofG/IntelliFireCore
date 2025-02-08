@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI
+CMAKE_SOURCE_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build
+CMAKE_BINARY_DIR = /home/mo/IntelliFireCore/src/IntelliFireUI/build
 
 # Utility rule file for IntellifireUI_autogen.
 
@@ -70,9 +70,9 @@ CMakeFiles/IntellifireUI_autogen: IntellifireUI_autogen/timestamp
 
 IntellifireUI_autogen/timestamp: /usr/lib/qt5/bin/moc
 IntellifireUI_autogen/timestamp: CMakeFiles/IntellifireUI_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntellifireUI"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntellifireUI"
+	/usr/bin/cmake -E cmake_autogen /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/timestamp
 
 IntellifireUI_autogen: CMakeFiles/IntellifireUI_autogen
 IntellifireUI_autogen: IntellifireUI_autogen/timestamp
@@ -88,6 +88,6 @@ CMakeFiles/IntellifireUI_autogen.dir/clean:
 .PHONY : CMakeFiles/IntellifireUI_autogen.dir/clean
 
 CMakeFiles/IntellifireUI_autogen.dir/depend:
-	cd /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/mo/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build /home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntellifireUI_autogen.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/IntellifireUI_autogen.dir/depend
 

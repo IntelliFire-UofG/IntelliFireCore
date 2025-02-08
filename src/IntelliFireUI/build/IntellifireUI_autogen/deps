@@ -1,14 +1,14 @@
 IntellifireUI_autogen/timestamp: \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/CMakeLists.txt \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeCCompiler.cmake \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/moc_predefs.h \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.h \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp \
-	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.h \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/CMakeLists.txt \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeCCompiler.cmake \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/moc_predefs.h \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/main.cpp \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/mainwindow.h \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp \
+	/home/mo/IntelliFireCore/src/IntelliFireUI/sensorContainer.h \
 	/usr/include/asm-generic/errno-base.h \
 	/usr/include/asm-generic/errno.h \
 	/usr/include/assert.h \

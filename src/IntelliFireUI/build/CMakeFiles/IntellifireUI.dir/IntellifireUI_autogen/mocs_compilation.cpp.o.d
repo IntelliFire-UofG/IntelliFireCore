@@ -1,7 +1,7 @@
 CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp \
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_mainwindow.cpp \
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_mainwindow.cpp \
  /usr/include/c++/13/memory /usr/include/c++/13/bits/memoryfwd.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -13,6 +13,7 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
+ /usr/include/c++/13/pstl/pstl_config.h \
  /usr/include/c++/13/bits/allocator.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
  /usr/include/c++/13/bits/new_allocator.h /usr/include/c++/13/new \
@@ -34,11 +35,11 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/13/bits/stl_algobase.h \
  /usr/include/c++/13/bits/stl_iterator.h \
  /usr/include/c++/13/bits/ptr_traits.h /usr/include/c++/13/debug/debug.h \
- /usr/include/c++/13/bits/predefined_ops.h \
+ /usr/include/c++/13/bits/predefined_ops.h /usr/include/c++/13/bit \
  /usr/include/c++/13/ext/alloc_traits.h \
  /usr/include/c++/13/bits/alloc_traits.h \
  /usr/include/c++/13/bits/stl_raw_storage_iter.h \
- /usr/include/c++/13/bits/align.h /usr/include/c++/13/bit \
+ /usr/include/c++/13/bits/align.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -113,7 +114,9 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/13/bits/atomic_base.h \
  /usr/include/c++/13/bits/atomic_lockfree_defines.h \
  /usr/include/c++/13/backward/auto_ptr.h \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../mainwindow.h \
+ /usr/include/c++/13/pstl/glue_memory_defs.h \
+ /usr/include/c++/13/pstl/execution_defs.h \
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../mainwindow.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmainwindow.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
@@ -141,6 +144,7 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
  /usr/include/alloca.h /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  /usr/include/c++/13/bits/std_abs.h \
+ /usr/include/c++/13/pstl/glue_algorithm_defs.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h \
@@ -176,7 +180,8 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/ctype.h /usr/include/c++/13/bits/ostream_insert.h \
  /usr/include/c++/13/bits/cxxabi_forced.h \
  /usr/include/c++/13/bits/range_access.h \
- /usr/include/c++/13/bits/basic_string.h \
+ /usr/include/c++/13/bits/basic_string.h /usr/include/c++/13/string_view \
+ /usr/include/c++/13/bits/string_view.tcc \
  /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdio \
  /usr/include/stdio.h /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -189,8 +194,10 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/13/bits/charconv.h \
- /usr/include/c++/13/bits/basic_string.tcc /usr/include/c++/13/iterator \
- /usr/include/c++/13/bits/stream_iterator.h \
+ /usr/include/c++/13/bits/basic_string.tcc \
+ /usr/include/c++/13/bits/memory_resource.h \
+ /usr/include/c++/13/bits/uses_allocator_args.h \
+ /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
  /usr/include/c++/13/bits/streambuf_iterator.h \
  /usr/include/c++/13/streambuf /usr/include/c++/13/bits/ios_base.h \
  /usr/include/c++/13/bits/locale_classes.h \
@@ -207,13 +214,23 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qhashfunctions.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qpair.h \
  /usr/include/c++/13/numeric /usr/include/c++/13/bits/stl_numeric.h \
+ /usr/include/c++/13/pstl/glue_numeric_defs.h \
  /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/bits/enable_special_members.h \
+ /usr/include/c++/13/bits/node_handle.h \
+ /usr/include/c++/13/bits/erase_if.h /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/array \
+ /usr/include/c++/13/compare \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontainertools_impl.h \
- /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_vector.h \
- /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/list \
- /usr/include/c++/13/bits/stl_list.h /usr/include/c++/13/bits/list.tcc \
+ /usr/include/c++/13/list /usr/include/c++/13/bits/stl_list.h \
+ /usr/include/c++/13/bits/list.tcc \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -233,7 +250,6 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/13/map /usr/include/c++/13/bits/stl_tree.h \
  /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h \
- /usr/include/c++/13/bits/erase_if.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject_impl.h \
  /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
  /usr/include/c++/13/ratio /usr/include/c++/13/cstdint \
@@ -274,8 +290,8 @@ CMakeFiles/IntellifireUI.dir/IntellifireUI_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSlider \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../sensorContainer.h \
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../sensorContainer.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_sensorContainer.cpp \
- /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../sensorContainer.h
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/moc_sensorContainer.cpp \
+ /home/mo/IntelliFireCore/src/IntelliFireUI/build/IntellifireUI_autogen/EWIEGA46WW/../../../sensorContainer.h
