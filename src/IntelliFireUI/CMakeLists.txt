@@ -11,8 +11,16 @@ set(CMAKE_AUTOMOC ON)
 # Find Qt5
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
-# Add source files
-add_executable(IntellifireUI main.cpp mainwindow.cpp sensorContainer.cpp sensorContainer.h mainwindow.h)
+# Add Qt Resource File
+qt5_add_resources(RESOURCES resources.qrc)
 
-# Link Qt5 libraries
-target_link_libraries(IntellifireUI Qt5::Widgets)
+# Define Executable BEFORE Linking Libraries
+add_executable(IntelliFireUI
+    main.cpp
+    mainwindow.cpp mainwindow.h
+    sensorContainer.cpp sensorContainer.h
+    ${RESOURCES}  # Include compiled Qt resources
+)
+
+# Link Qt Libraries AFTER Defining Executable
+target_link_libraries(IntelliFireUI Qt5::Widgets)
