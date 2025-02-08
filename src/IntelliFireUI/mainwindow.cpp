@@ -5,30 +5,31 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QLabel>
+#include <QDebug>
+#include "sensorContainer.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setWindowTitle("Welcome to Intellifire UI");
     resize(800, 600);
-    
+
     QWidget *centralWidget = new QWidget;
     setCentralWidget(centralWidget);
-    
+
     QHBoxLayout *mainLayout = new QHBoxLayout(centralWidget);
-    
+
     // Left side - Sensor grid
-    // createSensorGrid();
     QGridLayout *sensorGrid = new QGridLayout;
+    
     sensorGrid->addWidget(new SensorContainer(1), 0, 0);
     sensorGrid->addWidget(new SensorContainer(2), 0, 1);
     sensorGrid->addWidget(new SensorContainer(3), 1, 0);
     sensorGrid->addWidget(new SensorContainer(4), 1, 1);
-    
+
     // Right side - Sliders
     QVBoxLayout *sliderLayout = new QVBoxLayout;
-    createSliders();
-    
+
     // Subtitle
     QLabel *subtitle = new QLabel("Device: IntelliFire Pro v2.0");
     subtitle->setStyleSheet(R"(
@@ -39,21 +40,34 @@ MainWindow::MainWindow(QWidget *parent)
             padding: 10px;
         }
     )");
-    
+
     // Combine everything
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->addWidget(subtitle);
     leftLayout->addLayout(sensorGrid);
-    
+
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(sliderLayout);
+
+    // ✅ Now call `createSliders()` after setting up `mainLayout`
+    createSliders();
 }
 
 void MainWindow::createSliders()
 {
+    if (!centralWidget() || !centralWidget()->layout()) {
+        qDebug() << "Error: centralWidget() or layout() is NULL!";
+        return;
+    }
+
     QVBoxLayout *sliderLayout = qobject_cast<QVBoxLayout*>(
-      centralWidget()->layout()->itemAt(1)->layout()
-  );
+        centralWidget()->layout()->itemAt(1)->layout()
+    );
+
+    if (!sliderLayout) {
+        qDebug() << "Error: sliderLayout is NULL!";
+        return;
+    };
     
     // Speed controls
     speedSlider = new QSlider(Qt::Vertical);
