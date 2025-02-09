@@ -41,6 +41,7 @@
  */
 
 #include "../include/LN298MotorControl.h"
+#include "../include/basicMotion.h"
 #include "../include/eventHandler.h"
 #include "../include/ADCReader.h" // Consider for further dev
 // #include "DisplayManager.hpp" // Consider for further dev
@@ -48,13 +49,15 @@
 
 #include <iostream>
 #include <thread>
+#include <pigpio.h>
 
-#define ENA 0
-#define IN1 1
-#define IN2 2
-#define ENB 3
-#define IN3 4
-#define IN4 5
+// TODO: Define the pins
+#define ENA 12
+#define IN1 5
+#define IN2 6
+#define ENB 18
+#define IN3 13
+#define IN4 19
 
 #define BUTTON_FORWARD 6
 #define BUTTON_BACKWARD 7
@@ -63,8 +66,14 @@
 int main() {
     std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
 
-    // Initialize motor controller
-    MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
+    // Initialize MotorRight and MotorLeft controller
+    // MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
+    MotorController motorRight(ENA, IN1, IN2);
+    MotorController motorLeft(ENB, IN3, IN4);
+    
+    // Create basicMotion objects with points and set speed
+    BasicMotion motion(&motorRight, &motorLeft);
+    motion.setSpeed(100);
 
     // Initialize event handler
     EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
@@ -80,14 +89,24 @@ int main() {
     */
 
     // Register event-driven callbacks
-    eventHandler.registerForwardCallback([&]() { motorController.moveForward(75); });
-    eventHandler.registerBackwardCallback([&]() { motorController.moveBackward(75); });
-    eventHandler.registerStopCallback([&]() { motorController.stop(); });
+    eventHandler.registerForwardCallback([&motion]() {
+        std::cout << "Moving Forward..." << std::endl;
+         motion.forward(); 
+    });
+
+    eventHandler.registerBackwardCallback([&motion]() {
+        std::cout << "Moving Backwards..." << std::endl;
+        motion.backward(); 
+    });
+
+    eventHandler.registerStopCallback([&motion]() { 
+        std::cout << "Truck Stopped..." << std::endl;
+    motion.stop(); });
 
     // Register ADC callback to react to fire detection
     adcReader.registerFlameCallback([&](int channel, int value) {
         std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
-        motorController.stop();  // Example response: Stop if flame is detected
+        motion.stop();  // Example response: Stop if flame is detected
     });
 
     // Start Event Loop (Runs in Separate Thread)
