@@ -2,6 +2,7 @@
 #define LN298MOTORCONTROL_H
 
 #include <functional>
+#include <cstdint>
 
 /**
  * @class MotorController
@@ -18,7 +19,7 @@ public:
     /**
      * @brief Constructs a MotorController object and initializes motor control pins.
      * 
-     * @param en GPIO pin for left motor speed control (PWM).
+     * @param enA GPIO pin for left motor speed control (PWM).
      * @param in1 GPIO pin for left motor direction.
      * @param in2 GPIO pin for left motor direction.
      */
@@ -29,7 +30,7 @@ public:
      * 
      * @param speed Speed of the motors (0-100%).
      */
-    void setMotorSpeed(int8 speed);
+    void setMotorSpeed(int8_t speed);
 
       /**
      * @brief Registers a callback for event-driven motor actions.
@@ -58,14 +59,14 @@ private:
      * 
      * @param speed Speed of the motors (0-100%).
      */
-    void setPWMDuty(int8 duty);
+    void setPWMDuty(int8_t duty);
 
     /**
      * @brief General function to configure inX GPIOs to set rotation direction of the motors
      * 
      * @param speed Speed of the motors (0-100%).
      */
-    void setMotorDirection(Direction dir)
+    void setMotorDirection(Direction dir);
 
 };
 
