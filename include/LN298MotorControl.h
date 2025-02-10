@@ -19,9 +19,9 @@ public:
     /**
      * @brief Constructs a MotorController object and initializes motor control pins.
      * 
-     * @param enA GPIO pin for left motor speed control (PWM).
-     * @param in1 GPIO pin for left motor direction.
-     * @param in2 GPIO pin for left motor direction.
+     * @param enA GPIO pin for motor speed control (PWM).
+     * @param in1 GPIO pin for motor direction.
+     * @param in2 GPIO pin for motor direction.
      */
     MotorController(int enA, int in1, int in2);
     
@@ -57,14 +57,14 @@ private:
      * @brief General function to configure PWM duty cycle in the enable pin
      * to achieve the desired speed percentage.
      * 
-     * @param speed Speed of the motors (0-100%).
+     * @param duty Speed of the motors (0-100%).
      */
     void setPWMDuty(int8_t duty);
 
     /**
      * @brief General function to configure inX GPIOs to set rotation direction of the motors
      * 
-     * @param speed Speed of the motors (0-100%).
+     * @param dir Direction of the motor (POSITIVE for forward, NEGATIVE for reverse).
      */
     void setMotorDirection(Direction dir);
 
