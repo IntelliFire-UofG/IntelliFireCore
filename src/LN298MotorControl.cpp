@@ -1,5 +1,5 @@
 #include "LN298MotorControl.h"
-#include <pigpio.h>
+#include <libgpio.h>
 #include <cmath>
 
 
