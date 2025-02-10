@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPixmap>
+#include <QDebug>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     : QWidget(parent)
@@ -10,15 +11,18 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     
     // Load the corresponding icon
     QLabel *image = new QLabel;
-    QPixmap pixmap(QString(":/assets/icon%1.png").arg(containerNumber)); // Adjust path if needed
+    QString imagepath = QString(":/assets/icon%1.png").arg(containerNumber);
+    QPixmap pixmap(imagepath); // Adjust path if needed
     
     if (pixmap.isNull()) {
+        qDebug() << "Failed to load imageee2:";
         // If image fails to load, use a blue square as a placeholder
         pixmap = QPixmap(64, 64);
         pixmap.fill(Qt::blue);
     }
 
     image->setPixmap(pixmap);
+    image->setScaledContents(true); 
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
     
