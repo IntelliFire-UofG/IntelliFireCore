@@ -49,7 +49,7 @@
 
 #include <iostream>
 #include <thread>
-#include <pigpio.h>
+#include <libgpio.h>
 
 // TODO: Define the pins
 #define ENA 12
