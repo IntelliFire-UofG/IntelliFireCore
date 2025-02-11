@@ -40,15 +40,9 @@ public:
     void turnLeft();
 
     /**
-     * @brief Turns the robot to the left.
-     */
-    void stop();
-
-    /**
      * @brief Sets the speed of the robot.
      */
-    void setSpeed(int new_speed);
-
+    void setSpeed();
 
 private:
     MotorController *motor_right; ///< Pointer to the right motor controller.
