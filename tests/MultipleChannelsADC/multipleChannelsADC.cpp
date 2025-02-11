@@ -1,5 +1,5 @@
 /*
- * ADS1115 test/demo program for the Raspberry PI
+ * ADS1015 test/demo program for the Raspberry PI
  *
  * Copyright (c) 2007  MontaVista Software, Inc.
  * Copyright (c) 2007  Anton Vorontsov <avorontsov@ru.mvista.com>
@@ -19,9 +19,9 @@
  
  #include "ads1015rpi.h"
  
- // We inherit ADS1115rpi, implement
+ // We inherit ADS1015rpi, implement
  // hasSample() and print the ADC reading.
- class ADS1015Printer : public ADS1015rpi::ADSCallbackInterface {
+ class MultichannelPrinter : public ADS1015rpi::ADSCallbackInterface {
 private:
     bool discard = false;
     ADS1015settings::Input current_channel = ADS1015settings::A0;
@@ -75,20 +75,20 @@ private:
     }
  };
  
- // Creates an instance of the ADS1115Printer class.
+ // Creates an instance of the ADS1015Printer class.
  // Prints data till the user presses a key.
  int main(int argc, char *argv[]) {
-     fprintf(stderr,"Press any key to stop.\n");
-     ADS1115Printer ads1115Callback;
-     ADS1115rpi ads1115rpi;
-     ads1115rpi.registerCallback(&ads1115Callback);
-         ADS1115settings s;
-     s.samplingRate = ADS1115settings::FS64HZ;
-     s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-     ads1115rpi.start(s);
-         fprintf(stderr,"fs = %d\n",ads1115rpi.getADS1115settings().getSamplingRate());
-     getchar();
-     ads1115rpi.stop();
-     return 0;
+    fprintf(stderr,"Press any key to stop.\n");
+    MultichannelPrinter ads1015Callback;
+    ADS1015rpi ads1015rpi;
+    ads1015rpi.registerCallback(&ads1015Callback);
+    ADS1015settings s;
+    s.samplingRate = ADS1015settings::FS64HZ;
+    s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
+    ads1015rpi.start(s);
+    fprintf(stderr,"fs = %d\n",ads1015rpi.getADS1015settings().getSamplingRate());
+    getchar();
+    ads1015rpi.stop();
+    return 0;
  }
  
