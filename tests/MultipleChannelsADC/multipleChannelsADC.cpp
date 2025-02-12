@@ -21,7 +21,7 @@
  
 // We inherit ADS1015rpi, implement
 // hasSample() and print the ADC reading.
-class FlameSensorReader: public ADS1115rpi::ADSCallbackInterface
+class FlameSensorReader: public ADS1015rpi::ADSCallbackInterface
 {
 private:
     ADS1015rpi ads1015rpi;
@@ -62,7 +62,7 @@ private:
             current_channel = ADS1015settings::AIN0;
             break;
         }
-        ads1015rpi->setChannel(current_channel);
+        ads1015rpi.setChannel(current_channel);
     }
     
 
@@ -73,7 +73,9 @@ public:
         ADS1015settings s;
         s.samplingRate = ADS1015settings::FS128HZ;
         s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-        ads1015.start();
+        ads1015rpi.start();
+        fprintf(stderr,"fs = %d\n",ads1015rpi.getADS1015settings().getSamplingRate());
+    
     }
 
     void stop()
@@ -82,22 +84,21 @@ public:
         ADS1015settings s;
         s.samplingRate = ADS1015settings::FS128HZ;
         s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-        ads1015.stop();
+        ads1015rpi.stop();
     }
 
-    void hasADS1015Sample(float v) override {
-            if (discard == true)
-            {
-                return;
-                discard = false;
-            }
-            printChannel();
-            printf("%e\n",v);
-            nextChannel();
-            discard = true;
+    void hasADS1015Sample(float v) override 
+    {
+        if (discard == true)
+        {
+            return;
+            discard = false;
         }
+        printChannel();
+        printf("%e\n",v);
+        nextChannel();
+        discard = true;
     }
-
 };
 class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
      
@@ -109,7 +110,6 @@ class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
     fprintf(stderr,"Press any key to stop.\n");
     FlameSensorReader flame_sensors;
     flame_sensors.start();
-    fprintf(stderr,"fs = %d\n",ads1015rpi.getADS1015settings().getSamplingRate());
     getchar();
     flame_sensors.stop();
     return 0;
