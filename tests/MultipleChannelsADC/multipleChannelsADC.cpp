@@ -21,9 +21,10 @@
  
 // We inherit ADS1015rpi, implement
 // hasSample() and print the ADC reading.
-class FlameSensorReader : public ADS1015rpi
+class FlameSensorReader: public ADS1115rpi::ADSCallbackInterface
 {
 private:
+    ADS1015rpi ads1015rpi;
     bool discard = false;
     ADS1015settings::Input current_channel = ADS1015settings::AIN0;
     void printChannel()
@@ -61,12 +62,30 @@ private:
             current_channel = ADS1015settings::AIN0;
             break;
         }
-        setChannel(current_channel);
+        ads1015rpi->setChannel(current_channel);
     }
- };
-class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
-     ADSCallbackInterface {
-        virtual void hasADS1015Sample(float v) override {
+    
+
+public:
+    void start()
+    {
+        ads1015rpi.registerCallback(this);
+        ADS1015settings s;
+        s.samplingRate = ADS1015settings::FS128HZ;
+        s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
+        ads1015.start();
+    }
+
+    void stop()
+    {
+        ads1015rpi.registerCallback(this);
+        ADS1015settings s;
+        s.samplingRate = ADS1015settings::FS128HZ;
+        s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
+        ads1015.stop();
+    }
+
+    void hasADS1015Sample(float v) override {
             if (discard == true)
             {
                 return;
@@ -78,22 +97,21 @@ class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
             discard = true;
         }
     }
+
+};
+class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
+     
 };
  
  // Creates an instance of the ADS1015Printer class.
  // Prints data till the user presses a key.
  int main(int argc, char *argv[]) {
     fprintf(stderr,"Press any key to stop.\n");
-    MultichannelPrinter ads1015Callback;
-    ADS1015rpi ads1015rpi;
-    ads1015rpi.registerCallback(&ads1015Callback);
-    ADS1015settings s;
-    s.samplingRate = ADS1015settings::FS128HZ;
-    s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-    ads1015rpi.start(s);
+    FlameSensorReader flame_sensors;
+    flame_sensors.start();
     fprintf(stderr,"fs = %d\n",ads1015rpi.getADS1015settings().getSamplingRate());
     getchar();
-    ads1015rpi.stop();
+    flame_sensors.stop();
     return 0;
  }
  
