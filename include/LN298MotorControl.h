@@ -2,7 +2,6 @@
 #define LN298MOTORCONTROL_H
 
 #include <functional>
-#include <cstdint>
 
 /**
  * @class MotorController
@@ -30,7 +29,7 @@ public:
      * 
      * @param speed Speed of the motors (0-100%).
      */
-    void setMotorSpeed(int8_t speed);
+    void setMotorSpeed(int8 speed);
 
       /**
      * @brief Registers a callback for event-driven motor actions.
@@ -59,14 +58,14 @@ private:
      * 
      * @param duty Speed of the motors (0-100%).
      */
-    void setPWMDuty(int8_t duty);
+    void setPWMDuty(int8 duty);
 
     /**
      * @brief General function to configure inX GPIOs to set rotation direction of the motors
      * 
      * @param dir Direction of the motor (POSITIVE for forward, NEGATIVE for reverse).
      */
-    void setMotorDirection(Direction dir);
+    void setMotorDirection(Direction dir)
 
 };
 
