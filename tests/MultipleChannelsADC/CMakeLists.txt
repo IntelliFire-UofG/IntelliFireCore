@@ -7,15 +7,22 @@ project(MultipleChannelsADC)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Find libgpiod
+find_library(GPIOD_LIBRARY gpiod)
+if(NOT GPIOD_LIBRARY)
+    message(FATAL_ERROR "libgpiod not found")
+endif()
+
 # Add the include directory
-include_directories(${PROJECT_SOURCE_DIR}/../include)
+include_directories(${PROJECT_SOURCE_DIR}/../../include)
 
 # Add the source files
 set(SOURCES
-    ${PROJECT_SOURCE_DIR}/../src/ads1015.cpp
+    ${PROJECT_SOURCE_DIR}/../../src/ads1015rpi.cpp
     ${PROJECT_SOURCE_DIR}/multipleChannelsADC.cpp
 )
 
-target_link_libraries(ads1115rpi gpiod)
+
 # Add the executable
 add_executable(MultipleChannelsADC ${SOURCES})
+target_link_libraries(MultipleChannelsADC gpiod)

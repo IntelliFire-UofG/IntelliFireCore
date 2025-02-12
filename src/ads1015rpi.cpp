@@ -15,7 +15,7 @@ void ADS1015rpi::start(ADS1015settings settings) {
 	if (fd_i2c < 0) {
 	    char i2copen[] = "Could not open I2C.\n";
 #ifdef DEBUG
-	    fprintf(stderr,i2open);
+	    fprintf(stderr,i2copen);
 #endif
 	    throw i2copen;
 	}

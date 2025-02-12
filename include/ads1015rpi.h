@@ -67,7 +67,7 @@ struct ADS1015settings {
 	FS1600HZ = 4,
 	FS2400HZ = 5,
 	FS3300HZ = 6,
-	FS3300HZ = 7
+	//FS3300HZ = 7
     };
 	
     /**
@@ -82,7 +82,7 @@ struct ADS1015settings {
     /**
      * Sampling rate requested
      **/
-    SamplingRates samplingRate = FS8HZ;
+    SamplingRates samplingRate = FS128HZ;
 
     /**
      * Full scale range: 2.048V, 1.024V, 0.512V or 0.256V.

@@ -19,26 +19,27 @@
  
  #include "ads1015rpi.h"
  
- // We inherit ADS1015rpi, implement
- // hasSample() and print the ADC reading.
- class MultichannelPrinter : public ADS1015rpi::ADSCallbackInterface {
+// We inherit ADS1015rpi, implement
+// hasSample() and print the ADC reading.
+class FlameSensorReader : public ADS1015rpi
+{
 private:
     bool discard = false;
-    ADS1015settings::Input current_channel = ADS1015settings::A0;
+    ADS1015settings::Input current_channel = ADS1015settings::AIN0;
     void printChannel()
     {
         switch (current_channel)
         {
-        case ADS1015settings::A0:
+        case ADS1015settings::AIN0:
             printf("A0: ");
             break;
-        case ADS1015settings::A1:
+        case ADS1015settings::AIN1:
             printf("A1: ");
             break;
-        case ADS1015settings::A2:
+        case ADS1015settings::AIN2:
             printf("A2: ");
             break;
-        case ADS1015settings::A3:
+        case ADS1015settings::AIN3:
             printf("A3: ");
             break;
         }
@@ -47,33 +48,37 @@ private:
     {
         switch (current_channel)
         {
-        case ADS1015settings::A0:
-            current_channel = ADS1015settings::A1;
+        case ADS1015settings::AIN0:
+            current_channel = ADS1015settings::AIN1;
             break;
-        case ADS1015settings::A1:
-            current_channel = ADS1015settings::A2;
+        case ADS1015settings::AIN1:
+            current_channel = ADS1015settings::AIN2;
             break;
-        case ADS1015settings::A2:
-            current_channel = ADS1015settings::A3;
+        case ADS1015settings::AIN2:
+            current_channel = ADS1015settings::AIN3;
             break;
-        case ADS1015settings::A3:
-            current_channel = ADS1015settings::A0;
+        case ADS1015settings::AIN3:
+            current_channel = ADS1015settings::AIN0;
             break;
         }
         setChannel(current_channel);
     }
-    virtual void hasADS1015Sample(float v) override {
-        if (discard == true)
-        {
-            return;
-            discard = false;
-        }
-        printChannel();
-        printf("%e\n",v);
-        nextChannel();
-        discard = true;
-    }
  };
+class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
+     ADSCallbackInterface {
+        virtual void hasADS1015Sample(float v) override {
+            if (discard == true)
+            {
+                return;
+                discard = false;
+            }
+            printChannel();
+            printf("%e\n",v);
+            nextChannel();
+            discard = true;
+        }
+    }
+};
  
  // Creates an instance of the ADS1015Printer class.
  // Prints data till the user presses a key.
@@ -83,7 +88,7 @@ private:
     ADS1015rpi ads1015rpi;
     ads1015rpi.registerCallback(&ads1015Callback);
     ADS1015settings s;
-    s.samplingRate = ADS1015settings::FS64HZ;
+    s.samplingRate = ADS1015settings::FS128HZ;
     s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
     ads1015rpi.start(s);
     fprintf(stderr,"fs = %d\n",ads1015rpi.getADS1015settings().getSamplingRate());
