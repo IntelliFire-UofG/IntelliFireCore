@@ -1,0 +1,26 @@
+{
+	"BUILD_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen",
+	"CMAKE_BINARY_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI",
+	"CMAKE_SOURCE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon3.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon2.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon1.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon4.png"
+	],
+	"LOCK_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc",
+	"VERBOSITY" : 0
+}

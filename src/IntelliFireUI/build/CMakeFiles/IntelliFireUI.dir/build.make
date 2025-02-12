@@ -69,20 +69,21 @@ include CMakeFiles/IntelliFireUI.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/IntelliFireUI.dir/flags.make
 
-qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc
-qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon1.png
-qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon2.png
-qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon3.png
-qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon4.png
-qrc_resources.cpp: resources.qrc.depends
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating qrc_resources.cpp"
-	/usr/lib/qt5/bin/rcc --name resources --output /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/qrc_resources.cpp /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc
-
 IntelliFireUI_autogen/timestamp: /usr/lib/qt5/bin/moc
 IntelliFireUI_autogen/timestamp: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic MOC for target IntelliFireUI"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntelliFireUI"
 	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json ""
 	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/timestamp
+
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_EWIEGA46WW_Info.json
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon3.png
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon2.png
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon1.png
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon4.png
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp: /usr/lib/qt5/bin/rcc
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for resources.qrc"
+	/usr/bin/cmake -E cmake_autorcc /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_EWIEGA46WW_Info.json 
 
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o: IntelliFireUI_autogen/mocs_compilation.cpp
@@ -140,19 +141,19 @@ CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp -o CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.s
 
-CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
-CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o: qrc_resources.cpp
-CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o -MF CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/qrc_resources.cpp
+CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
+CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o: IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp
+CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o -MF CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp
 
-CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/qrc_resources.cpp > CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.i
+CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp > CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i
 
-CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/qrc_resources.cpp -o CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.s
+CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp -o CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s
 
 # Object files for target IntelliFireUI
 IntelliFireUI_OBJECTS = \
@@ -160,7 +161,7 @@ IntelliFireUI_OBJECTS = \
 "CMakeFiles/IntelliFireUI.dir/main.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.o" \
-"CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o"
+"CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o"
 
 # External object files for target IntelliFireUI
 IntelliFireUI_EXTERNAL_OBJECTS =
@@ -169,7 +170,7 @@ IntelliFireUI: CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilati
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/main.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/sensorContainer.cpp.o
-IntelliFireUI: CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o
+IntelliFireUI: CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/build.make
 IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
 IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
@@ -186,8 +187,8 @@ CMakeFiles/IntelliFireUI.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/IntelliFireUI.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/IntelliFireUI.dir/clean
 
+CMakeFiles/IntelliFireUI.dir/depend: IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp
 CMakeFiles/IntelliFireUI.dir/depend: IntelliFireUI_autogen/timestamp
-CMakeFiles/IntelliFireUI.dir/depend: qrc_resources.cpp
 	cd /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/CMakeFiles/IntelliFireUI.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/IntelliFireUI.dir/depend
 

@@ -155,6 +155,30 @@ IntelliFireUI_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI_autogen.dir/build.make CMakeFiles/IntelliFireUI_autogen.dir/build
 .PHONY : IntelliFireUI_autogen/fast
 
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.o: IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.o
+
+# target to build an object file
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.o
+
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.i: IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.i
+
+# target to preprocess a source file
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.i
+
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.s: IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.s
+
+# target to generate assembly for a file
+IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s
+.PHONY : IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.cpp.s
+
 IntelliFireUI_autogen/mocs_compilation.o: IntelliFireUI_autogen/mocs_compilation.cpp.o
 .PHONY : IntelliFireUI_autogen/mocs_compilation.o
 
@@ -227,30 +251,6 @@ mainwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/mainwindow.cpp.s
 .PHONY : mainwindow.cpp.s
 
-qrc_resources.o: qrc_resources.cpp.o
-.PHONY : qrc_resources.o
-
-# target to build an object file
-qrc_resources.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.o
-.PHONY : qrc_resources.cpp.o
-
-qrc_resources.i: qrc_resources.cpp.i
-.PHONY : qrc_resources.i
-
-# target to preprocess a source file
-qrc_resources.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.i
-.PHONY : qrc_resources.cpp.i
-
-qrc_resources.s: qrc_resources.cpp.s
-.PHONY : qrc_resources.s
-
-# target to generate assembly for a file
-qrc_resources.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/qrc_resources.cpp.s
-.PHONY : qrc_resources.cpp.s
-
 sensorContainer.o: sensorContainer.cpp.o
 .PHONY : sensorContainer.o
 
@@ -286,6 +286,9 @@ help:
 	@echo "... IntelliFireUI_autogen"
 	@echo "... IntelliFireUI_autogen_timestamp_deps"
 	@echo "... IntelliFireUI"
+	@echo "... IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.o"
+	@echo "... IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.i"
+	@echo "... IntelliFireUI_autogen/EWIEGA46WW/qrc_resources.s"
 	@echo "... IntelliFireUI_autogen/mocs_compilation.o"
 	@echo "... IntelliFireUI_autogen/mocs_compilation.i"
 	@echo "... IntelliFireUI_autogen/mocs_compilation.s"
@@ -295,9 +298,6 @@ help:
 	@echo "... mainwindow.o"
 	@echo "... mainwindow.i"
 	@echo "... mainwindow.s"
-	@echo "... qrc_resources.o"
-	@echo "... qrc_resources.i"
-	@echo "... qrc_resources.s"
 	@echo "... sensorContainer.o"
 	@echo "... sensorContainer.i"
 	@echo "... sensorContainer.s"
