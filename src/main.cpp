@@ -48,6 +48,7 @@
 
 #include <iostream>
 #include <thread>
+#include <libgpio.h>
 
 #define ENA 0
 #define IN1 1

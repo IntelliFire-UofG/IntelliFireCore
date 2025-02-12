@@ -1,4 +1,5 @@
 #include "LN298MotorControl.h"
+#include <libgpio.h>
 #include <cmath>
 
 
