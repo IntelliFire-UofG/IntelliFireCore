@@ -162,8 +162,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
-  "resources.qrc.depends"
   "CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_EWIEGA46WW_Info.json"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
