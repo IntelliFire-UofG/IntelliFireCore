@@ -1,0 +1,3 @@
+add_executable(ir_sensor_printer ir_sensor_printer.cpp)
+target_link_libraries(ir_sensor_printer ir_sensor_static)
+target_include_directories(ir_sensor_printer PRIVATE ..)

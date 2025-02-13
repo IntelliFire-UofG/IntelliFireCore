@@ -9,52 +9,46 @@ endif()
 project(LIBGPIOD_RaspberryPi_IRSensor VERSION 1.0.0 LANGUAGES CXX)
 include(GNUInstallDirs)
 
-# Compiler warnings
+add_subdirectory(example)
+
 add_compile_options(-Wall -Wconversion -Wextra -pedantic)
 
-set(LIBSRC src/IRSensor.cpp)
-set(LIBINCLUDE include/IRSensor.h)
+set(LIBSRC ir_sensor.cpp)
+set(LIBINCLUDE ir_sensor.h)
 
 # Build shared library
-add_library(IRSensor
+add_library(ir_sensor
   SHARED
   ${LIBSRC}
 )
 
-set_target_properties(IRSensor PROPERTIES
+set_target_properties(ir_sensor PROPERTIES
   SOVERSION 1
   PUBLIC_HEADER "${LIBINCLUDE}"
 )
 
-target_link_libraries(IRSensor gpiod)
+target_link_libraries(ir_sensor gpiod)
 
-install(TARGETS IRSensor EXPORT IRSensor-targets
+install(TARGETS ir_sensor EXPORT ir_sensor-targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # Build static library
-add_library(IRSensor_static
+add_library(ir_sensor_static
   STATIC
   ${LIBSRC}
 )
 
-set_target_properties(IRSensor_static PROPERTIES
+set_target_properties(ir_sensor_static PROPERTIES
   PUBLIC_HEADER "${LIBINCLUDE}"
 )
 
-target_link_libraries(IRSensor_static gpiod)
+target_link_libraries(ir_sensor_static gpiod)
 
-install(TARGETS IRSensor_static EXPORT IRSensor_static-targets
+install(TARGETS ir_sensor_static EXPORT ir_sensor_static-targets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
-
-# Example Executable
-add_executable(testIRSensor tests/testIRSensor.cpp)
-
-target_link_libraries(testIRSensor IRSensor_static)
-
-target_include_directories(testIRSensor PRIVATE ${CMAKE_SOURCE_DIR}/include)
