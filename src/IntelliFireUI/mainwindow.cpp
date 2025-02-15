@@ -125,6 +125,7 @@ void MainWindow::handleParamButton()
     // Implementation for parameter setting
 }
 
+/* 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)
 {
@@ -139,4 +140,4 @@ connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContain
 
 // Start reading sensor values from ADS1115
 adsManager->start();
-}
+} */
