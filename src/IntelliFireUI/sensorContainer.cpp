@@ -11,7 +11,7 @@ int SensorContainer::updateSensorValue(){
     int sensorValue = ultrasonicDistance();  
     
 
-    qDebug() << " Uppppppppppppppppdated Sensor Value: " << sensorValue;
+    qDebug() << " Updated Sensor Value: " << sensorValue;
     
     //sensorValue = 100;//debugging to test value
     //return rand()% 200;//test for when no raspberry pi connected
@@ -54,7 +54,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 
     auto updateSensor = [this,&PLACEHOLDER,layout,value,image,timer]() {
     PLACEHOLDER= this->updateSensorValue();
-    //latestSensorValue.store(newValue);
+    
     //std::cout<<"Value:"<<PLACEHOLDER;//Debugging
     value->setText(QString::number(PLACEHOLDER)+" cm");
     
@@ -63,7 +63,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     updateSensor();
     
     
-    std::cout<<"NEWWWWWW = "<<PLACEHOLDER;
+    std::cout<<"New Sensor value = "<<PLACEHOLDER<<std::endl;
     
 
     
