@@ -35,12 +35,12 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 - **Platform**: Raspberry Pi (Linux)  
 - **Architecture**: Object-Oriented Programming (OOP)  
 - **Event Handling**: Threads, Callbacks, Interrupts  
-- **Visualization**: OpenGL/SDL for real-time sensor data plotting  
+- **Visualization**: Qt5  
 - **Testing**: Unit testing framework  
 
 ---
 ```bash
-📂 AutonomousFireTruck
+📂 IntelliFireCore
  ├── 📂 SupportCodes           # Extra support codes for reference/testing
  │   ├── LM393_SupportCode_README.md
  │   ├── LM393_SupportCode_Read.cpp
@@ -54,7 +54,7 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
  │   ├── pumpControl.h         # Fire extinguishing pump control
  │
  ├── 📂 src                    # Implementation files
- │   ├── 📂 GUI                # Graphical UI visualization for sensor data
+ │   ├── 📂 IntellifireUI                # Graphical UI visualization for sensor data
  │   ├── LM393FlameSensor.cpp  # Implementation of flame sensor handling
  │   ├── LN298MotorControl.cpp # Implementation of motor driver logic
  │   ├── eventHandler.cpp      # Implementation of event-driven interactions
@@ -77,18 +77,18 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 ## 🚦 **Installation & Setup**
 ### 1️⃣ Prerequisites
 Raspberry Pi with Linux
-C++ compiler (g++)
-WiringPi (for GPIO control)
+C++ compiler (CMake)
+lgpiod (for GPIO control)
 ADS1015/ADS1115 ADC module
 L298N Motor Driver
 ### 2️⃣ Build & Run
 ```bash
 
 # Clone the repository
-git clone https://github.com/yourusername/AutonomousFireTruck.git
+git clone [https://github.com/IntelliFire-UofG/IntelliFireCore.git]
 
 # Navigate to project directory
-cd AutonomousFireTruck
+cd src
 
 # Compile the project
 make
@@ -112,9 +112,9 @@ See the LICENSE file for details.
 ## 📞 **Contact & Social Media**
 📧 Email: intellifire2025@outlook.com
 💼 Instagram: @intellifire25
-🌎 Github: [yourwebsite.com](https://github.com/IntelliFire-UofG/)
+🌎 Github: [https://github.com/IntelliFire-UofG/]
 
-##🏷️ **Tags**
+## 🏷️ **Tags**
 
 C++ Raspberry Pi Event-Driven Programming Real-Time Systems Flame Sensor Motor Control Embedded Systems
 
