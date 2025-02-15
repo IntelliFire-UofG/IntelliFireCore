@@ -16,8 +16,9 @@ private slots:
 
 private:
     QTimer *timer;  // Store QTimer in the class to prevent crashes
-    QLabel *sensorLabel; 
-signals:
+    QLabel *sensorLabel = nullptr; 
+    int PLACEHOLDER ;
+
 
 
 
