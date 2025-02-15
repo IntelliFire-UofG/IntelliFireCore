@@ -330,10 +330,13 @@ IntelliFireUI_autogen/timestamp: /home/misaelrivera/IntelliFire/IntelliFireCore/
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtguiglobal.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qtransform.h \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qwindowdefs.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSlider \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmainwindow.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qsizepolicy.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
@@ -637,6 +640,8 @@ IntelliFireUI_autogen/timestamp: /home/misaelrivera/IntelliFire/IntelliFireCore/
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h:
+
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSlider:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow:
@@ -754,6 +759,8 @@ IntelliFireUI_autogen/timestamp: /home/misaelrivera/IntelliFire/IntelliFireCore/
 /usr/include/c++/13/cstdlib:
 
 /usr/include/c++/13/cstdint:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h:
 
 /usr/include/c++/13/concepts:
 
@@ -942,6 +949,8 @@ CMakeFiles/3.28.3/CMakeCCompiler.cmake:
 /usr/include/c++/13/backward/binders.h:
 
 /usr/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel:
 
 /usr/include/c++/13/bits/predefined_ops.h:
 

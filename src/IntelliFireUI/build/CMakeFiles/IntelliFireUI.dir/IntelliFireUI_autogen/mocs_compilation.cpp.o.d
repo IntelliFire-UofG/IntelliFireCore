@@ -293,5 +293,8 @@ CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o: \
  /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/../../../sensorContainer.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
  /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/moc_sensorContainer.cpp \
  /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/build/IntelliFireUI_autogen/EWIEGA46WW/../../../sensorContainer.h
