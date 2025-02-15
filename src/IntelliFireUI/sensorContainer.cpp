@@ -26,9 +26,19 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
     
-    // Labels
-    QLabel *title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
-    QLabel *value_label = new QLabel("25.5°C");  // Example value
+    QLabel *title;
+    QLabel *value_label;
+    
+    if (containerNumber < 5)
+    {
+        title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
+        value_label = new QLabel("25.5°C");  // Example value
+    }
+    else
+    {
+        title = new QLabel(QString("Distance sensor value %1").arg(containerNumber));
+        value_label = new QLabel("0.0 cm");  // Example value
+    }
     
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
