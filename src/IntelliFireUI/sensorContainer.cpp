@@ -67,14 +67,14 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 
     
     
-    timer->start(1000);
+    timer->start(200);
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
     layout->addWidget(value, 0, Qt::AlignHCenter);
 
     }
     else if (containerNumber == 2){
-    QLabel *title = new QLabel(QString("Flame sensor:"));
+    QLabel *title = new QLabel(QString("Flames sensor:"));
     QLabel *value = new QLabel("25.5°C");  // Example value
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
