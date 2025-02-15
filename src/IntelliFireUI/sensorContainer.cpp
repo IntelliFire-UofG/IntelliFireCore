@@ -14,8 +14,8 @@ int SensorContainer::updateSensorValue(){
     qDebug() << " Updated Sensor Value: " << sensorValue;
     
     //sensorValue = 100;//debugging to test value
-    //return rand()% 200;//test for when no raspberry pi connected
-    return sensorValue;//return value from ultrasonic sensor
+    return rand()% 200;//test for when no raspberry pi connected
+    //return sensorValue;//return value from ultrasonic sensor
     }
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
@@ -48,11 +48,11 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     
 
     
-    int PLACEHOLDER = 0;
+    int PLACEHOLDER ;
     QLabel *value = new QLabel(QString::number(PLACEHOLDER));
     
 
-    auto updateSensor = [this,&PLACEHOLDER,layout,value,image,timer]() {
+    auto updateSensor = [this,&PLACEHOLDER,layout,value,image]() {
     PLACEHOLDER= this->updateSensorValue();
     
     //std::cout<<"Value:"<<PLACEHOLDER;//Debugging
@@ -67,8 +67,8 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     
 
     
-    connect(timer, &QTimer::timeout, this, updateSensor);
-    timer->start(1000);
+    connect(this->timer, &QTimer::timeout, this, updateSensor);
+    this->timer->start(1000);
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
     layout->addWidget(value, 0, Qt::AlignHCenter);
