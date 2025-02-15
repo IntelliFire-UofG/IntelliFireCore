@@ -5,7 +5,7 @@
 #include <QDebug>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), sensorNumber(containerNumber)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
@@ -15,7 +15,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     QPixmap pixmap(imagepath); // Adjust path if needed
     
     if (pixmap.isNull()) {
-        qDebug() << "Failed to load imageee2:";
+        qDebug() << "Failed to load image:";
         // If image fails to load, use a blue square as a placeholder
         pixmap = QPixmap(64, 64);
         pixmap.fill(Qt::blue);
@@ -28,11 +28,11 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     
     // Labels
     QLabel *title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
-    QLabel *value = new QLabel("25.5°C");  // Example value
+    QLabel *value_label = new QLabel("25.5°C");  // Example value
     
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+    layout->addWidget(value_label, 0, Qt::AlignHCenter);
     
     setStyleSheet(R"(
         QWidget {
@@ -46,4 +46,8 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             color: #333333;
         }
     )");
+}
+
+void SensorContainer::updateSensorValue(float sensor_value) {
+    value_label->setText(QString::number(sensor_value, 'f', 2));
 }
