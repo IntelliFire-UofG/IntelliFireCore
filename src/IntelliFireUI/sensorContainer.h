@@ -3,6 +3,7 @@
 #include <atomic>
 #include <QLabel>
 #include <QWidget>
+#include <QTimer>
 
 class SensorContainer : public QWidget
 {
@@ -14,8 +15,11 @@ private slots:
 
 
 private:
-    QTimer *timer;  // ✅ Store QTimer in the class to prevent crashes
+    QTimer *timer;  // Store QTimer in the class to prevent crashes
     QLabel *sensorLabel; 
+signals:
+
+
 
 };
 
