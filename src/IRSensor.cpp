@@ -1,116 +1,84 @@
-#include "ir_sensor.h"
-#include <iostream>
-#include <poll.h>
-#include <csignal>
+#include "../include/IRSensor.h"
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 #include <errno.h>
 #include <string.h>
 
-IRSensor::IRSensor(const char* chipPath, int pin)
-    : chipPath_(chipPath),
-      pin_(pin),
-      chip_(nullptr),
-      sensor_line_(nullptr),
-      running_(false)
-{
+// This start() method mirrors the GPIOPin::start() method.
+// It opens the chip and line using the given chip path and pin number.
+void IRSensor::start(const char* chipPath, int pin) {
 #ifdef DEBUG
-    std::cerr << "Initializing IR Sensor on chip " << chipPath_ 
-              << ", pin " << pin_ << std::endl;
+    fprintf(stderr, "Init.\n");
 #endif
 
-    chip_ = gpiod_chip_open(chipPath_);
-    if (!chip_) {
+    chip = gpiod_chip_open(chipPath);
+    if (NULL == chip) {
 #ifdef DEBUG
-        std::cerr << "Error: Unable to open GPIO chip " << chipPath_ << std::endl;
+        fprintf(stderr, "GPIO chip could not be accessed.\n");
 #endif
         throw "GPIO chip error.";
     }
-
-    sensor_line_ = gpiod_chip_get_line(chip_, pin_);
-    if (!sensor_line_) {
+    
+    sensor_line = gpiod_chip_get_line(chip, pin);
+    if (NULL == sensor_line) {
 #ifdef DEBUG
-        std::cerr << "Error: Unable to get GPIO line for pin " << pin_ << std::endl;
+        fprintf(stderr, "GPIO line could not be accessed.\n");
 #endif
-        gpiod_chip_close(chip_);
-        chip_ = nullptr;
+        gpiod_chip_close(chip);
+        chip = NULL;
         throw "GPIO line error.";
     }
-
-    int ret = gpiod_line_request_both_edges_events(sensor_line_, "ir_sensor");
+    
+    int ret = gpiod_line_request_both_edges_events(sensor_line, "Consumer");
     if (ret < 0) {
 #ifdef DEBUG
-        std::cerr << "Error: Failed to request events on GPIO pin " << pin_ << std::endl;
+        fprintf(stderr, "Request event notification failed on pin %d.\n", pin);
 #endif
-        gpiod_chip_close(chip_);
-        chip_ = nullptr;
-        sensor_line_ = nullptr;
+        gpiod_chip_close(chip);
+        chip = NULL;
+        sensor_line = NULL;
         throw "Could not request event for IRQ.";
     }
+    
+    running = true;
+    thr = std::thread(&IRSensor::worker, this);
 }
 
-IRSensor::~IRSensor() {
-    stop();
-    if (sensor_line_) {
-        gpiod_line_release(sensor_line_);
-        sensor_line_ = nullptr;
-    }
-    if (chip_) {
-        gpiod_chip_close(chip_);
-        chip_ = nullptr;
-    }
-}
-
-bool IRSensor::start() {
-    if (!chip_ || !sensor_line_) {
-        return false;
-    }
-    running_ = true;
-    eventThread_ = std::thread(&IRSensor::eventLoop, this);
-    return true;
-}
-
-void IRSensor::stop() {
-    running_ = false;
-    if (eventThread_.joinable()) {
-        eventThread_.join();
+// This method is analogous to GPIOPin::gpioEvent().
+// It notifies all registered callbacks of the new event.
+void IRSensor::irEvent(gpiod_line_event& event) {
+    for (auto &cb : callbacks) {
+        cb->hasEvent(event);
     }
 }
 
-void IRSensor::registerCallback(IRSensorCallback cb) {
-    callbacks_.push_back(cb);
-}
-
-void IRSensor::eventLoop() {
-    int fd = gpiod_line_event_get_fd(sensor_line_);
-    if (fd < 0) {
-        std::cerr << "Error: Unable to get event file descriptor for IR sensor." << std::endl;
-        return;
-    }
-
-    struct pollfd pfd;
-    pfd.fd = fd;
-    pfd.events = POLLIN | POLLPRI;
-
-    while (running_) {
-        int ret = poll(&pfd, 1, -1);
-        if (ret < 0) {
-            if (errno == EINTR) {
-                continue;
-            }
-            std::cerr << "Error: poll() failed in IR sensor event loop: " 
-                      << strerror(errno) << std::endl;
-            break;
-        }
-
-        if (pfd.revents & (POLLIN | POLLPRI)) {
+// The worker() method follows the same pattern as in GPIOPin.
+// It waits (with a timeout) for an event on the line, reads it,
+// and then passes it on via irEvent().
+void IRSensor::worker() {
+    while (running) {
+        const timespec ts = { ISR_TIMEOUT, 0 };
+        int r = gpiod_line_event_wait(sensor_line, &ts);
+        if (1 == r) {
             gpiod_line_event event;
-            if (gpiod_line_event_read(sensor_line_, &event) < 0) {
-                std::cerr << "Error: Failed to read GPIO event in IR sensor." << std::endl;
-                continue;
-            }
-            // Notify all registered callbacks.
-            for (auto &cb : callbacks_) {
-                cb(&event);
-            }
+            gpiod_line_event_read(sensor_line, &event);
+            irEvent(event);
+        } else if (r < 0) {
+#ifdef DEBUG
+            fprintf(stderr, "GPIO error while waiting for event.\n");
+#endif
         }
     }
+}
+
+// Finally, stop() stops the worker thread and releases the resources.
+void IRSensor::stop() {
+    if (!running) return;
+    running = false;
+    thr.join();
+    gpiod_line_release(sensor_line);
+    gpiod_chip_close(chip);
 }

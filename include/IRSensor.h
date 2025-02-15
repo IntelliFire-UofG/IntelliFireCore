@@ -4,37 +4,72 @@
 #include <gpiod.h>
 #include <thread>
 #include <vector>
-#include <functional>
+#include <stdio.h>
 
-// Define a callback type that accepts a pointer to a gpiod_line_event.
-using IRSensorCallback = std::function<void(const gpiod_line_event* event)>;
+// Enable debug messages if not defined otherwise.
+#ifndef NDEBUG
+#define DEBUG
+#endif
+
+#define ISR_TIMEOUT 1 // sec
 
 class IRSensor {
 public:
-    // Constructor now only needs the chip path and pin number.
-    IRSensor(const char* chipPath, int pin);
-    ~IRSensor();
+    /**
+     * Destructor that ensures the sensor stops on exit.
+     **/
+    ~IRSensor() {
+        stop();
+    }
 
-    // Start and stop the event loop.
-    bool start();
+    // Callback interface similar to GPIOPin.
+    struct IRSensorCallbackInterface {
+        /**
+         * Called when a new event is available.
+         * Must be implemented by the client.
+         * \param e The event (rising or falling edge).
+         **/
+        virtual void hasEvent(gpiod_line_event& e) = 0;
+    };
+
+    /**
+     * Registers a callback interface.
+     **/
+    void registerCallback(IRSensorCallbackInterface* ci) {
+        callbacks.push_back(ci);
+    }
+
+    /**
+     * Starts listening on the IR sensor.
+     * \param chipPath Path to the GPIO chip.
+     * \param pin Pin number for the sensor.
+     **/
+    void start(const char* chipPath, int pin);
+
+    /**
+     * Stops listening to the sensor.
+     **/
     void stop();
 
-    // Register a callback. Multiple callbacks can be added.
-    void registerCallback(IRSensorCallback cb);
-
 private:
-    // Main event loop function.
-    void eventLoop();
+    // Notifies all registered callbacks of a new event.
+    void irEvent(gpiod_line_event& event);
 
-    const char* chipPath_;
-    int pin_;
-    gpiod_chip* chip_;
-    gpiod_line* sensor_line_;
-    bool running_;
-    std::thread eventThread_;
+    // Worker thread function.
+    void worker();
 
-    // A vector to hold all registered callbacks.
-    std::vector<IRSensorCallback> callbacks_;
+    // gpiod objects.
+    gpiod_chip* chip = nullptr;
+    gpiod_line* sensor_line = nullptr;
+
+    // Thread.
+    std::thread thr;
+
+    // Running flag.
+    bool running = false;
+
+    // Vector of callback interfaces.
+    std::vector<IRSensorCallbackInterface*> callbacks;
 };
 
 #endif // __IR_SENSOR_H__
