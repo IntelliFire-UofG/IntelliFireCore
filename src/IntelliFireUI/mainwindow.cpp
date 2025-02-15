@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setWindowTitle("Welcome to Intellifire UI");
-    resize(800, 600);
+    resize(800, 800);
 
     QWidget *centralWidget = new QWidget;
     setCentralWidget(centralWidget);
@@ -28,12 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
     SensorContainer *container_2 = new SensorContainer(2);
     SensorContainer *container_3 = new SensorContainer(3);
     SensorContainer *container_4 = new SensorContainer(4);
+    SensorContainer *container_5 = new SensorContainer(5);
+    SensorContainer *container_6 = new SensorContainer(6);
     
     // Sensor containers mapped into layout
-    sensorGrid->addWidget(container_1, 0, 0);
-    sensorGrid->addWidget(container_2, 0, 1);
-    sensorGrid->addWidget(container_3, 1, 0);
-    sensorGrid->addWidget(container_4, 1, 1);
+    sensorGrid->addWidget(container_1, 0, 0); // Flame Sensor 1
+    sensorGrid->addWidget(container_2, 0, 1); // Flame Sensor 2
+    sensorGrid->addWidget(container_3, 1, 0); // Flame Sensor 3
+    sensorGrid->addWidget(container_4, 1, 1); // Flame Sensor 4
+    sensorGrid->addWidget(container_5, 2, 0); // Ultrasonic Sensor
+    sensorGrid->addWidget(container_6, 2, 1); // IR Sensor
 
     // Right side - Sliders
     QVBoxLayout *sliderLayout = new QVBoxLayout;
