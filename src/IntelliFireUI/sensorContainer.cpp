@@ -10,12 +10,12 @@
 int SensorContainer::updateSensorValue(){
     int sensorValue = ultrasonicDistance();  
     
-
-    qDebug() << " Updated Sensor Value: " << sensorValue;
+    // ✅ Validate the sensor valu
+    
     
     //sensorValue = 100;//debugging to test value
-    return rand()% 200;//test for when no raspberry pi connected
-    //return sensorValue;//return value from ultrasonic sensor
+    //return rand()% 200;//test for when no raspberry pi connected
+    return sensorValue;//return value from ultrasonic sensor
     }
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
@@ -41,18 +41,17 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
     
+    
     // Labels
     if (containerNumber == 1){
+    PLACEHOLDER = 0;
     QLabel *title = new QLabel(QString("Ultrasonic sensor distance:"));
     
     
-
-    
-    int PLACEHOLDER ;
     QLabel *value = new QLabel(QString::number(PLACEHOLDER));
     
 
-    auto updateSensor = [this,&PLACEHOLDER,layout,value,image]() {
+    auto updateSensor = [this,value,layout](){
     PLACEHOLDER= this->updateSensorValue();
     
     //std::cout<<"Value:"<<PLACEHOLDER;//Debugging
@@ -62,13 +61,13 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     };
     updateSensor();
     
-    
-    std::cout<<"New Sensor value = "<<PLACEHOLDER<<std::endl;
+    connect(timer, &QTimer::timeout, this,updateSensor);
+    //std::cout<<"New Sensor value = "<<PLACEHOLDER<<std::endl;
     
 
     
-    connect(this->timer, &QTimer::timeout, this, updateSensor);
-    this->timer->start(1000);
+    
+    timer->start(1000);
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
     layout->addWidget(value, 0, Qt::AlignHCenter);
