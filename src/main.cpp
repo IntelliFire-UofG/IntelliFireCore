@@ -49,15 +49,17 @@
 
 #include <iostream>
 #include <thread>
-#include <libgpio.h>
+#include <gpiod.h>
+
+# define CHIP_NAME "gpiochip0"
 
 // TODO: Define the pins
-#define ENA 12
-#define IN1 5
-#define IN2 6
-#define ENB 18
-#define IN3 13
-#define IN4 19
+#define ENA 13
+#define IN1 22
+#define IN2 23
+#define ENB 12
+#define IN3 17
+#define IN4 27
 
 #define BUTTON_FORWARD 6
 #define BUTTON_BACKWARD 7
@@ -71,7 +73,7 @@ int main() {
     MotorController motorRight(ENA, IN1, IN2);
     MotorController motorLeft(ENB, IN3, IN4);
     
-    // Create basicMotion objects with points and set speed
+    // Create basicMotion objects with pointers and set speed
     BasicMotion motion(&motorRight, &motorLeft);
     motion.setSpeed(100);
 
