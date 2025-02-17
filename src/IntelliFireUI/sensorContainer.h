@@ -11,12 +11,16 @@ class SensorContainer : public QWidget
 public:
     explicit SensorContainer(int containerNumber, QWidget *parent = nullptr);
 private slots:
-    int updateSensorValue(); 
+    void updateSensorValue();
+    void updateUI(int value); 
+
+signals:
+    void sensorValueUpdated(int newValue);
 
 
 private:
     QTimer *timer;  // Store QTimer in the class to prevent crashes
-    QLabel *sensorLabel = nullptr; 
+    QLabel *value; 
     int PLACEHOLDER ;
 
 
