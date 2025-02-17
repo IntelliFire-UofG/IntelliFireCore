@@ -7,17 +7,6 @@
 #include <QDebug>
 #include <QTimer>
 
-int SensorContainer::updateSensorValue(){
-    int sensorValue = ultrasonicDistance();  
-    
-    // ✅ Validate the sensor valu
-    
-    
-    //sensorValue = 100;//debugging to test value
-    //return rand()% 200;//test for when no raspberry pi connected
-    return sensorValue;//return value from ultrasonic sensor
-    }
-
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     : QWidget(parent), timer(new QTimer(this))
 {
@@ -40,61 +29,48 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     image->setScaledContents(true); 
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
-    
+
+
+    QLabel *title = new QLabel;
+    value = new QLabel("0");
     
     // Labels
     if (containerNumber == 1){
-    PLACEHOLDER = 0;
-    QLabel *title = new QLabel(QString("Ultrasonic sensor distance:"));
+    
+    title -> setText("Ultrasonic sensor distance:");
     
     
-    QLabel *value = new QLabel(QString::number(PLACEHOLDER));
+    
     
 
-    auto updateSensor = [this,value,layout](){
-    PLACEHOLDER= this->updateSensorValue();
-    
-    //std::cout<<"Value:"<<PLACEHOLDER;//Debugging
-    value->setText(QString::number(PLACEHOLDER)+" cm");
-    
-    
-    };
-    updateSensor();
-    
-    connect(timer, &QTimer::timeout, this,updateSensor);
-    //std::cout<<"New Sensor value = "<<PLACEHOLDER<<std::endl;
+    connect(timer, &QTimer::timeout, this,&SensorContainer::updateSensorValue);
+    connect(this,&SensorContainer::sensorValueUpdated,this,&SensorContainer::updateUI);
     
 
     
     
     timer->start(200);
-    layout->addWidget(image, 0, Qt::AlignHCenter);
-    layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+
 
     }
     else if (containerNumber == 2){
-    QLabel *title = new QLabel(QString("Flames sensor:"));
-    QLabel *value = new QLabel("25.5°C");  // Example value
-    layout->addWidget(image, 0, Qt::AlignHCenter);
-    layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+    PLACEHOLDER = 4;
+    title -> setText("Flames sensor:");
+    value->setText(QString::number(4) + " Fire");
+
 
     }
     else if (containerNumber == 3){
-    QLabel *title = new QLabel(QString("Water pump level:"));
-    QLabel *value = new QLabel("100");  // Example value
-    layout->addWidget(image, 0, Qt::AlignHCenter);
-    layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+    title -> setText("Water pump level:");
+    value->setText(QString::number(1) + " L"); // Example value
+
 
     }
     else if (containerNumber == 4){
-    QLabel *title = new QLabel(QString("Motor speed:"));
-    QLabel *value = new QLabel("100000km/h");  // Example value
-    layout->addWidget(image, 0, Qt::AlignHCenter);
-    layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+    title -> setText("Motor speed:");
+    
+    value->setText(QString::number(100000) + " km/h");// Example value
+
 
     }
 
@@ -104,12 +80,13 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     QLabel *title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
     QLabel *value = new QLabel("25.5°C");  // Example value
     
-    layout->addWidget(image, 0, Qt::AlignHCenter);
-    layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+   
 
 
     }
+    layout->addWidget(image, 0, Qt::AlignHCenter);
+    layout->addWidget(title, 0, Qt::AlignHCenter);
+    layout->addWidget(value, 0, Qt::AlignHCenter);
   
     
     setStyleSheet(R"(
@@ -124,4 +101,16 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             color: #333333;
         }
     )");
+}
+void SensorContainer::updateSensorValue(){
+    int sensorValue = ultrasonicDistance();  
+    
+    //sensorValue = 100;//debugging to test value
+    //return rand()% 200;//test for when no raspberry pi connected
+    emit sensorValueUpdated(sensorValue);//return value from ultrasonic sensor
+    }
+
+//update the UI with the new value from updateSensorValue()
+void SensorContainer::updateUI(int newValue) {
+    value->setText(QString::number(newValue) + " cm");
 }
