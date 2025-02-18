@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QTimer>
 
 /**
  * @class SensorContainer
@@ -28,8 +29,16 @@ public slots:
      * @param value The new sensor reading
      */
     void updateSensorValue(float value);
+    void updateUltrasonicSensorValue();
+    void updateUI(int value);
+
+
+signals:
+    void sensorValueUpdated(int newValue);
+
 
 private:
+    QTimer *timer;
     QLabel *title;       ///< Title label displaying sensor information
     QLabel *value_label;  ///< Label showing real-time sensor value
     int sensorNumber;    ///< Identifier for the sensor
