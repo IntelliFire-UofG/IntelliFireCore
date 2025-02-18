@@ -46,7 +46,7 @@ private:
             current_channel = ADS1115settings::AIN0;
             break;
         }
-        ads1115rpi->setChannel(current_channel);
+        ads1115rpi.setChannel(current_channel);
     }
     
 
@@ -57,7 +57,7 @@ public:
         ADS1115settings s;
         s.samplingRate = ADS1115settings::FS128HZ;
         s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-        ads1115.start();
+        ads1115rpi.start();
         fprintf(stderr,"fs = %d\n",ads1115rpi.getADS1115settings().getSamplingRate());
     }
 
@@ -67,23 +67,23 @@ public:
         ADS1115settings s;
         s.samplingRate = ADS1115settings::FS128HZ;
         s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-        ads1115.stop();
+        ads1115rpi.stop();
     }
 
-    void hasADS1115Sample(float v) override {
-            if (discard == true)
-            {
-                return;
-                discard = false;
-            }
-            printChannel();
-            printf("%e\n",v);
-            nextChannel();
-            discard = true;
+    void hasADS1115Sample(float v) override 
+    {
+        if (discard == true)
+        {
+            return;
+            discard = false;
         }
+        printChannel();
+        printf("%e\n",v);
+        nextChannel();
+        discard = true;
     }
-
 };
+
 class MultichannelPrinter : public FlameSensorReader::ADSCallbackInterface {
      
 };

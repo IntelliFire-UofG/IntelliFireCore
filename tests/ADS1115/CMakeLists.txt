@@ -25,4 +25,4 @@ set(SOURCES
 
 # Add the executable
 add_executable(MultipleChannelsADS1115 ${SOURCES})
-target_link_libraries(MultipleChannelsADC gpiod)
+target_link_libraries(MultipleChannelsADS1115 gpiod)
