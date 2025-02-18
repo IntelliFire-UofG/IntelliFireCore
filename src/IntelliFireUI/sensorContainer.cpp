@@ -5,7 +5,7 @@
 #include <QDebug>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), sensorNumber(containerNumber)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
@@ -15,7 +15,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     QPixmap pixmap(imagepath); // Adjust path if needed
     
     if (pixmap.isNull()) {
-        qDebug() << "Failed to load imageee2:";
+        qDebug() << "Failed to load image:";
         // If image fails to load, use a blue square as a placeholder
         pixmap = QPixmap(64, 64);
         pixmap.fill(Qt::blue);
@@ -26,13 +26,23 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     image->setFixedSize(64, 64);
     image->setStyleSheet("border: 1px solid #cccccc;");
     
-    // Labels
-    QLabel *title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
-    QLabel *value = new QLabel("25.5°C");  // Example value
+    QLabel *title;
+    QLabel *value_label;
+    
+    if (containerNumber < 5)
+    {
+        title = new QLabel(QString("Flame sensor value %1").arg(containerNumber));
+        value_label = new QLabel("25.5°C");  // Example value
+    }
+    else
+    {
+        title = new QLabel(QString("Distance sensor value %1").arg(containerNumber));
+        value_label = new QLabel("0.0 cm");  // Example value
+    }
     
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
-    layout->addWidget(value, 0, Qt::AlignHCenter);
+    layout->addWidget(value_label, 0, Qt::AlignHCenter);
     
     setStyleSheet(R"(
         QWidget {
@@ -46,4 +56,8 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             color: #333333;
         }
     )");
+}
+
+void SensorContainer::updateSensorValue(float sensor_value) {
+    value_label->setText(QString::number(sensor_value, 'f', 2));
 }
