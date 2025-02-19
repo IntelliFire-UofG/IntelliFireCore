@@ -3,6 +3,12 @@
 #include <cmath>
 #define CHIP_NAME "gpiochip0"
 
+/*
+CODE REVIEW -> 19/February/2025
+Please check naming convenction and functions organization
+Remember to keep up to date branches
+*/
+
 MotorController::MotorController(int enA, int in1Pin, int in2Pin)
 {
     chip = gpiod_chip_open_by_name(CHIP_NAME);
@@ -59,7 +65,6 @@ void MotorController::setMotorSpeed(int8_t speed) {
 }
 
 
-
 // void MotorController::registerCallback(std::function<void()> callback);
 
 
@@ -83,4 +88,7 @@ void MotorController::setMotorDirection(Direction dir) {
 void MotorController::registerCallback(std::function<void()> callback)
 {
     motorEventCallback = callback;
+
 }
+
+#endif // LN298MOTORCONTROL_H

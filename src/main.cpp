@@ -41,7 +41,6 @@
  */
 
 #include "../include/LN298MotorControl.h"
-#include "../include/basicMotion.h"
 #include "../include/eventHandler.h"
 #include "../include/ADCReader.h" // Consider for further dev
 // #include "DisplayManager.hpp" // Consider for further dev
@@ -53,6 +52,15 @@
 
 # define CHIP_NAME "gpiochip0"
 
+/*
+
+CODE REVIEW -> 19/February/2025
+
+Set a better naming convention
+Update branches
+
+*/
+
 // TODO: Define the pins
 #define ENA 13
 #define IN1 22
@@ -60,6 +68,7 @@
 #define ENB 12
 #define IN3 17
 #define IN4 27
+
 
 #define BUTTON_FORWARD 6
 #define BUTTON_BACKWARD 7
@@ -91,24 +100,14 @@ int main() {
     */
 
     // Register event-driven callbacks
-    eventHandler.registerForwardCallback([&motion]() {
-        std::cout << "Moving Forward..." << std::endl;
-         motion.forward(); 
-    });
-
-    eventHandler.registerBackwardCallback([&motion]() {
-        std::cout << "Moving Backwards..." << std::endl;
-        motion.backward(); 
-    });
-
-    eventHandler.registerStopCallback([&motion]() { 
-        std::cout << "Truck Stopped..." << std::endl;
-    motion.stop(); });
+    eventHandler.registerForwardCallback([&]() { motorController.moveForward(75); });
+    eventHandler.registerBackwardCallback([&]() { motorController.moveBackward(75); });
+    eventHandler.registerStopCallback([&]() { motorController.stop(); });
 
     // Register ADC callback to react to fire detection
     adcReader.registerFlameCallback([&](int channel, int value) {
         std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
-        motion.stop();  // Example response: Stop if flame is detected
+        motorController.stop();  // Example response: Stop if flame is detected
     });
 
     // Start Event Loop (Runs in Separate Thread)
