@@ -16,7 +16,7 @@ add_executable(IntelliFireUI
     mainwindow.cpp
     sensorContainer.cpp
     resources.qrc
-    ultrasonicDistance.cpp
+    UltraSonicSensor.cpp
 )
 
 # Link Qt Libraries AFTER Defining Executable
