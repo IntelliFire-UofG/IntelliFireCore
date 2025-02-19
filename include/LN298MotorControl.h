@@ -2,6 +2,8 @@
 #define LN298MOTORCONTROL_H
 
 #include <functional>
+#include <cstdint>
+#include <gpiod.h>
 
 /**
  * @class MotorController
@@ -22,7 +24,7 @@ public:
      * @param in1 GPIO pin for motor direction.
      * @param in2 GPIO pin for motor direction.
      */
-    MotorController(int enA, int in1, int in2);
+    MotorController(int enA, int in1, int in2); .
     
     /**
      * @brief Activates motor b to move at certain speed (0-100%).
@@ -46,9 +48,10 @@ private:
         NEGATIVE,
     };
     // TODO: Change to whatever makes sense for gpiod
-    int enablePin;
-    int in1;
-    int in2;
+    gpiod_line *chip;
+    gpiod_line *enablePin;
+    gpiod_line *in1;
+    gpiod_line *in2;
 
     std::function<void()> motorEventCallback;
 
