@@ -1,5 +1,5 @@
 #include "sensorContainer.h"
-#include "ultrasonicDistance.h"
+#include "UltraSonicSensor.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPixmap>
@@ -7,7 +7,7 @@
 #include <QTimer>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent), sensorNumber(containerNumber), timer(new QTimer(this))
+    : QWidget(parent), sensorNumber(containerNumber), sensor(new UltraSonicSensor(this))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
@@ -40,9 +40,9 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     else if (containerNumber == 5)
     {
         title -> setText("Ultrasonic sensor distance:");
-        connect(timer, &QTimer::timeout, this,&SensorContainer::updateUltrasonicSensorValue);
-        connect(this,&SensorContainer::sensorValueUpdated,this,&SensorContainer::updateUI);
-        timer->start(200);
+        
+        connect(sensor,&UltraSonicSensor::measuredDistance,this,&SensorContainer::updateUI);
+        sensor->start("/dev/gpiochip0", 23, 24);
         /* code */
     }
     else
@@ -68,7 +68,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
         }
     )");
 }
-
+/*
 void SensorContainer::updateSensorValue(float sensor_value) {
     value_label->setText(QString::number(sensor_value, 'f', 2));
 
@@ -82,7 +82,7 @@ void SensorContainer::updateUltrasonicSensorValue(){
     //return rand()% 200;//test for when no raspberry pi connected
     emit sensorValueUpdated(sensorValue);//return value from ultrasonic sensor
     }
-
+**/
 //update the UI with the new value from updateSensorValue()
 void SensorContainer::updateUI(int newValue) {
     value_label->setText(QString::number(newValue) + " cm");
