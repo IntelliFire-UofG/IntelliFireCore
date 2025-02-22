@@ -6,18 +6,44 @@ ADS1115Manager::ADS1115Manager(QObject *parent) : QObject(parent) {
 }
 
 void ADS1115Manager::start() {
-    ADS1115settings settings;
-    settings.samplingRate = ADS1115settings::FS64HZ;
-    settings.drdy_chip = 4; // For RPI5, use chip 4
-    ads1115.start(settings);
+    ADS1115settings s;
+    s.samplingRate = ADS1115settings::FS128HZ;
+    s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
+    ads1115rpi.start(s);
 }
 
 void ADS1115Manager::stop() {
-    ads1115.stop();
+    ads1115rpi.stop();
 }
 
 void ADS1115Manager::hasADS1115Sample(float v) {
-    static int sensorIndex = 0;
-    emit newSensorValue(sensorIndex, v);
-    sensorIndex = (sensorIndex + 1) % 4; // Cycle through 4 sensors
+    if (discard == true)
+        {
+            discard = false;
+            return;
+        }
+        sensorValues[current_channel] = v;
+        nextChannel();
+        discard = true; // Cycle through 4 sensors
+        emit newSensorValue(current_channel, v);
+}
+
+void ADS1115Manager::nextChannel()
+{
+    switch (current_channel)
+    {
+    case ADS1115settings::AIN0:
+        current_channel = ADS1115settings::AIN1;
+        break;
+    case ADS1115settings::AIN1:
+        current_channel = ADS1115settings::AIN2;
+        break;
+    case ADS1115settings::AIN2:
+        current_channel = ADS1115settings::AIN3;
+        break;
+    case ADS1115settings::AIN3:
+        current_channel = ADS1115settings::AIN0;
+        break;
+    }
+    ads1115rpi.setChannel(current_channel);
 }
