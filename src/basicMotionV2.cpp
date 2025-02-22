@@ -1,5 +1,4 @@
-#include "LN298MotorControlV2.h"
-
+#include "../include/LN298MotorControlV2.h"
 
 int main() {
     Motor leftMotor(12, 17, 27);  // Left Motor: PWM=12, IN1=17, IN2=27
