@@ -57,7 +57,7 @@ public:
         ADS1115settings s;
         s.samplingRate = ADS1115settings::FS128HZ;
         s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-        ads1115rpi.start();
+        ads1115rpi.start(s);
         fprintf(stderr,"fs = %d\n",ads1115rpi.getADS1115settings().getSamplingRate());
     }
 
