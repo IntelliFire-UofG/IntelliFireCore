@@ -1,8 +1,9 @@
-#include "../include/UltraSonicSensor.h"
+#include "UltraSonicSensor.h"
 
 #include <iostream>
 #include <unistd.h>
 #include <sys/time.h>
+#include <QMetaObject>
 
 void UltraSonicSensor::start(const char* chipPath, int triggerPin, int echoPin) {
 #ifdef DEBUG
@@ -65,6 +66,8 @@ void UltraSonicSensor::measureDistance() {
     for (auto &cb : callbacks) {
         cb->onDistanceMeasured(distance);
     }
+
+    QMetaObject::invokeMethod(this, "measuredDistance", Qt::QueuedConnection, Q_ARG(float, distance));
 }
 
 void UltraSonicSensor::worker() {
