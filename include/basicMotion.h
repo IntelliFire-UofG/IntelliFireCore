@@ -47,7 +47,7 @@ public:
 private:
     MotorController *motor_right; ///< Pointer to the right motor controller.
     MotorController *motor_left;  ///< Pointer to the left motor controller.
-    int speed = 50; ///< Default speed value.
+    int speed = 100; ///< Default speed value.
 };
 
 #endif // BASIC_MOTION_H

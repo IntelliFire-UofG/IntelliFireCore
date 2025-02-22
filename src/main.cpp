@@ -48,13 +48,27 @@
 
 #include <iostream>
 #include <thread>
+#include <gpiod.h>
 
-#define ENA 0
-#define IN1 1
-#define IN2 2
-#define ENB 3
-#define IN3 4
-#define IN4 5
+# define CHIP_NAME "gpiochip0"
+
+/*
+
+CODE REVIEW -> 19/February/2025
+
+Set a better naming convention
+Update branches
+
+*/
+
+// TODO: Define the pins
+#define ENA 13
+#define IN1 22
+#define IN2 23
+#define ENB 12
+#define IN3 17
+#define IN4 27
+
 
 #define BUTTON_FORWARD 6
 #define BUTTON_BACKWARD 7
@@ -63,8 +77,14 @@
 int main() {
     std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
 
-    // Initialize motor controller
-    MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
+    // Initialize MotorRight and MotorLeft controller
+    // MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
+    MotorController motorRight(ENA, IN1, IN2);
+    MotorController motorLeft(ENB, IN3, IN4);
+    
+    // Create basicMotion objects with pointers and set speed
+    BasicMotion motion(&motorRight, &motorLeft);
+    motion.setSpeed(100);
 
     // Initialize event handler
     EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins

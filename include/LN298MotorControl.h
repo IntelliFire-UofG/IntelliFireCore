@@ -2,6 +2,8 @@
 #define LN298MOTORCONTROL_H
 
 #include <functional>
+#include <cstdint>
+#include <gpiod.h>
 
 /**
  * @class MotorController
@@ -18,11 +20,11 @@ public:
     /**
      * @brief Constructs a MotorController object and initializes motor control pins.
      * 
-     * @param en GPIO pin for left motor speed control (PWM).
-     * @param in1 GPIO pin for left motor direction.
-     * @param in2 GPIO pin for left motor direction.
+     * @param enA GPIO pin for motor speed control (PWM).
+     * @param in1 GPIO pin for motor direction.
+     * @param in2 GPIO pin for motor direction.
      */
-    MotorController(int enA, int in1, int in2);
+    MotorController(int enA, int in1, int in2); .
     
     /**
      * @brief Activates motor b to move at certain speed (0-100%).
@@ -46,9 +48,10 @@ private:
         NEGATIVE,
     };
     // TODO: Change to whatever makes sense for gpiod
-    int enablePin;
-    int in1;
-    int in2;
+    gpiod_line *chip;
+    gpiod_line *enablePin;
+    gpiod_line *in1;
+    gpiod_line *in2;
 
     std::function<void()> motorEventCallback;
 
@@ -56,14 +59,14 @@ private:
      * @brief General function to configure PWM duty cycle in the enable pin
      * to achieve the desired speed percentage.
      * 
-     * @param speed Speed of the motors (0-100%).
+     * @param duty Speed of the motors (0-100%).
      */
     void setPWMDuty(int8 duty);
 
     /**
      * @brief General function to configure inX GPIOs to set rotation direction of the motors
      * 
-     * @param speed Speed of the motors (0-100%).
+     * @param dir Direction of the motor (POSITIVE for forward, NEGATIVE for reverse).
      */
     void setMotorDirection(Direction dir)
 
