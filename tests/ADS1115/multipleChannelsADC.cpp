@@ -63,10 +63,6 @@ public:
 
     void stop()
     {
-        ads1115rpi.registerCallback(this);
-        ADS1115settings s;
-        s.samplingRate = ADS1115settings::FS128HZ;
-        s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
         ads1115rpi.stop();
     }
 
@@ -74,8 +70,8 @@ public:
     {
         if (discard == true)
         {
-            return;
             discard = false;
+            return;
         }
         printChannel();
         printf("%e\n",v);
