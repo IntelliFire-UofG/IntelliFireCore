@@ -1,0 +1,8 @@
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/edit_cache.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/rebuild_cache.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen_timestamp_deps.dir
+/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir
