@@ -4,5 +4,7 @@
         <file>assets/icon2.png</file>
         <file>assets/icon3.png</file>
         <file>assets/icon4.png</file>
+        <file>assets/icon5.png</file>
+        <file>assets/icon6.png</file>
     </qresource>
 </RCC>
