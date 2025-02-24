@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QSlider>
+#include <QKeyEvent>
 #include "sensorContainer.h"
+#include "keyLogger.h"
 
 class MainWindow : public QMainWindow
 {
@@ -11,10 +13,14 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    KeyLogger *getKeyLogger();  // Make KeyLogger accessible
+    void keyPressEvent(QKeyEvent *event) override;
+
 
 private slots:
     void handleSpeedButton();
     void handleParamButton();
+    void updateKeyDisplay(KeyEventInfo keyInfo);
 
 private:
     // void setupUI();
@@ -23,6 +29,12 @@ private:
     
     QSlider *speedSlider;
     QSlider *paramSlider;
+
+    QLabel *keyDisplayLabel;
+    KeyLogger *keyLogger;
+
+    void updateKeyDisplay(QString key);
+
 };
 
 #endif // MAINWINDOW_H
