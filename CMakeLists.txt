@@ -56,6 +56,8 @@ add_executable(IntelliFireUI
     src/IntelliFireUI/include/mainwindow.h
     src/IntelliFireUI/include/sensorContainer.h
     src/IntelliFireUI/resources.qrc
+    src/IntelliFireUI/src/keyLogger.cpp
+    src/IntelliFireUI/include/keyLogger.h
 )
 
 target_link_libraries(IntelliFireUI PRIVATE Qt5::Widgets UltraSonicSensorLib)
