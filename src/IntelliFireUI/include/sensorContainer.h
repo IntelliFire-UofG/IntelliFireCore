@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
-#include "UltraSonicSensor.h"
+#include "../include/UltraSonicSensor.h"
 
 /**
  * @class SensorContainer
