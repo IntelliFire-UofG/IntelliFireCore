@@ -2,7 +2,11 @@
 #include "ads1115manager.h"
 
 ADS1115Manager::ADS1115Manager(QObject *parent) : QObject(parent) {
-    ads1115.registerCallback(this);
+    ads1115rpi.registerCallback(this);
+}
+ADS1115Manager::~ADS1115Manager()
+{
+    stop();
 }
 
 void ADS1115Manager::start() {
@@ -47,3 +51,8 @@ void ADS1115Manager::nextChannel()
     }
     ads1115rpi.setChannel(current_channel);
 }
+
+
+// void ADS1115Manager::newSensorValue(int sensorIndex, float value)
+// {
+// }

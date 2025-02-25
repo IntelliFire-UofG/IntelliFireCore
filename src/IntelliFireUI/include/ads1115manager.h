@@ -20,6 +20,7 @@ public:
      * @param parent Optional QObject parent
      */
     explicit ADS1115Manager(QObject *parent = nullptr);
+    ~ADS1115Manager();
 
     /**
      * @brief Starts the ADS1115 data acquisition.

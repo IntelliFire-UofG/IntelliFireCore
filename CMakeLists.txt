@@ -45,6 +45,28 @@ target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/inclu
 target_link_libraries(UltraSonicSensorLib PRIVATE Qt5::Core ${GPIOD_LIB})
 
 #------------------------------------------------------------------------------
+# Build ADS1115Lib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115Lib
+    src/ads1115rpi.cpp
+    include/ads1115rpi.h
+)
+
+target_include_directories(ADS1115Lib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(ADS1115Lib PRIVATE ${GPIOD_LIB})
+
+#------------------------------------------------------------------------------
+# Build ADS1115ManagerLib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115ManagerLib
+    src/IntelliFireUI/src/ads1115manager.cpp
+    src/IntelliFireUI/include/ads1115manager.h
+)
+
+target_include_directories(ADS1115ManagerLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
+target_link_libraries(ADS1115ManagerLib PRIVATE Qt5::Core ${GPIOD_LIB} ADS1115Lib)
+
+#------------------------------------------------------------------------------
 # Build the IntelliFire UI Executable
 #------------------------------------------------------------------------------
 # The UI uses its own main() located in src/IntelliFireUI/main.cpp, and its
@@ -58,4 +80,4 @@ add_executable(IntelliFireUI
     src/IntelliFireUI/resources.qrc
 )
 
-target_link_libraries(IntelliFireUI PRIVATE Qt5::Widgets UltraSonicSensorLib)
+target_link_libraries(IntelliFireUI PRIVATE Qt5::Widgets UltraSonicSensorLib ADS1115Lib ADS1115ManagerLib)

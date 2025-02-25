@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QDebug>
 #include "sensorContainer.h"
-// #include "ads1115manager.h" // Later on implemantation
+#include "ads1115manager.h" // Later on implemantation
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -64,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
     // ✅ Now call `createSliders()` after setting up `mainLayout`
     createSliders();
 
-      // Initialize and start ADS1115Manager
-      // initializeADS1115(container_1, container_2, container_3, container_4);
+    // Initialize and start ADS1115Manager
+    initializeADS1115(container_1, container_2, container_3, container_4);
 }
 
 void MainWindow::createSliders()
@@ -129,7 +129,7 @@ void MainWindow::handleParamButton()
     // Implementation for parameter setting
 }
 
-/* 
+ 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)
 {
@@ -137,11 +137,11 @@ void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer
 ADS1115Manager *adsManager = new ADS1115Manager(this);
 
 // Connect the newSensorValue signal to each container's updateSensorValue slot
-connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::updateSensorValue);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::sensorValueUpdated);
 
 // Start reading sensor values from ADS1115
 adsManager->start();
-} */
+} 

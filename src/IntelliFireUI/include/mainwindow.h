@@ -15,7 +15,7 @@ public:
 private slots:
     void handleSpeedButton();
     void handleParamButton();
-
+    void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
 private:
     // void setupUI();
     void createSliders();
