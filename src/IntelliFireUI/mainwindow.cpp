@@ -7,6 +7,15 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    //camera
+    myCallback.mainwindow = this;
+    camera.registerCallback(&myCallback);
+    image = new QLabel;
+    //camera added to the right
+    QHBoxLayout *sensorAndCameraLayout = new QHBoxLayout;
+    sensorAndCameraLayout-> addWidget(image);
+
+    /////////////////////////////////////////////////////////////////
     setWindowTitle("Welcome to IntelliFire UI");
     resize(1000, 800);
 
@@ -70,6 +79,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     rightLayout->addWidget(keyLogger);
     rightLayout->addWidget(keyDisplayLabel);
     mainLayout->addLayout(rightLayout);
+    mainLayout->addLayout(sensorAndCameraLayout); //camera 
+
+     //start camera
+     camera.start();
     
     // Register key press callback
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
@@ -124,7 +137,15 @@ KeyLogger* MainWindow::getKeyLogger()
     return keyLogger;
 }
 
+void MainWindow::updateImage(const cv::Mat &mat) {
+    const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+    image->setPixmap(QPixmap::fromImage(frame));
+    const int h = frame.height();
+	const int w = frame.width();
+	
+    update();
 
+}
 /* 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)
