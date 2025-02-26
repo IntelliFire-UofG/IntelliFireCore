@@ -24,16 +24,22 @@ public:
      * @param in1 GPIO pin for motor direction.
      * @param in2 GPIO pin for motor direction.
      */
-    MotorController(int enA, int in1, int in2); .
+    MotorController(int enA, int in1, int in2);
     
     /**
-     * @brief Activates motor b to move at certain speed (0-100%).
-     * 
-     * @param speed Speed of the motors (0-100%).
+     * @brief Destructor for MotorController.
      */
-    void setMotorSpeed(int8 speed);
+    ~MotorController();
 
-      /**
+    /**
+     * @brief Activates motor to move at certain speed (-100 to 100%).
+     * Negative values indicate reverse direction.
+     * 
+     * @param speed Speed of the motors (-100 to 100%).
+     */
+    void setMotorSpeed(int8_t speed);
+
+    /**
      * @brief Registers a callback for event-driven motor actions.
      * 
      * @param callback Function to execute when an event occurs.
@@ -41,17 +47,16 @@ public:
     void registerCallback(std::function<void()> callback);
 
 private:
-   
     enum class Direction
     {
         POSITIVE,
         NEGATIVE,
     };
-    // TODO: Change to whatever makes sense for gpiod
-    gpiod_line *chip;
-    gpiod_line *enablePin;
-    gpiod_line *in1;
-    gpiod_line *in2;
+
+    struct gpiod_chip *chip;
+    struct gpiod_line *enablePin;
+    struct gpiod_line *in1;
+    struct gpiod_line *in2;
 
     std::function<void()> motorEventCallback;
 
@@ -61,15 +66,14 @@ private:
      * 
      * @param duty Speed of the motors (0-100%).
      */
-    void setPWMDuty(int8 duty);
+    void setPWMDuty(int8_t duty);
 
     /**
      * @brief General function to configure inX GPIOs to set rotation direction of the motors
      * 
      * @param dir Direction of the motor (POSITIVE for forward, NEGATIVE for reverse).
      */
-    void setMotorDirection(Direction dir)
-
+    void setMotorDirection(Direction dir);
 };
 
 #endif // LN298MOTORCONTROL_H

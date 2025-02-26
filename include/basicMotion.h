@@ -1,7 +1,7 @@
 #ifndef BASIC_MOTION_H
 #define BASIC_MOTION_H
 
-#include "LN298MotorControl.h"
+#include "include/LN298MotorControl.h"
 /**
  * @class BasicMotion
  * @brief Defines the basic motions the robot is capable to achieve with two motors
@@ -39,6 +39,11 @@ public:
      */
     void turnLeft();
 
+    /**
+     * @brief Stops all motor movement.
+     */
+    void stop();
+    
     /**
      * @brief Sets the speed of the robot.
      */

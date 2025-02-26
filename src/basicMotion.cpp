@@ -27,6 +27,10 @@ void BasicMotion::turnLeft()
     motor_right->setMotorSpeed(speed);
     motor_left->setMotorSpeed(0);
 }
+void basicMotion::stop(){
+    motor_right->setMotorSpeed(0);
+    motor_left->setMotorSpeed(0);
+}
 void BasicMotion::setSpeed(int new_speed)
 {
     speed = std::max(0, std::min(100, new_speed));
