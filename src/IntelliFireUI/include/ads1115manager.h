@@ -32,7 +32,7 @@ public:
      */
     void stop();
 
-signals:
+Q_SIGNALS:
     /**
      * @brief Signal emitted when a new sensor value is read.
      * @param sensorIndex The index of the sensor (0-3)

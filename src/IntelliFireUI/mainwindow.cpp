@@ -1,19 +1,26 @@
 #include "mainwindow.h"
-#include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
-#include <QLabel>
 #include <QDebug>
 #include "sensorContainer.h"
 #include "ads1115manager.h" // Later on implemantation
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    setWindowTitle("Welcome to Intellifire UI");
-    resize(800, 800);
+    //camera
+    myCallback.mainwindow = this;
+    camera.registerCallback(&myCallback);
+    image = new QLabel;
+    //camera added to the right
+    QHBoxLayout *sensorAndCameraLayout = new QHBoxLayout;
+    sensorAndCameraLayout-> addWidget(image);
+
+    /////////////////////////////////////////////////////////////////
+    setWindowTitle("Welcome to IntelliFire UI");
+    resize(1000, 800);
+
 
     QWidget *centralWidget = new QWidget;
     setCentralWidget(centralWidget);
@@ -66,6 +73,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Initialize and start ADS1115Manager
     initializeADS1115(container_1, container_2, container_3, container_4);
+    // Key Logger
+    keyLogger = new KeyLogger;
+    keyDisplayLabel = new QLabel("Key Pressed: None");
+    keyDisplayLabel->setStyleSheet("font-size: 16px; color: #0078d4;");
+
+    // Combine everything
+    QVBoxLayout *rightLayout = new QVBoxLayout;
+    rightLayout->addWidget(keyLogger);
+    rightLayout->addWidget(keyDisplayLabel);
+    mainLayout->addLayout(rightLayout);
+    mainLayout->addLayout(sensorAndCameraLayout); //camera 
+
+     //start camera
+     camera.start();
+    
+    // Register key press callback
+    keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
+        updateKeyDisplay(keyInfo);
+    });
+
+    
 }
 
 void MainWindow::createSliders()
@@ -75,15 +103,9 @@ void MainWindow::createSliders()
         return;
     }
 
-    QVBoxLayout *sliderLayout = qobject_cast<QVBoxLayout*>(
-        centralWidget()->layout()->itemAt(1)->layout()
-    );
+    QVBoxLayout *sliderLayout = qobject_cast<QVBoxLayout*>(centralWidget()->layout()->itemAt(1)->layout());
+    if (!sliderLayout) return;
 
-    if (!sliderLayout) {
-        qDebug() << "Error: sliderLayout is NULL!";
-        return;
-    };
-    
     // Speed controls
     speedSlider = new QSlider(Qt::Vertical);
     QPushButton *speedButton = new QPushButton("Set Speed");
@@ -99,36 +121,35 @@ void MainWindow::createSliders()
     sliderLayout->addSpacing(20);
     sliderLayout->addWidget(paramSlider);
     sliderLayout->addWidget(paramButton);
-    
-    // Styling
-    QString sliderStyle = R"(
-        QSlider::groove:vertical {
-            background: #e0e0e0;
-            width: 6px;
-            border-radius: 3px;
-        }
-        QSlider::handle:vertical {
-            background: #0078d4;
-            height: 16px;
-            margin: 0 -8px;
-            border-radius: 8px;
-        }
-    )";
-    
-    speedSlider->setStyleSheet(sliderStyle);
-    paramSlider->setStyleSheet(sliderStyle);
 }
 
-void MainWindow::handleSpeedButton()
+void MainWindow::updateKeyDisplay(KeyEventInfo keyInfo)
 {
-    // Implementation for speed setting
+    keyDisplayLabel->setText("Key Pressed: " + keyInfo.keyName);
 }
 
-void MainWindow::handleParamButton()
+void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    // Implementation for parameter setting
+    keyLogger->keyPressEvent(event);
 }
 
+void MainWindow::handleSpeedButton() {}
+void MainWindow::handleParamButton() {}
+
+KeyLogger* MainWindow::getKeyLogger()
+{
+    return keyLogger;
+}
+
+void MainWindow::updateImage(const cv::Mat &mat) {
+    const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+    image->setPixmap(QPixmap::fromImage(frame));
+    const int h = frame.height();
+	const int w = frame.width();
+	
+    update();
+
+}
  
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)

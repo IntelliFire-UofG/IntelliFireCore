@@ -13,7 +13,13 @@ void ADS1115Manager::start() {
     ADS1115settings s;
     s.samplingRate = ADS1115settings::FS128HZ;
     s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
-    ads1115rpi.start(s);
+    try{
+        ads1115rpi.start(s);
+    }catch (...)
+    {
+        printf("I2C error \n");
+    }
+        
 }
 
 void ADS1115Manager::stop() {

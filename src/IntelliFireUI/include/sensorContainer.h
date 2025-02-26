@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
-#include "UltraSonicSensor.h"
+#include "../include/UltraSonicSensor.h"
 
 /**
  * @class SensorContainer
@@ -24,7 +24,7 @@ public:
      */
     explicit SensorContainer(int containerNumber, QWidget *parent = nullptr);
 
-public slots:
+public Q_SLOTS:
     /**
      * @brief Updates the sensor value displayed in the UI.
      * @param value The new sensor reading
@@ -34,7 +34,7 @@ public slots:
     void updateUI(int value);
 
 
-signals:
+Q_SIGNALS:
     void sensorValueUpdated(int newValue);
 
 
