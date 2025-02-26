@@ -31,25 +31,24 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     QLabel *title = new QLabel;
     value_label = new QLabel("0");
 
-    switch (containerNumber)
-    {
-        case 5:
-            /* code */
-            title->setText("Ultrasonic sensor distance:");
-            connect(sensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUI);
-            sensor->start("/dev/gpiochip0", 23, 24);
+    switch (containerNumber) {
+        case 5:  // **Ultrasonic Sensor**
+            title->setText("Ultrasonic Sensor Distance:");
+            ultrasonicSensor = new UltraSonicSensor(this);
+            connect(ultrasonicSensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
+            ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
             break;
 
-        case 6:
-            
-            title->setText("Ultrasonic sensor distance:");
-            value_label->setText(QString::number(0) + " cm"); // Example value 
-            
+        case 6:  // **IR Sensor**
+            title->setText("IR Sensor Status:");
+            irSensor = new IRSensor();
+            irSensor->registerCallback(this);
+            irSensor->start("/dev/gpiochip0", 12); // Adjust GPIO pin as needed
             break;
-        
-        default:
-            title->setText(QString("Flames sensor value: %1").arg(containerNumber));
-            value_label->setText(QString::number(25.5) + " °C"); // Example value
+
+        default:  // **Flame Sensor (or other)**
+            title->setText(QString("Flame Sensor Value: %1").arg(containerNumber));
+            value_label->setText("25.5 °C"); // Placeholder value
             break;
     }
     
@@ -85,6 +84,35 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     )");
 }
 
-void SensorContainer::updateUI(int newValue) {
+SensorContainer::~SensorContainer() {
+    if (irSensor) {
+        irSensor->stop();
+        delete irSensor;
+    }
+    if (ultrasonicSensor) {
+        delete ultrasonicSensor;
+    }
+}
+
+// **Callback for IR sensor**
+void SensorContainer::hasEvent(gpiod_line_event& e) {
+    QString message;
+    if (e.event_type == GPIOD_LINE_EVENT_FALLING_EDGE) {
+        message = "Obstacle Detected!";
+    } else if (e.event_type == GPIOD_LINE_EVENT_RISING_EDGE) {
+        message = "Obstacle Removed!";
+    } else {
+        message = "Unknown Event!";
+    }
+    updateIRUI(message);
+}
+
+// **Update UI for IR sensor**
+void SensorContainer::updateIRUI(const QString& message) {
+    value_label->setText(message);
+}
+
+// **Update UI for Ultrasonic sensor**
+void SensorContainer::updateUltrasonicUI(int newValue) {
     value_label->setText(QString::number(newValue) + " cm");
 }
