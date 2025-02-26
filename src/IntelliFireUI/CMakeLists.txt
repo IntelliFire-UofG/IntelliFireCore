@@ -12,11 +12,12 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 
 add_executable(IntelliFireUI
-    main.cpp
-    mainwindow.cpp
-    sensorContainer.cpp
-    resources.qrc
-    UltraSonicSensor.cpp
+    ./main.cpp
+    ./mainwindow.cpp
+    ./sensorContainer.cpp
+    ./src/keyLogger.cpp
+    ./resources.qrc
+    ../UltraSonicSensor.cpp
 )
 
 # Link Qt Libraries AFTER Defining Executable

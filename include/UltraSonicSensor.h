@@ -1,6 +1,8 @@
 #ifndef __ULTRA_SONIC_SENSOR_H__
 #define __ULTRA_SONIC_SENSOR_H__
 
+
+#include <QObject> 
 #include <gpiod.h>
 #include <thread>
 #include <vector>
@@ -14,8 +16,12 @@
 #define SOUND_SPEED 34300 // cm/s
 #define USR_TIMEOUT 1 // sec
 
-class UltraSonicSensor {
+class UltraSonicSensor : public QObject{
+
+    Q_OBJECT
+
 public:
+    explicit UltraSonicSensor(QObject *parent = nullptr) : QObject(parent), running(false) {}  // ✅ Fix constructor
     ~UltraSonicSensor() {
         stop();
     }
@@ -36,6 +42,10 @@ public:
     void start(const char* chipPath, int triggerPin, int echoPin);
 
     void stop();
+
+signals:
+    void measuredDistance(float distance);
+
 
 private:
     void measureDistance();

@@ -1,91 +1,114 @@
-cmake_minimum_required(VERSION 3.10.0)
-project(LIBGPIOD_RaspberryPi_Sensors VERSION 1.0.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.10)
 
-# Set the C++ standard
-set(CMAKE_CXX_STANDARD 14)
+project(IntelliFireCore
+    DESCRIPTION "IntelliFire Core with UI, camera preview, and sensor management"
+    LANGUAGES CXX
+)
 
-# Set default build type if none specified
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+#------------------------------------------------------------------------------
+# General Settings
+#------------------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wno-unused-parameter")
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 endif()
 
-# Include GNUInstallDirs for standard install locations
+#------------------------------------------------------------------------------
+# Enable Qt's Automatic Processing
+#------------------------------------------------------------------------------
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+#------------------------------------------------------------------------------
+# Find Required Packages
+#------------------------------------------------------------------------------
+find_package(PkgConfig REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+
+# libcamera library
+pkg_check_modules(LIBCAMERA REQUIRED IMPORTED_TARGET libcamera)
+message(STATUS "libcamera library found:")
+message(STATUS "    version: ${LIBCAMERA_VERSION}")
+message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
+message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
+
+# OpenCV info
+message(STATUS "OpenCV:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+
+# Locate libgpiod for UltraSonicSensor library
+find_library(GPIOD_LIB gpiod)
+if(NOT GPIOD_LIB)
+  message(FATAL_ERROR "Could not find libgpiod library")
+endif()
+
+#------------------------------------------------------------------------------
+# Include Directories
+#------------------------------------------------------------------------------
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include
+    ${LIBCAMERA_INCLUDE_DIRS}
+    ${OpenCV_INCLUDE_DIRS}
+)
+
+#------------------------------------------------------------------------------
+# Build UltraSonicSensorLib as a Static Library
+#------------------------------------------------------------------------------
+add_library(UltraSonicSensorLib STATIC
+    src/UltraSonicSensor.cpp
+    src/IRSensor.cpp
+    include/UltraSonicSensor.h
+    include/IRSensor.h
+)
+
+target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(UltraSonicSensorLib PRIVATE Qt5::Core ${GPIOD_LIB})
+
+#------------------------------------------------------------------------------
+# Build cam2opencv as a Static Library
+#------------------------------------------------------------------------------
+add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
+target_include_directories(cam2opencv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(cam2opencv PkgConfig::LIBCAMERA ${OpenCV_LIBS})
+target_compile_options(cam2opencv PRIVATE ${LIBCAMERA_CFLAGS_OTHER})
+
+#------------------------------------------------------------------------------
+# IntelliFire UI Executable (with Camera and Sensor Support)
+#------------------------------------------------------------------------------
+add_executable(IntelliFireUI
+    src/IntelliFireUI/main.cpp
+    src/IntelliFireUI/mainwindow.cpp
+    src/IntelliFireUI/sensorContainer.cpp
+    src/IntelliFireUI/src/keyLogger.cpp
+    src/IntelliFireUI/resources.qrc
+    src/IntelliFireUI/include/mainwindow.h
+    src/IntelliFireUI/include/sensorContainer.h
+    src/IntelliFireUI/include/keyLogger.h
+)
+
+# Linking all required libraries
+target_link_libraries(IntelliFireUI
+    Qt5::Widgets
+    UltraSonicSensorLib
+    cam2opencv
+    qwt-qt5
+    ${OpenCV_LIBS}
+    ${GPIOD_LIB}
+    PkgConfig::LIBCAMERA
+)
+
+#------------------------------------------------------------------------------
+# Install Rules (Optional)
+#------------------------------------------------------------------------------
 include(GNUInstallDirs)
-
-# Enable compiler warnings
-add_compile_options(-Wall -Wconversion -Wextra -pedantic)
-
-# Define the paths to the source and header files
-set(LIBSRC_IR ${CMAKE_SOURCE_DIR}/src/IRSensor.cpp)
-set(LIBINCLUDE_IR ${CMAKE_SOURCE_DIR}/include/IRSensor.h)
-
-set(LIBSRC_US ${CMAKE_SOURCE_DIR}/src/UltraSonicSensor.cpp)
-set(LIBINCLUDE_US ${CMAKE_SOURCE_DIR}/include/UltraSonicSensor.h)
-
-# ----------------------- Build the IR Sensor Library -----------------------
-
-# Shared Library
-add_library(IRSensor SHARED ${LIBSRC_IR})
-set_target_properties(IRSensor PROPERTIES
-    SOVERSION 1
-    PUBLIC_HEADER "${LIBINCLUDE_IR}"
-)
-target_link_libraries(IRSensor gpiod)
-
-install(TARGETS IRSensor EXPORT IRSensor-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# Static Library
-add_library(IRSensor_static STATIC ${LIBSRC_IR})
-set_target_properties(IRSensor_static PROPERTIES
-    PUBLIC_HEADER "${LIBINCLUDE_IR}"
-)
-target_link_libraries(IRSensor_static gpiod)
-
-install(TARGETS IRSensor_static EXPORT IRSensor_static-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# ------------------ Build the UltraSonic Sensor Library -------------------
-
-# Shared Library
-add_library(UltraSonicSensor SHARED ${LIBSRC_US})
-set_target_properties(UltraSonicSensor PROPERTIES
-    SOVERSION 1
-    PUBLIC_HEADER "${LIBINCLUDE_US}"
-)
-target_link_libraries(UltraSonicSensor gpiod)
-
-install(TARGETS UltraSonicSensor EXPORT UltraSonicSensor-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# Static Library
-add_library(UltraSonicSensor_static STATIC ${LIBSRC_US})
-set_target_properties(UltraSonicSensor_static PROPERTIES
-    PUBLIC_HEADER "${LIBINCLUDE_US}"
-)
-target_link_libraries(UltraSonicSensor_static gpiod)
-
-install(TARGETS UltraSonicSensor_static EXPORT UltraSonicSensor_static-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# ---------------------- Build Test Executables -----------------------
-
-# Test executable for IR Sensor
-add_executable(testIRSensor ${CMAKE_SOURCE_DIR}/tests/testIRSensor.cpp)
-target_link_libraries(testIRSensor IRSensor_static)
-target_include_directories(testIRSensor PRIVATE ${CMAKE_SOURCE_DIR}/include)
-
-# Test executable for UltraSonic Sensor
-add_executable(testUltraSonicSensor ${CMAKE_SOURCE_DIR}/tests/testUltraSonicSensor.cpp)
-target_link_libraries(testUltraSonicSensor UltraSonicSensor_static)
-target_include_directories(testUltraSonicSensor PRIVATE ${CMAKE_SOURCE_DIR}/include)
+install(TARGETS IntelliFireUI RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS UltraSonicSensorLib cam2opencv ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
