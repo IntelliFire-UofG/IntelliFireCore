@@ -65,7 +65,9 @@ include_directories(
 #------------------------------------------------------------------------------
 add_library(UltraSonicSensorLib STATIC
     src/UltraSonicSensor.cpp
+    src/IRSensor.cpp
     include/UltraSonicSensor.h
+    include/IRSensor.h
 )
 
 target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/include)
