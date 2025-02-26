@@ -30,25 +30,42 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     
     QLabel *title = new QLabel;
     value_label = new QLabel("0");
+
+    switch (containerNumber)
+    {
+        case 5:
+            /* code */
+            title->setText("Ultrasonic sensor distance:");
+            connect(sensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUI);
+            sensor->start("/dev/gpiochip0", 23, 24);
+            break;
+
+        case 6:
+            
+            title->setText("Ultrasonic sensor distance:");
+            value_label->setText(QString::number(0) + " cm"); // Example value 
+            
+            break;
+        
+        default:
+            title->setText(QString("Flames sensor value: %1").arg(containerNumber));
+            value_label->setText(QString::number(25.5) + " °C"); // Example value
+            break;
+    }
     
-    if (containerNumber < 5)
-    {
-        title->setText(QString("Flames sensor value: %1").arg(containerNumber));
-        value_label->setText(QString::number(25.5) + " °C"); // Example value
+    // if (containerNumber < 5)
+    // {
         
-    }
-    else if (containerNumber == 5)
-    {
-        title->setText("Ultrasonic sensor distance:");
         
-        connect(sensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUI);
-        sensor->start("/dev/gpiochip0", 23, 24);
-    }
-    else
-    {
-        title->setText("Ultrasonic sensor distance:");
-        value_label->setText(QString::number(0) + " cm"); // Example value 
-    }
+    // }
+    // else if (containerNumber == 5)
+    // {
+
+    // }
+    // else
+    // {
+
+    // }
     
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
