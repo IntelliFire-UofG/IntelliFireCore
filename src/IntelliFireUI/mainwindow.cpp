@@ -41,8 +41,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sensorGrid->addWidget(container_2, 0, 1); // Flame Sensor 2
     sensorGrid->addWidget(container_3, 1, 0); // Flame Sensor 3
     sensorGrid->addWidget(container_4, 1, 1); // Flame Sensor 4
-    //sensorGrid->addWidget(container_5, 2, 0); // Ultrasonic Sensor
-    //sensorGrid->addWidget(container_6, 2, 1); // IR Sensor
+    sensorGrid->addWidget(container_5, 2, 0); // Ultrasonic Sensor
+    sensorGrid->addWidget(container_6, 2, 1); // IR Sensor
 
     // Right side - Sliders
     QVBoxLayout *sliderLayout = new QVBoxLayout;
