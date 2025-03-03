@@ -40,7 +40,8 @@
  * @date 2025-02-01
  */
 
-#include "../include/LN298MotorControl.h"
+#include "../include/LN298MotorControlV3.h"
+#include '../include/basicMotionV2.h'
 #include "../include/eventHandler.h"
 #include "../include/ADCReader.h" // Consider for further dev
 // #include "DisplayManager.hpp" // Consider for further dev
@@ -49,24 +50,24 @@
 #include <iostream>
 #include <thread>
 #include <libgpio.h>
+#include <atomic>
 
-#define ENA 0
-#define IN1 1
-#define IN2 2
-#define ENB 3
-#define IN3 4
-#define IN4 5
+// #define LEFT_PWM 12
+// #define LEFT_IN1 17
+// #define LEFT_IN2 27
+// #define RIGHT_PWM 13
+// #define RIGHT_IN1 22
+// #define RIGHT_IN2 23
 
-#define BUTTON_FORWARD 6
-#define BUTTON_BACKWARD 7
-#define BUTTON_STOP 8
+// #define BUTTON_FORWARD 6
+// #define BUTTON_BACKWARD 7
+// #define BUTTON_STOP 8
 
 int main() {
     std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
-
-    // Initialize motor controller
-    MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
-
+    
+    // call basicMotion function to allow button movement
+    return basicMotion();
     // Initialize event handler
     EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
 
@@ -74,16 +75,10 @@ int main() {
     ADCReader adcReader(0x48);  // I2C address for ADS1015/ADS1115 
 
     /*
-
     This is considered for further use
     // Initialize Display Manager for real-time visualization
     // DisplayManager displayManager;
     */
-
-    // Register event-driven callbacks
-    eventHandler.registerForwardCallback([&]() { motorController.moveForward(75); });
-    eventHandler.registerBackwardCallback([&]() { motorController.moveBackward(75); });
-    eventHandler.registerStopCallback([&]() { motorController.stop(); });
 
     // Register ADC callback to react to fire detection
     adcReader.registerFlameCallback([&](int channel, int value) {
@@ -97,6 +92,4 @@ int main() {
 
     std::cout << "✅ System Running..." << std::endl;
     eventThread.join();  // Keep main thread alive
-
-    return 0;
 }
