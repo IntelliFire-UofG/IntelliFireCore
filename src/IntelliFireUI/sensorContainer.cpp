@@ -7,7 +7,7 @@
 #include <QTimer>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent), sensorNumber(containerNumber), sensor(new UltraSonicSensor(this))
+    : QWidget(parent), sensorNumber(containerNumber), ultrasonicSensor(new UltraSonicSensor(this))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
