@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QTimer>
 #include "../include/UltraSonicSensor.h"
+#include "../include/IRSensor.h"
 
 /**
  * @class SensorContainer
@@ -13,7 +14,7 @@
  * This class provides a visual representation of a sensor, including an icon,
  * a title, and a label to show real-time sensor values.
  */
-class SensorContainer : public QWidget {
+class SensorContainer : public QWidget, public IRSensor::IRSensorCallbackInterface {
     Q_OBJECT
 
 public:
@@ -23,6 +24,10 @@ public:
      * @param parent Optional parent QWidget
      */
     explicit SensorContainer(int containerNumber, QWidget *parent = nullptr);
+    ~SensorContainer();
+
+    // Callback for IR sensor events
+    void hasEvent(gpiod_line_event& e) override;
 
 public Q_SLOTS:
     /**
@@ -31,7 +36,8 @@ public Q_SLOTS:
      */
     //void updateSensorValue(float value);
     //void updateUltrasonicSensorValue();
-    void updateUI(int value);
+    void updateUltrasonicUI(int value);
+    void updateIRUI(const QString& message);
 
 
 Q_SIGNALS:
@@ -43,7 +49,8 @@ private:
     QLabel *title;       ///< Title label displaying sensor information
     QLabel *value_label;  ///< Label showing real-time sensor value
     int sensorNumber;    ///< Identifier for the sensor
-    UltraSonicSensor *sensor;
+    UltraSonicSensor *ultrasonicSensor = nullptr;
+    IRSensor *irSensor = nullptr;
 };
 
 #endif // SENSORCONTAINER_H
