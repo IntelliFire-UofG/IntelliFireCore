@@ -1,21 +1,25 @@
 #include "LN298MotorControlV2.h"
+#include "basicMotionV2.h"
 #include <atomic>
 #include <thread>
 
-int main() {
+int basicMotion() {
     Motor leftMotor(12, 17, 27);
     Motor rightMotor(13, 22, 23);
 
-    std::atomic<char> lastKey;  // Correct declaration (remove direct assignment)
-    lastKey.store('\0');        // Store initial value separately
+    std::atmoic<char> lastKey;
+    lastKey.store('\0');
 
-    // Start keyboard listener in a separate thread
     std::thread keyboardThread(keyboardListener, std::ref(lastKey));
-
-    // Start motor control loop with correct parameters
     keyboardControl(leftMotor, rightMotor, std::ref(lastKey));
 
-    // Cleanup
-    keyboardThread.detach();  // Let keyboard listener run indefinitely
-    return 0;
+    keyboardThread.detach();
+    return 0
 }
+
+// Keep this if you want to be able to compile this file independently
+#ifdef COMPILE_STANDALONE
+int main() {
+    return basicMotion();
+}
+#endif
