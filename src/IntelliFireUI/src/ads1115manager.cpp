@@ -33,10 +33,9 @@ void ADS1115Manager::hasADS1115Sample(float v) {
             return;
         }
         sensorValues[current_channel] = v;
-        emit newSensorValue(current_channel, v);
         nextChannel();
         discard = true; // Cycle through 4 sensors
-        
+        emit newSensorValue(current_channel, v);
 }
 
 void ADS1115Manager::nextChannel()

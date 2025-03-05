@@ -38,7 +38,7 @@ public Q_SLOTS:
     //void updateUltrasonicSensorValue();
     void updateUltrasonicUI(int value);
     void updateIRUI(const QString& message);
-    void sensorValueUpdated(int id, float value);
+    void sensorValueUpdated(float value);
 
 
 //Q_SIGNALS:
