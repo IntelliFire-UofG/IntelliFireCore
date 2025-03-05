@@ -12,6 +12,7 @@ ADS1115Manager::~ADS1115Manager()
 void ADS1115Manager::start() {
     ADS1115settings s;
     s.samplingRate = ADS1115settings::FS128HZ;
+    s.pgaGain = ADS1115settings::FSR4_096;
     s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
     try{
         ads1115rpi.start(s);
@@ -33,9 +34,10 @@ void ADS1115Manager::hasADS1115Sample(float v) {
             return;
         }
         sensorValues[current_channel] = v;
+        emit newSensorValue(current_channel, v);
         nextChannel();
         discard = true; // Cycle through 4 sensors
-        emit newSensorValue(current_channel, v);
+        
 }
 
 void ADS1115Manager::nextChannel()
@@ -57,8 +59,3 @@ void ADS1115Manager::nextChannel()
     }
     ads1115rpi.setChannel(current_channel);
 }
-
-
-// void ADS1115Manager::newSensorValue(int sensorIndex, float value)
-// {
-// }
