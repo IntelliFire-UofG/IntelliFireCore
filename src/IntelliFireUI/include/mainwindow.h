@@ -7,6 +7,8 @@
 #include "sensorContainer.h"
 #include "keyLogger.h"
 #include "libcam2opencv.h"
+#include <QMediaPlayer>
+#include <QVideoWidget>
 
 class MainWindow : public QMainWindow
 {
@@ -15,22 +17,24 @@ class MainWindow : public QMainWindow
 public:
     
     explicit MainWindow(QWidget *parent = nullptr);
-    QLabel       *image;
-    void updateImage(const cv::Mat &mat);
+    // QLabel       *image;
+    // void updateImage(const cv::Mat &mat);
     KeyLogger *getKeyLogger();  // Make KeyLogger accessible
     void keyPressEvent(QKeyEvent *event) override;
 
-    struct MyCallback : Libcam2OpenCV::Callback {
-        MainWindow* mainwindow = nullptr;
-        virtual void hasFrame(const cv::Mat &frame, const libcamera::ControlList &) {
-            if (nullptr != mainwindow) {
-                mainwindow->updateImage(frame);
-            }
-        }
-    };
+    ~MainWindow();
+
+    // struct MyCallback : Libcam2OpenCV::Callback {
+    //     MainWindow* mainwindow = nullptr;
+    //     virtual void hasFrame(const cv::Mat &frame, const libcamera::ControlList &) {
+    //         if (nullptr != mainwindow) {
+    //             mainwindow->updateImage(frame);
+    //         }
+    //     }
+    // };
     
-    Libcam2OpenCV camera;
-    MyCallback myCallback; 
+    // Libcam2OpenCV camera;
+    // MyCallback myCallback; 
 
 
 private Q_SLOTS:
@@ -45,6 +49,8 @@ private:
     
     QSlider *speedSlider;
     QSlider *paramSlider;
+    QMediaPlayer *player;
+    QVideoWidget *videoWidget;
 
     QLabel *keyDisplayLabel;
     KeyLogger *keyLogger;

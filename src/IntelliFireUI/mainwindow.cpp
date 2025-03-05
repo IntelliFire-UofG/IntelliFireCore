@@ -3,17 +3,48 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QNetworkInterface>
 #include <QDebug>
+
+
+QString getLocalIPAddress() {
+    QList<QHostAddress> ipList = QNetworkInterface::allAddresses();
+    for (const QHostAddress &address : ipList) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress::LocalHost) {
+            return address.toString();
+        }
+    }
+    return "127.0.0.1";  // Default to localhost if no IP found
+}
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     //camera
-    myCallback.mainwindow = this;
-    camera.registerCallback(&myCallback);
-    image = new QLabel;
-    //camera added to the right
-    QHBoxLayout *sensorAndCameraLayout = new QHBoxLayout;
-    sensorAndCameraLayout-> addWidget(image);
+    // myCallback.mainwindow = this;
+    // camera.registerCallback(&myCallback);
+    // image = new QLabel;
+    // //camera added to the right
+    // QHBoxLayout *sensorAndCameraLayout = new QHBoxLayout;
+    // sensorAndCameraLayout-> addWidget(image);
+
+    // Create video player and widget
+    player = new QMediaPlayer(this);
+    videoWidget = new QVideoWidget(this);
+
+    // Set up layout
+    setCentralWidget(videoWidget);
+    player->setVideoOutput(videoWidget);
+
+    // Get Raspberry Pi's IP Address dynamically
+    QString ipAddress = getLocalIPAddress();
+    QString streamUrl = "tcp://" + ipAddress + ":8554";
+
+    qDebug() << "Streaming from:" << streamUrl;
+
+    // Set media source
+    player->setMedia(QUrl(streamUrl));
+    player->play();
 
     /////////////////////////////////////////////////////////////////
     setWindowTitle("Welcome to IntelliFire UI");
@@ -79,10 +110,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     rightLayout->addWidget(keyLogger);
     rightLayout->addWidget(keyDisplayLabel);
     mainLayout->addLayout(rightLayout);
-    mainLayout->addLayout(sensorAndCameraLayout); //camera 
+    // mainLayout->addLayout(sensorAndCameraLayout); //camera 
 
      //start camera
-     camera.start();
+    //  camera.start();
     
     // Register key press callback
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
@@ -137,15 +168,20 @@ KeyLogger* MainWindow::getKeyLogger()
     return keyLogger;
 }
 
-void MainWindow::updateImage(const cv::Mat &mat) {
-    const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
-    image->setPixmap(QPixmap::fromImage(frame));
-    const int h = frame.height();
-	const int w = frame.width();
-	
-    update();
-
+MainWindow::~MainWindow() {
+    delete player;
+    delete videoWidget;
 }
+
+// void MainWindow::updateImage(const cv::Mat &mat) {
+//     const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+//     image->setPixmap(QPixmap::fromImage(frame));
+//     const int h = frame.height();
+// 	const int w = frame.width();
+	
+//     update();
+
+// }
 /* 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)
