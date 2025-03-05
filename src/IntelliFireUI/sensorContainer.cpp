@@ -117,7 +117,10 @@ void SensorContainer::updateUltrasonicUI(int newValue) {
     value_label->setText(QString::number(newValue) + " cm");
 }
 
-void SensorContainer::sensorValueUpdated(float value)
+void SensorContainer::sensorValueUpdated(int id, float value)
 {
-    value_label->setText(QString::number(value));
+    if ((id + 1) == sensorNumber)
+    {
+        value_label->setText(QString::number(value));
+    }
 }
