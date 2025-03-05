@@ -48,7 +48,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 
         default:  // **Flame Sensor (or other)**
             title->setText(QString("Flame Sensor Value: %1").arg(containerNumber));
-            //value_label->setText("25.5 °C"); // Placeholder value
+            value_label->setText("25.5 °C"); // Placeholder value
             break;
     }
     
@@ -115,9 +115,4 @@ void SensorContainer::updateIRUI(const QString& message) {
 // **Update UI for Ultrasonic sensor**
 void SensorContainer::updateUltrasonicUI(int newValue) {
     value_label->setText(QString::number(newValue) + " cm");
-}
-
-void SensorContainer::sensorValueUpdated(float value)
-{
-    value_label->setText(QString::number(value));
 }
