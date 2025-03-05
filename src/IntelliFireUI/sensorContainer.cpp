@@ -121,6 +121,6 @@ void SensorContainer::sensorValueUpdated(int id, float value)
 {
     if ((id + 1) == sensorNumber)
     {
-        value_label->setText(QString::number(value));
+        value_label->setText(QString::number(value, 'f', 3));
     }
 }
