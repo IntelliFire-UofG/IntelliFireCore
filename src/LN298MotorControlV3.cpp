@@ -1,14 +1,12 @@
 #include "LN298MotorControlV2.h"
-#include <atomic>  // Fix atomic variable errors
-#include <thread>  // Fix thread-related errors
-#include <unistd.h> // Required for STDIN_FILENO
-#include <atomic>   // Required for std::atomic
-#include <condition_variable>
+#include <atomic>
+#include <thread>
+#include <unistd.h>
+#include <termios.h>
+#include <fcntl.h>
 
-std::mutex mtx;
-std::condition_variable cv;
-bool keyChanged = false;
-
+// Atomic variable for thread-safe key state sharing
+std::atomic<char> currentKey('\0');
 
 Motor::Motor(int pwm_pin, int in1_pin, int in2_pin) {
     chip = gpiod_chip_open_by_name(CHIP_NAME);
@@ -36,37 +34,30 @@ void Motor::moveForward() {
     gpiod_line_set_value(in1, 1);
     gpiod_line_set_value(in2, 0);
     gpiod_line_set_value(pwm, 1);
-    std::cout << "?? Moving Forward" << std::endl;
 }
 
 void Motor::moveBackward() {
     gpiod_line_set_value(in1, 0);
     gpiod_line_set_value(in2, 1);
     gpiod_line_set_value(pwm, 1);
-    std::cout << "?? Moving Backward" << std::endl;
 }
 
 void Motor::stop() {
     gpiod_line_set_value(in1, 0);
     gpiod_line_set_value(in2, 0);
     gpiod_line_set_value(pwm, 0);
-    std::cout << "?? Motor Stopped" << std::endl;
 }
 
 void Motor::turnLeft() {
-    stop();
     gpiod_line_set_value(in1, 1);
     gpiod_line_set_value(in2, 0);
     gpiod_line_set_value(pwm, 1);
-    std::cout << "?? Turning Left" << std::endl;
 }
 
 void Motor::turnRight() {
-    stop();
     gpiod_line_set_value(in1, 0);
     gpiod_line_set_value(in2, 1);
     gpiod_line_set_value(pwm, 1);
-    std::cout << "?? Turning Right" << std::endl;
 }
 
 Motor::~Motor() {
@@ -76,101 +67,112 @@ Motor::~Motor() {
     gpiod_chip_close(chip);
 }
 
-void keyboardListener(std::atomic<char>& lastKey) {
+// Improved keyboard listener with non-blocking input
+void keyboardListener() {
     struct termios oldt, newt;
     char ch;
-    fd_set readfds;
-    struct timeval timeout;
-
+    
+    // Get current terminal settings
     tcgetattr(STDIN_FILENO, &oldt);
+    
+    // Set terminal to raw mode
     newt = oldt;
     newt.c_lflag &= ~(ICANON | ECHO);
+    newt.c_cc[VMIN] = 0;  // Return immediately, even when no input is available
+    newt.c_cc[VTIME] = 0; // No timeout
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
+    
+    // Set stdin to non-blocking
+    int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+    
     while (true) {
-        FD_ZERO(&readfds);
-        FD_SET(STDIN_FILENO, &readfds);
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 50000;  // Check every 50ms
-
-        if (select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout) > 0) {
-            if (read(STDIN_FILENO, &ch, 1) > 0) {
-                lastKey.store(ch);
-            }
+        int result = read(STDIN_FILENO, &ch, 1);
+        if (result > 0) {
+            // If a key is pressed, store it
+            currentKey.store(ch);
+            if (ch == 'q') break; // Exit listener if 'q' is pressed
         } else {
-            lastKey.store('\0');  // If no key is pressed, stop the motor
+            // If no key is pressed, reset to null character
+            currentKey.store('\0');
         }
-
-        // Notify motor control that the key state changed
-        {
-            std::lock_guard<std::mutex> lock(mtx);
-            keyChanged = true;
-        }
-        cv.notify_one();
+        
+        // Much shorter polling interval
+        usleep(5000); // 5ms polling interval (reduced from 50ms)
     }
-
+    
+    // Restore terminal settings before exiting
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    fcntl(STDIN_FILENO, F_SETFL, flags);
 }
 
-
-void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey) {
+void keyboardControl(Motor &leftMotor, Motor &rightMotor) {
     std::cout << "?? Hold W/A/S/D to move, release to stop. Press Q to quit." << std::endl;
 
-    char prevKey = '\0';  // Track previous key state
-    bool motorRunning = false;  // Track if motor is running
-
-    while (true) {
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [] { return keyChanged; });  // Wait for key change event
-        keyChanged = false;
-
-        char key = lastKey.load();  // Get latest key press
-
-        if (key != prevKey) {  // Only act if key state changes
-            prevKey = key;  // Update previous key state
-
-            if (key == 'w') {
-                std::cout << "?? Moving Forward" << std::endl;
-                leftMotor.moveForward();
-                rightMotor.moveForward();
-                motorRunning = true;
-            } else if (key == 's') {
-                std::cout << "?? Moving Backward" << std::endl;
-                leftMotor.moveBackward();
-                rightMotor.moveBackward();
-                motorRunning = true;
-            } else if (key == 'a') {
-                std::cout << "?? Turning Left" << std::endl;
-                leftMotor.turnLeft();
-                motorRunning = true;
-            } else if (key == 'd') {
-                std::cout << "?? Turning Right" << std::endl;
-                rightMotor.turnRight();
-                motorRunning = true;
-            } else if (key == '\0' && motorRunning) {  // Stop motor only if it was running
-                std::cout << "?? Motor Stopped" << std::endl;
-                leftMotor.stop();
-                rightMotor.stop();
-                motorRunning = false;
-            } else if (key == 'q') {  // Quit program
-                std::cout << "?? Exiting..." << std::endl;
-                return;
+    // Start the keyboard listener thread
+    std::thread listener(keyboardListener);
+    
+    // Detach to allow it to run independently
+    listener.detach();
+    
+    char lastProcessedKey = '\0';
+    bool isRunning = true;
+    
+    while (isRunning) {
+        char key = currentKey.load();
+        
+        // Process the current key state
+        if (key != lastProcessedKey) {
+            lastProcessedKey = key;
+            
+            switch (key) {
+                case 'w':
+                    std::cout << "?? Moving Forward" << std::endl;
+                    leftMotor.moveForward();
+                    rightMotor.moveForward();
+                    break;
+                case 's':
+                    std::cout << "?? Moving Backward" << std::endl;
+                    leftMotor.moveBackward();
+                    rightMotor.moveBackward();
+                    break;
+                case 'a':
+                    std::cout << "?? Turning Left" << std::endl;
+                    leftMotor.stop();
+                    rightMotor.moveForward();
+                    break;
+                case 'd':
+                    std::cout << "?? Turning Right" << std::endl;
+                    leftMotor.moveForward();
+                    rightMotor.stop();
+                    break;
+                case '\0':
+                    std::cout << "?? Motor Stopped" << std::endl;
+                    leftMotor.stop();
+                    rightMotor.stop();
+                    break;
+                case 'q':
+                    std::cout << "?? Exiting..." << std::endl;
+                    isRunning = false;
+                    break;
             }
         }
+        
+        // Minimal sleep to prevent CPU hogging
+        usleep(2000); // 2ms processing loop
     }
+    
+    // Make sure motors are stopped when exiting
+    leftMotor.stop();
+    rightMotor.stop();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// int main() {
+//     // Example usage with pin numbers
+//     Motor leftMotor(18, 23, 24);  // Replace with your actual GPIO pins
+//     Motor rightMotor(19, 25, 26); // Replace with your actual GPIO pins
+    
+//     keyboardControl(leftMotor, rightMotor);
+    
+//     return 0;
+// }
