@@ -6,9 +6,8 @@
 #include <QKeyEvent>
 #include "sensorContainer.h"
 #include "keyLogger.h"
-#include "libcam2opencv.h"
-#include <QMediaPlayer>
-#include <QVideoWidget>
+// #include "libcam2opencv.h"
+#include <QWebEngineView>
 
 class MainWindow : public QMainWindow
 {
@@ -22,7 +21,7 @@ public:
     KeyLogger *getKeyLogger();  // Make KeyLogger accessible
     void keyPressEvent(QKeyEvent *event) override;
 
-    ~MainWindow();
+    // ~MainWindow();
 
     // struct MyCallback : Libcam2OpenCV::Callback {
     //     MainWindow* mainwindow = nullptr;
@@ -49,13 +48,14 @@ private:
     
     QSlider *speedSlider;
     QSlider *paramSlider;
-    QMediaPlayer *player;
-    QVideoWidget *videoWidget;
+    // QMediaPlayer *player;
+    // QVideoWidget *videoWidget;
 
     QLabel *keyDisplayLabel;
     KeyLogger *keyLogger;
 
     void updateKeyDisplay(QString key);
+    QWebEngineView *webView;
 
 };
 
