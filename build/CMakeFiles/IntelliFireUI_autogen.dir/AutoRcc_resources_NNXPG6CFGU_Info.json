@@ -1,0 +1,28 @@
+{
+	"BUILD_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen",
+	"CMAKE_BINARY_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore",
+	"CMAKE_SOURCE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore",
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon3.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon2.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon6.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon1.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon5.png",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon4.png"
+	],
+	"LOCK_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_NNXPG6CFGU_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "NNXPG6CFGU",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_NNXPG6CFGU_Used.txt",
+	"SOURCE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc",
+	"VERBOSITY" : 0
+}

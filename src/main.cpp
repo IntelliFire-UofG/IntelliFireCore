@@ -49,6 +49,7 @@
 
 #include <iostream>
 #include <thread>
+
 #include <libgpio.h>
 #include <atomic>
 
@@ -59,6 +60,7 @@
 // #define RIGHT_IN1 22
 // #define RIGHT_IN2 23
 
+
 // #define BUTTON_FORWARD 6
 // #define BUTTON_BACKWARD 7
 // #define BUTTON_STOP 8
@@ -67,7 +69,9 @@ int main() {
     std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
     
     // call basicMotion function to allow button movement
-    return basicMotion();
+    /*CODE REVIEW: March 12th -> basicMotion won't be returned and just instantiated. */
+    basicMotion();
+
     // Initialize event handler
     EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
 

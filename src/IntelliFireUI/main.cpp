@@ -1,5 +1,6 @@
 #include <QApplication>
-#include "mainwindow.h"
+#include "./include/mainwindow.h"
+// #include "ads1115manager.h" // Waiting for sensor to implement this
 
 int main(int argc, char *argv[])
 {
