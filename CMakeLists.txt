@@ -74,6 +74,28 @@ target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/inclu
 target_link_libraries(UltraSonicSensorLib PRIVATE Qt5::Core ${GPIOD_LIB})
 
 #------------------------------------------------------------------------------
+# Build ADS1115Lib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115Lib STATIC
+    src/ads1115rpi.cpp
+    include/ads1115rpi.h
+)
+
+target_include_directories(ADS1115Lib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(ADS1115Lib PRIVATE ${GPIOD_LIB})
+
+#------------------------------------------------------------------------------
+# Build ADS1115ManagerLib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115ManagerLib STATIC
+    src/IntelliFireUI/src/ads1115manager.cpp
+    src/IntelliFireUI/include/ads1115manager.h
+)
+
+target_include_directories(ADS1115ManagerLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
+target_link_libraries(ADS1115ManagerLib PRIVATE Qt5::Core ADS1115Lib)
+
+#------------------------------------------------------------------------------
 # Build cam2opencv as a Static Library
 #------------------------------------------------------------------------------
 add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
@@ -99,6 +121,8 @@ add_executable(IntelliFireUI
 target_link_libraries(IntelliFireUI
     Qt5::Widgets
     UltraSonicSensorLib
+    ADS1115Lib 
+    ADS1115ManagerLib
     cam2opencv
     qwt-qt5
     ${OpenCV_LIBS}
