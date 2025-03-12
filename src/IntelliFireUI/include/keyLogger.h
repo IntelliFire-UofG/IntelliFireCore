@@ -24,7 +24,7 @@ public:
      * @brief Set a callback function to handle key events.
      * @param callback The function to be executed when a key event occurs.
      */
-    void setKeyCallback(std::function<void(const KeyEventInfo&)> callback);
+    void setKeyCallback(std::function<void(KeyEventInfo)> callback);
 
     /**
      * @brief Handles key press events.
