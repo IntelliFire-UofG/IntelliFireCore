@@ -52,20 +52,6 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             break;
     }
     
-    // if (containerNumber < 5)
-    // {
-        
-        
-    // }
-    // else if (containerNumber == 5)
-    // {
-
-    // }
-    // else
-    // {
-
-    // }
-    
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
     layout->addWidget(value_label, 0, Qt::AlignHCenter);
