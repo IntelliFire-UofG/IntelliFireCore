@@ -19,12 +19,28 @@ class KeyLogger : public QWidget {
 
 public:
     explicit KeyLogger(QWidget *parent = nullptr);
-    void setKeyCallback(std::function<void(KeyEventInfo)> callback);
 
+    /**
+     * @brief Set a callback function to handle key events.
+     * @param callback The function to be executed when a key event occurs.
+     */
+    void setKeyCallback(std::function<void(const KeyEventInfo&)> callback);
+
+protected:
+    /**
+     * @brief Handles key press events.
+     * @param event The key event data.
+     */
     void keyPressEvent(QKeyEvent *event) override;
 
+    /**
+     * @brief Handles key release events.
+     * @param event The key event data.
+     */
+    void keyReleaseEvent(QKeyEvent *event) override;
+
 private:
-    std::function<void(KeyEventInfo)> keyCallback;
+    std::function<void(const KeyEventInfo&)> keyCallback;
 };
 
 #endif // KEYLOGGER_H
