@@ -109,7 +109,7 @@ target_compile_options(cam2opencv PRIVATE ${LIBCAMERA_CFLAGS_OTHER})
 add_executable(IntelliFireUI
     src/IntelliFireUI/main.cpp
     src/IntelliFireUI/mainwindow.cpp
-    src/IntelliFireUI/sensorContainer.cpp
+    src/IntelliFireUI/src/sensorContainer.cpp
     src/IntelliFireUI/src/keyLogger.cpp
     src/IntelliFireUI/resources.qrc
     src/IntelliFireUI/include/mainwindow.h
