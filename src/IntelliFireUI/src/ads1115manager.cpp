@@ -1,6 +1,7 @@
 // ads1115manager.cpp
 #include "ads1115manager.h"
 
+
 ADS1115Manager::ADS1115Manager(QObject *parent) : QObject(parent) {
     ads1115rpi.registerCallback(this);
 }
