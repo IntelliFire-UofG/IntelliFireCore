@@ -13,7 +13,7 @@ void FireDetector::start(unsigned int id_, unsigned int chip, unsigned int line)
     if (ret < 0)
     {
 #ifdef DEBUG
-            fprintf(stderr,"Request event notification failed on pin %d and chip %d.\n",GPIO_CHIP,SENSOR_PIN_0);
+            fprintf(stderr,"Request event notification failed on pin %d and chip %d.\n", GPIO_CHIP, SENSOR_PIN_0);
 #endif
             throw "FireDetector: Could not request event for IRQ.";
     }
@@ -40,8 +40,6 @@ void FireDetector::worker()
         gpiod_line_event_wait(gpio_line, &ts);
         struct gpiod_line_event event;
         gpiod_line_event_read(gpio_line, &event);
-        // printf("---------------------------------------- \n");
-        // printf("FireDetector ID: %i -- Event: %i \n", id, event.event_type);
         for(auto &cb: fire_callback_interfaces) {
             cb->fireDetected(this->id, event.event_type);
         }

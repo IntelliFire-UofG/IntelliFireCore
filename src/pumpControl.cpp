@@ -38,15 +38,12 @@ void PumpControl::fireDetected(unsigned int id, int event_type)
             fire_detected[id] = true;
     }
     activate_pump = fire_detected[0] && fire_detected [1];
-    //printf("Sensor 0: %i --- Sensor 1: %i \n", (int) fire_detected[0], (int) fire_detected[1]);
     if (activate_pump) {
         gpiod_line_set_value(pump_out, 1);
-        printf("Activate Pump \n");
     }
     else 
     {
         gpiod_line_set_value(pump_out, 0);
-        printf("Deactivate Pump \n");
     }
     
 
