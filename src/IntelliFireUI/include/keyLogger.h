@@ -26,7 +26,6 @@ public:
      */
     void setKeyCallback(std::function<void(const KeyEventInfo&)> callback);
 
-protected:
     /**
      * @brief Handles key press events.
      * @param event The key event data.
