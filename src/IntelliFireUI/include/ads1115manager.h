@@ -4,6 +4,7 @@
 #include <QObject>
 #include "ads1115rpi.h"
 
+
 /**
  * @class ADS1115Manager
  * @brief Manages ADS1115 sensor data and emits real-time values.
@@ -47,7 +48,7 @@ private:
      */
     void hasADS1115Sample(float v) override;
 
-    ADS1115rpi ads1115rpi;; ///< Instance of ADS1115 driver
+    ADS1115rpi ads1115rpi; ///< Instance of ADS1115 driver
     float sensorValues[4]; ///< Vector to store sensor values
     bool discard = false; ///< Flag to discard first sample
     ADS1115settings::Input current_channel = ADS1115settings::AIN0; ///< Current sensor channel
@@ -55,6 +56,7 @@ private:
      * @brief Changes the current sensor channel to the next one.
      */
     void nextChannel();
+    float sensor_threshold = 2.0f;
 };
 
 #endif // ADS1115MANAGER_H
