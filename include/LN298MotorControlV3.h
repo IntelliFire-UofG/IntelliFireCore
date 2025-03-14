@@ -26,8 +26,8 @@ public:
     void moveForward();
     void moveBackward();
     void stop();
-    void turnLeft();
-    void turnRight();
+    void turnLeft();  // FIXED: Added missing function declaration
+    void turnRight(); // FIXED: Added missing function declaration
 
     // Destructor
     ~Motor();
