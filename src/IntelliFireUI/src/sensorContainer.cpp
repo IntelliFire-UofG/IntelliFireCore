@@ -7,7 +7,7 @@
 #include <QTimer>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent), sensorNumber(containerNumber), sensor(new UltraSonicSensor(this))
+    : QWidget(parent), sensorNumber(containerNumber), ultrasonicSensor(new UltraSonicSensor(this))
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
@@ -48,23 +48,9 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 
         default:  // **Flame Sensor (or other)**
             title->setText(QString("Flame Sensor Value: %1").arg(containerNumber));
-            value_label->setText("25.5 °C"); // Placeholder value
+            //value_label->setText("25.5 °C"); // Placeholder value
             break;
     }
-    
-    // if (containerNumber < 5)
-    // {
-        
-        
-    // }
-    // else if (containerNumber == 5)
-    // {
-
-    // }
-    // else
-    // {
-
-    // }
     
     layout->addWidget(image, 0, Qt::AlignHCenter);
     layout->addWidget(title, 0, Qt::AlignHCenter);
@@ -115,4 +101,12 @@ void SensorContainer::updateIRUI(const QString& message) {
 // **Update UI for Ultrasonic sensor**
 void SensorContainer::updateUltrasonicUI(int newValue) {
     value_label->setText(QString::number(newValue) + " cm");
+}
+
+void SensorContainer::sensorValueUpdated(int id, float value)
+{
+    if ((id + 1) == sensorNumber)
+    {
+        value_label->setText(QString::number(value, 'f', 3));
+    }
 }
