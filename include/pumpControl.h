@@ -9,13 +9,27 @@
 #define SENSOR_PIN_1 26
 #define PUMP_PIN     27
 
-class PumpControl : public FireDetector::FireDetectorCallbackInterface
+class PumpControl : public QObject, public FireDetector::FireDetectorCallbackInterface
 {
+    Q_OBJECT
 public:
-    PumpControl();
+    /**
+     * @brief Constructor for PumpControl
+     * @param parent Optional QObject parent
+     */
+    explicit PumpControl(QObject *parent = nullptr);
+    /**
+     * @brief Constructor for PumpControl
+     */
     ~PumpControl();
     void start();
     void stop();
+Q_SIGNALS:
+    /**
+     * @brief Signal emitted when there's a change in the pump status
+     * @param pumpStatus Boolean status of the pump
+     */
+    void pumpStatusChanged(bool pumpStatus);
 private: 
 
     void fireDetected(unsigned int id, int event_type) override;
