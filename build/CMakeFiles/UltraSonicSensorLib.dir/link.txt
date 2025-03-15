@@ -1,2 +1,0 @@
-/usr/bin/ar qc libUltraSonicSensorLib.a CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o
-/usr/bin/ranlib libUltraSonicSensorLib.a
