@@ -5,7 +5,8 @@
 #include <QPushButton>
 #include <QDebug>
 #include "sensorContainer.h"
-#include "ads1115manager.h" // Later on implemantation
+#include "ads1115manager.h" 
+#include "pumpControl.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -73,27 +74,58 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // Initialize and start ADS1115Manager
     initializeADS1115(container_1, container_2, container_3, container_4);
+
     // Key Logger
     keyLogger = new KeyLogger;
     keyDisplayLabel = new QLabel("Key Pressed: None");
-    keyDisplayLabel->setStyleSheet("font-size: 16px; color: #0078d4;");
+    keyDisplayLabel->setStyleSheet("font-size: 24px; color: #0078d4;");
+
+    // Pump Status Label
+    pumpStatusLabel = new QLabel("Pump Status: Unknown");
+    pumpStatusLabel->setStyleSheet("font-size: 24px; color: #ff4500;");
 
     // Combine everything
     QVBoxLayout *rightLayout = new QVBoxLayout;
     rightLayout->addWidget(keyLogger);
     rightLayout->addWidget(keyDisplayLabel);
+    rightLayout->addWidget(pumpStatusLabel);
+    
     mainLayout->addLayout(rightLayout);
     mainLayout->addLayout(sensorAndCameraLayout); //camera 
 
-     //start camera
-     camera.start();
+    //start camera
+    camera.start();
     
     // Register key press callback
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
         updateKeyDisplay(keyInfo);
     });
 
-    
+
+    // Connect pump status signal to update function
+    connect(PumpController::getInstance(), &PumpController::pumpStatusChanged,
+    this, &MainWindow::updatePumpStatus);
+
+    // Call updatePumpStatus initially
+    updatePumpStatus();
+
+}
+
+
+KeyLogger* MainWindow::getKeyLogger()
+{
+    return keyLogger;
+}
+
+void MainWindow::updatePumpStatus() {
+    // Assume we have a class "PumpController" that provides the status
+    bool isPumpActive = PumpController::getInstance()->isPumpActive();
+
+    if (isPumpActive) {
+        pumpStatusLabel->setText("Pump Status: Pump Activated");
+    } else {
+        pumpStatusLabel->setText("Pump Status: Pump Deactivated");
+    }
 }
 
 void MainWindow::createSliders()
@@ -136,11 +168,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::handleSpeedButton() {}
 void MainWindow::handleParamButton() {}
 
-KeyLogger* MainWindow::getKeyLogger()
-{
-    return keyLogger;
-}
-
 void MainWindow::updateImage(const cv::Mat &mat) {
     const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
     image->setPixmap(QPixmap::fromImage(frame));
@@ -166,3 +193,14 @@ connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContain
 // Start reading sensor values from ADS1115
 adsManager->start();
 } 
+
+void MainWindow::updatePumpStatus() {
+    // Assume we have a class "PumpController" that provides the status
+    bool isPumpActive = PumpController::getInstance()->isPumpActive(); // This must be changed to the actual class and method
+
+    if (isPumpActive) {
+        pumpStatusLabel->setText("Pump Status: Pump Activated");
+    } else {
+        pumpStatusLabel->setText("Pump Status: Pump Deactivated");
+    }
+}

@@ -49,8 +49,10 @@ private:
 
     QLabel *keyDisplayLabel;
     KeyLogger *keyLogger;
-
     void updateKeyDisplay(QString key);
+
+    QLabel *pumpStatusLabel;
+    void updatePumpStatus();
 
 };
 
