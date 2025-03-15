@@ -38,13 +38,17 @@ void PumpControl::fireDetected(unsigned int id, int event_type)
             fire_detected[id] = true;
     }
     activate_pump = fire_detected[0] && fire_detected [1];
-    if (activate_pump) {
-        gpiod_line_set_value(pump_out, 1);
-        emit pumpStatusChanged(activate_pump);
-    }
-    else 
+    if (prev_pump_status != activate_pump )
     {
-        gpiod_line_set_value(pump_out, 0);
+        if (activate_pump == true)
+        {
+            gpiod_line_set_value(pump_out, 1);
+        }
+        else 
+        {
+            gpiod_line_set_value(pump_out, 0);
+        }
         emit pumpStatusChanged(activate_pump);
+        prev_pump_status = activate_pump;
     }
 }

@@ -36,6 +36,7 @@ private:
 
     bool fire_detected [2] = {false, false};
     bool activate_pump = false ;
+    bool prev_pump_status = false ;
     FireDetector fire_range_detector_0;
     FireDetector fire_range_detector_1;
     struct gpiod_chip * pump_chip = nullptr;

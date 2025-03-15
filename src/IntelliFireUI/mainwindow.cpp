@@ -106,8 +106,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pump_control = new PumpControl();
     connect(pump_control, &PumpControl::pumpStatusChanged,this, &MainWindow::updatePumpStatus);
     pump_control->start();
-    // Call updatePumpStatus initially
-    //updatePumpStatus(false);
 
 }
 
