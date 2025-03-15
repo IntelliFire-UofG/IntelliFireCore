@@ -70,9 +70,10 @@ include CMakeFiles/IntelliFireUI.dir/progress.make
 include CMakeFiles/IntelliFireUI.dir/flags.make
 
 IntelliFireUI_autogen/timestamp: /usr/lib/qt5/bin/moc
+IntelliFireUI_autogen/timestamp: /usr/lib/qt5/bin/uic
 IntelliFireUI_autogen/timestamp: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntelliFireUI"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json Release
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target IntelliFireUI"
+	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json RelWithDebInfo
 	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/timestamp
 
 IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc
@@ -85,7 +86,7 @@ IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp: /home/misaelrivera/IntelliFi
 IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/assets/icon4.png
 IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp: /usr/lib/qt5/bin/rcc
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for src/IntelliFireUI/resources.qrc"
-	/usr/bin/cmake -E cmake_autorcc /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_NNXPG6CFGU_Info.json Release
+	/usr/bin/cmake -E cmake_autorcc /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutoRcc_resources_NNXPG6CFGU_Info.json RelWithDebInfo
 
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o: IntelliFireUI_autogen/mocs_compilation.cpp
@@ -129,19 +130,19 @@ CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.s
 
-CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
-CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
-CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o -MF CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp
+CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
+CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/sensorContainer.cpp
+CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o -MF CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/sensorContainer.cpp
 
-CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp > CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.i
+CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/sensorContainer.cpp > CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.i
 
-CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.s
+CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/sensorContainer.cpp -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.s
 
 CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
 CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/keyLogger.cpp
@@ -157,10 +158,38 @@ CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/keyLogger.cpp -o CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.s
 
+CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
+CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/fireDetector.cpp
+CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o -MF CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/fireDetector.cpp
+
+CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/fireDetector.cpp > CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.i
+
+CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/fireDetector.cpp -o CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.s
+
+CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
+CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/pumpControl.cpp
+CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o -MF CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/pumpControl.cpp
+
+CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/pumpControl.cpp > CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.i
+
+CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/pumpControl.cpp -o CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.s
+
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/flags.make
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o: IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o: CMakeFiles/IntelliFireUI.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o -MF CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o.d -o CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp
 
 CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.i: cmake_force
@@ -176,8 +205,10 @@ IntelliFireUI_OBJECTS = \
 "CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/main.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.o" \
-"CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o" \
+"CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.o" \
+"CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o" \
+"CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o" \
 "CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o"
 
 # External object files for target IntelliFireUI
@@ -186,17 +217,81 @@ IntelliFireUI_EXTERNAL_OBJECTS =
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/mocs_compilation.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/main.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.o
-IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o
+IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.o
+IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o
+IntelliFireUI: CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/build.make
-IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
 IntelliFireUI: libUltraSonicSensorLib.a
+IntelliFireUI: libADS1115Lib.a
+IntelliFireUI: libADS1115ManagerLib.a
+IntelliFireUI: libcam2opencv.a
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_alphamat.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_aruco.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_barcode.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_bgsegm.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_bioinspired.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_ccalib.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_cvv.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_dnn_objdetect.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_dnn_superres.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_dpm.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_face.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_freetype.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_fuzzy.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_hdf.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_hfs.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_img_hash.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_intensity_transform.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_line_descriptor.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_mcc.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_quality.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_rapid.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_reg.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_rgbd.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_saliency.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_shape.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_stereo.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_structured_light.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_superres.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_surface_matching.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_tracking.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_videostab.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_viz.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_wechat_qrcode.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_xobjdetect.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_xphoto.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libgpiod.so
+IntelliFireUI: libADS1115Lib.a
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_phase_unwrapping.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_optflow.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_highgui.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13
 IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13
 IntelliFireUI: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_datasets.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_plot.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_text.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_ml.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_videoio.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_ximgproc.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_video.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_imgcodecs.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_objdetect.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_calib3d.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_dnn.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_features2d.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_flann.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.6.0
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libcamera.so
+IntelliFireUI: /usr/lib/x86_64-linux-gnu/libcamera-base.so
 IntelliFireUI: /usr/lib/x86_64-linux-gnu/libgpiod.so
 IntelliFireUI: CMakeFiles/IntelliFireUI.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable IntelliFireUI"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable IntelliFireUI"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/IntelliFireUI.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

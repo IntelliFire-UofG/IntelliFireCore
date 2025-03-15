@@ -1,0 +1,2 @@
+/usr/bin/ar qc libADS1115ManagerLib.a CMakeFiles/ADS1115ManagerLib.dir/ADS1115ManagerLib_autogen/mocs_compilation.cpp.o CMakeFiles/ADS1115ManagerLib.dir/src/IntelliFireUI/src/ads1115manager.cpp.o
+/usr/bin/ranlib libADS1115ManagerLib.a

@@ -66,8 +66,9 @@ include CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps.dir/compiler_depen
 # Include the progress variables for this target.
 include CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps.dir/progress.make
 
-CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps: /usr/lib/qt5/bin/moc
 CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
+CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps: /usr/lib/qt5/bin/moc
+CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps: /usr/lib/qt5/bin/uic
 
 UltraSonicSensorLib_autogen_timestamp_deps: CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps
 UltraSonicSensorLib_autogen_timestamp_deps: CMakeFiles/UltraSonicSensorLib_autogen_timestamp_deps.dir/build.make

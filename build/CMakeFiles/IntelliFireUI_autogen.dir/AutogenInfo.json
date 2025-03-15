@@ -89,6 +89,15 @@
 		"/usr/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake",
 		"/usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in",
 		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake",
+		"/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake",
+		"/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake",
+		"/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake",
+		"/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake",
+		"/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
@@ -127,6 +136,7 @@
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
 		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
 		"/usr/share/cmake-3.28/Modules/CMakeParseArguments.cmake",
+		"/usr/share/cmake-3.28/Modules/GNUInstallDirs.cmake",
 		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/misaelrivera/IntelliFire/IntelliFireCore",
@@ -136,19 +146,19 @@
 	[
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include/keyLogger.h",
-			"Mu",
+			"MU",
 			"HKSN5TK2HW/moc_keyLogger.cpp",
 			null
 		],
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include/mainwindow.h",
-			"Mu",
+			"MU",
 			"HKSN5TK2HW/moc_mainwindow.cpp",
 			null
 		],
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include/sensorContainer.h",
-			"Mu",
+			"MU",
 			"HKSN5TK2HW/moc_sensorContainer.cpp",
 			null
 		]
@@ -170,6 +180,8 @@
 		"/home/misaelrivera/IntelliFire/IntelliFireCore",
 		"/home/misaelrivera/IntelliFire/IntelliFireCore/include",
 		"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include",
+		"/usr/include/libcamera",
+		"/usr/include/opencv4",
 		"/usr/include/x86_64-linux-gnu/qt5",
 		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
@@ -189,7 +201,7 @@
 	"MOC_PREDEFS_CMD" : 
 	[
 		"/usr/bin/c++",
-		"-std=gnu++14",
+		"-std=gnu++17",
 		"-dM",
 		"-E",
 		"-c",
@@ -199,13 +211,16 @@
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/mocs_compilation.cpp"
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/ADS1115Lib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/ADS1115ManagerLib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/cam2opencv_autogen/mocs_compilation.cpp"
 	],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 12,
 	"PARSE_CACHE_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
-	"QT_UIC_EXECUTABLE" : "",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
 	"QT_VERSION_MAJOR" : 5,
 	"QT_VERSION_MINOR" : 15,
 	"SETTINGS_FILE" : "/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenUsed.txt",
@@ -213,24 +228,44 @@
 	[
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/main.cpp",
-			"Mu",
+			"MU",
 			null
 		],
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/mainwindow.cpp",
-			"Mu",
-			null
-		],
-		[
-			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/sensorContainer.cpp",
-			"Mu",
+			"MU",
 			null
 		],
 		[
 			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/keyLogger.cpp",
-			"Mu",
+			"MU",
+			null
+		],
+		[
+			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/src/sensorContainer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/fireDetector.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/misaelrivera/IntelliFire/IntelliFireCore/src/pumpControl.cpp",
+			"MU",
 			null
 		]
 	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : 
+	[
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/ADS1115Lib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/ADS1115ManagerLib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/mocs_compilation.cpp",
+		"/home/misaelrivera/IntelliFire/IntelliFireCore/build/cam2opencv_autogen/mocs_compilation.cpp"
+	],
+	"UIC_UI_FILES" : [],
 	"VERBOSITY" : 0
 }

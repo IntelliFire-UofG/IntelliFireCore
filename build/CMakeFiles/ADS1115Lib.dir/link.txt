@@ -1,0 +1,2 @@
+/usr/bin/ar qc libADS1115Lib.a CMakeFiles/ADS1115Lib.dir/ADS1115Lib_autogen/mocs_compilation.cpp.o CMakeFiles/ADS1115Lib.dir/src/ads1115rpi.cpp.o
+/usr/bin/ranlib libADS1115Lib.a

@@ -1,5 +1,6 @@
 /home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/HKSN5TK2HW/moc_sensorContainer.cpp: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include/sensorContainer.h \
   /home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/moc_predefs.h \
+  /home/misaelrivera/IntelliFire/IntelliFireCore/include/IRSensor.h \
   /home/misaelrivera/IntelliFire/IntelliFireCore/include/UltraSonicSensor.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \

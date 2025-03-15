@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "UltraSonicSensorLib_autogen/timestamp" "custom" "UltraSonicSensorLib_autogen/deps"
   "/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/mocs_compilation.cpp" "CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o.d"
+  "/home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp" "CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o" "gcc" "CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o.d"
   "/home/misaelrivera/IntelliFire/IntelliFireCore/src/UltraSonicSensor.cpp" "CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o" "gcc" "CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o.d"
   )
 

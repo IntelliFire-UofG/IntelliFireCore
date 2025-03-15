@@ -69,9 +69,10 @@ include CMakeFiles/UltraSonicSensorLib_autogen.dir/progress.make
 CMakeFiles/UltraSonicSensorLib_autogen: UltraSonicSensorLib_autogen/timestamp
 
 UltraSonicSensorLib_autogen/timestamp: /usr/lib/qt5/bin/moc
+UltraSonicSensorLib_autogen/timestamp: /usr/lib/qt5/bin/uic
 UltraSonicSensorLib_autogen/timestamp: CMakeFiles/UltraSonicSensorLib_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target UltraSonicSensorLib"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen.dir/AutogenInfo.json Release
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target UltraSonicSensorLib"
+	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen.dir/AutogenInfo.json RelWithDebInfo
 	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/timestamp
 
 UltraSonicSensorLib_autogen: CMakeFiles/UltraSonicSensorLib_autogen

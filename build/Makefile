@@ -85,6 +85,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles /home/misaelrivera/IntelliFire/IntelliFireCore/build//CMakeFiles/progress.marks
@@ -130,6 +175,45 @@ UltraSonicSensorLib/fast:
 .PHONY : UltraSonicSensorLib/fast
 
 #=============================================================================
+# Target rules for targets named ADS1115Lib
+
+# Build rule for target.
+ADS1115Lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115Lib
+.PHONY : ADS1115Lib
+
+# fast build rule for target.
+ADS1115Lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/build
+.PHONY : ADS1115Lib/fast
+
+#=============================================================================
+# Target rules for targets named ADS1115ManagerLib
+
+# Build rule for target.
+ADS1115ManagerLib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115ManagerLib
+.PHONY : ADS1115ManagerLib
+
+# fast build rule for target.
+ADS1115ManagerLib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/build
+.PHONY : ADS1115ManagerLib/fast
+
+#=============================================================================
+# Target rules for targets named cam2opencv
+
+# Build rule for target.
+cam2opencv: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cam2opencv
+.PHONY : cam2opencv
+
+# fast build rule for target.
+cam2opencv/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/build
+.PHONY : cam2opencv/fast
+
+#=============================================================================
 # Target rules for targets named IntelliFireUI
 
 # Build rule for target.
@@ -169,6 +253,84 @@ UltraSonicSensorLib_autogen/fast:
 .PHONY : UltraSonicSensorLib_autogen/fast
 
 #=============================================================================
+# Target rules for targets named ADS1115Lib_autogen_timestamp_deps
+
+# Build rule for target.
+ADS1115Lib_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115Lib_autogen_timestamp_deps
+.PHONY : ADS1115Lib_autogen_timestamp_deps
+
+# fast build rule for target.
+ADS1115Lib_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib_autogen_timestamp_deps.dir/build.make CMakeFiles/ADS1115Lib_autogen_timestamp_deps.dir/build
+.PHONY : ADS1115Lib_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named ADS1115Lib_autogen
+
+# Build rule for target.
+ADS1115Lib_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115Lib_autogen
+.PHONY : ADS1115Lib_autogen
+
+# fast build rule for target.
+ADS1115Lib_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib_autogen.dir/build.make CMakeFiles/ADS1115Lib_autogen.dir/build
+.PHONY : ADS1115Lib_autogen/fast
+
+#=============================================================================
+# Target rules for targets named ADS1115ManagerLib_autogen_timestamp_deps
+
+# Build rule for target.
+ADS1115ManagerLib_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115ManagerLib_autogen_timestamp_deps
+.PHONY : ADS1115ManagerLib_autogen_timestamp_deps
+
+# fast build rule for target.
+ADS1115ManagerLib_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib_autogen_timestamp_deps.dir/build.make CMakeFiles/ADS1115ManagerLib_autogen_timestamp_deps.dir/build
+.PHONY : ADS1115ManagerLib_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named ADS1115ManagerLib_autogen
+
+# Build rule for target.
+ADS1115ManagerLib_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ADS1115ManagerLib_autogen
+.PHONY : ADS1115ManagerLib_autogen
+
+# fast build rule for target.
+ADS1115ManagerLib_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib_autogen.dir/build.make CMakeFiles/ADS1115ManagerLib_autogen.dir/build
+.PHONY : ADS1115ManagerLib_autogen/fast
+
+#=============================================================================
+# Target rules for targets named cam2opencv_autogen_timestamp_deps
+
+# Build rule for target.
+cam2opencv_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cam2opencv_autogen_timestamp_deps
+.PHONY : cam2opencv_autogen_timestamp_deps
+
+# fast build rule for target.
+cam2opencv_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv_autogen_timestamp_deps.dir/build.make CMakeFiles/cam2opencv_autogen_timestamp_deps.dir/build
+.PHONY : cam2opencv_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named cam2opencv_autogen
+
+# Build rule for target.
+cam2opencv_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cam2opencv_autogen
+.PHONY : cam2opencv_autogen
+
+# fast build rule for target.
+cam2opencv_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv_autogen.dir/build.make CMakeFiles/cam2opencv_autogen.dir/build
+.PHONY : cam2opencv_autogen/fast
+
+#=============================================================================
 # Target rules for targets named IntelliFireUI_autogen_timestamp_deps
 
 # Build rule for target.
@@ -193,6 +355,54 @@ IntelliFireUI_autogen: cmake_check_build_system
 IntelliFireUI_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI_autogen.dir/build.make CMakeFiles/IntelliFireUI_autogen.dir/build
 .PHONY : IntelliFireUI_autogen/fast
+
+ADS1115Lib_autogen/mocs_compilation.o: ADS1115Lib_autogen/mocs_compilation.cpp.o
+.PHONY : ADS1115Lib_autogen/mocs_compilation.o
+
+# target to build an object file
+ADS1115Lib_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/ADS1115Lib_autogen/mocs_compilation.cpp.o
+.PHONY : ADS1115Lib_autogen/mocs_compilation.cpp.o
+
+ADS1115Lib_autogen/mocs_compilation.i: ADS1115Lib_autogen/mocs_compilation.cpp.i
+.PHONY : ADS1115Lib_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+ADS1115Lib_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/ADS1115Lib_autogen/mocs_compilation.cpp.i
+.PHONY : ADS1115Lib_autogen/mocs_compilation.cpp.i
+
+ADS1115Lib_autogen/mocs_compilation.s: ADS1115Lib_autogen/mocs_compilation.cpp.s
+.PHONY : ADS1115Lib_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+ADS1115Lib_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/ADS1115Lib_autogen/mocs_compilation.cpp.s
+.PHONY : ADS1115Lib_autogen/mocs_compilation.cpp.s
+
+ADS1115ManagerLib_autogen/mocs_compilation.o: ADS1115ManagerLib_autogen/mocs_compilation.cpp.o
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.o
+
+# target to build an object file
+ADS1115ManagerLib_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/ADS1115ManagerLib_autogen/mocs_compilation.cpp.o
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.cpp.o
+
+ADS1115ManagerLib_autogen/mocs_compilation.i: ADS1115ManagerLib_autogen/mocs_compilation.cpp.i
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+ADS1115ManagerLib_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/ADS1115ManagerLib_autogen/mocs_compilation.cpp.i
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.cpp.i
+
+ADS1115ManagerLib_autogen/mocs_compilation.s: ADS1115ManagerLib_autogen/mocs_compilation.cpp.s
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+ADS1115ManagerLib_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/ADS1115ManagerLib_autogen/mocs_compilation.cpp.s
+.PHONY : ADS1115ManagerLib_autogen/mocs_compilation.cpp.s
 
 IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.o: IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.cpp.o
 .PHONY : IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.o
@@ -266,6 +476,78 @@ UltraSonicSensorLib_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/UltraSonicSensorLib.dir/build.make CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.s
 .PHONY : UltraSonicSensorLib_autogen/mocs_compilation.cpp.s
 
+cam2opencv_autogen/mocs_compilation.o: cam2opencv_autogen/mocs_compilation.cpp.o
+.PHONY : cam2opencv_autogen/mocs_compilation.o
+
+# target to build an object file
+cam2opencv_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/cam2opencv_autogen/mocs_compilation.cpp.o
+.PHONY : cam2opencv_autogen/mocs_compilation.cpp.o
+
+cam2opencv_autogen/mocs_compilation.i: cam2opencv_autogen/mocs_compilation.cpp.i
+.PHONY : cam2opencv_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+cam2opencv_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/cam2opencv_autogen/mocs_compilation.cpp.i
+.PHONY : cam2opencv_autogen/mocs_compilation.cpp.i
+
+cam2opencv_autogen/mocs_compilation.s: cam2opencv_autogen/mocs_compilation.cpp.s
+.PHONY : cam2opencv_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+cam2opencv_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/cam2opencv_autogen/mocs_compilation.cpp.s
+.PHONY : cam2opencv_autogen/mocs_compilation.cpp.s
+
+src/IRSensor.o: src/IRSensor.cpp.o
+.PHONY : src/IRSensor.o
+
+# target to build an object file
+src/IRSensor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UltraSonicSensorLib.dir/build.make CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o
+.PHONY : src/IRSensor.cpp.o
+
+src/IRSensor.i: src/IRSensor.cpp.i
+.PHONY : src/IRSensor.i
+
+# target to preprocess a source file
+src/IRSensor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UltraSonicSensorLib.dir/build.make CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.i
+.PHONY : src/IRSensor.cpp.i
+
+src/IRSensor.s: src/IRSensor.cpp.s
+.PHONY : src/IRSensor.s
+
+# target to generate assembly for a file
+src/IRSensor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/UltraSonicSensorLib.dir/build.make CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.s
+.PHONY : src/IRSensor.cpp.s
+
+src/IntelliFireUI/libcam2opencv.o: src/IntelliFireUI/libcam2opencv.cpp.o
+.PHONY : src/IntelliFireUI/libcam2opencv.o
+
+# target to build an object file
+src/IntelliFireUI/libcam2opencv.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/src/IntelliFireUI/libcam2opencv.cpp.o
+.PHONY : src/IntelliFireUI/libcam2opencv.cpp.o
+
+src/IntelliFireUI/libcam2opencv.i: src/IntelliFireUI/libcam2opencv.cpp.i
+.PHONY : src/IntelliFireUI/libcam2opencv.i
+
+# target to preprocess a source file
+src/IntelliFireUI/libcam2opencv.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/src/IntelliFireUI/libcam2opencv.cpp.i
+.PHONY : src/IntelliFireUI/libcam2opencv.cpp.i
+
+src/IntelliFireUI/libcam2opencv.s: src/IntelliFireUI/libcam2opencv.cpp.s
+.PHONY : src/IntelliFireUI/libcam2opencv.s
+
+# target to generate assembly for a file
+src/IntelliFireUI/libcam2opencv.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cam2opencv.dir/build.make CMakeFiles/cam2opencv.dir/src/IntelliFireUI/libcam2opencv.cpp.s
+.PHONY : src/IntelliFireUI/libcam2opencv.cpp.s
+
 src/IntelliFireUI/main.o: src/IntelliFireUI/main.cpp.o
 .PHONY : src/IntelliFireUI/main.o
 
@@ -314,29 +596,29 @@ src/IntelliFireUI/mainwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/mainwindow.cpp.s
 .PHONY : src/IntelliFireUI/mainwindow.cpp.s
 
-src/IntelliFireUI/sensorContainer.o: src/IntelliFireUI/sensorContainer.cpp.o
-.PHONY : src/IntelliFireUI/sensorContainer.o
+src/IntelliFireUI/src/ads1115manager.o: src/IntelliFireUI/src/ads1115manager.cpp.o
+.PHONY : src/IntelliFireUI/src/ads1115manager.o
 
 # target to build an object file
-src/IntelliFireUI/sensorContainer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.o
-.PHONY : src/IntelliFireUI/sensorContainer.cpp.o
+src/IntelliFireUI/src/ads1115manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/src/IntelliFireUI/src/ads1115manager.cpp.o
+.PHONY : src/IntelliFireUI/src/ads1115manager.cpp.o
 
-src/IntelliFireUI/sensorContainer.i: src/IntelliFireUI/sensorContainer.cpp.i
-.PHONY : src/IntelliFireUI/sensorContainer.i
+src/IntelliFireUI/src/ads1115manager.i: src/IntelliFireUI/src/ads1115manager.cpp.i
+.PHONY : src/IntelliFireUI/src/ads1115manager.i
 
 # target to preprocess a source file
-src/IntelliFireUI/sensorContainer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.i
-.PHONY : src/IntelliFireUI/sensorContainer.cpp.i
+src/IntelliFireUI/src/ads1115manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/src/IntelliFireUI/src/ads1115manager.cpp.i
+.PHONY : src/IntelliFireUI/src/ads1115manager.cpp.i
 
-src/IntelliFireUI/sensorContainer.s: src/IntelliFireUI/sensorContainer.cpp.s
-.PHONY : src/IntelliFireUI/sensorContainer.s
+src/IntelliFireUI/src/ads1115manager.s: src/IntelliFireUI/src/ads1115manager.cpp.s
+.PHONY : src/IntelliFireUI/src/ads1115manager.s
 
 # target to generate assembly for a file
-src/IntelliFireUI/sensorContainer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/sensorContainer.cpp.s
-.PHONY : src/IntelliFireUI/sensorContainer.cpp.s
+src/IntelliFireUI/src/ads1115manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115ManagerLib.dir/build.make CMakeFiles/ADS1115ManagerLib.dir/src/IntelliFireUI/src/ads1115manager.cpp.s
+.PHONY : src/IntelliFireUI/src/ads1115manager.cpp.s
 
 src/IntelliFireUI/src/keyLogger.o: src/IntelliFireUI/src/keyLogger.cpp.o
 .PHONY : src/IntelliFireUI/src/keyLogger.o
@@ -362,6 +644,30 @@ src/IntelliFireUI/src/keyLogger.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/keyLogger.cpp.s
 .PHONY : src/IntelliFireUI/src/keyLogger.cpp.s
 
+src/IntelliFireUI/src/sensorContainer.o: src/IntelliFireUI/src/sensorContainer.cpp.o
+.PHONY : src/IntelliFireUI/src/sensorContainer.o
+
+# target to build an object file
+src/IntelliFireUI/src/sensorContainer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.o
+.PHONY : src/IntelliFireUI/src/sensorContainer.cpp.o
+
+src/IntelliFireUI/src/sensorContainer.i: src/IntelliFireUI/src/sensorContainer.cpp.i
+.PHONY : src/IntelliFireUI/src/sensorContainer.i
+
+# target to preprocess a source file
+src/IntelliFireUI/src/sensorContainer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.i
+.PHONY : src/IntelliFireUI/src/sensorContainer.cpp.i
+
+src/IntelliFireUI/src/sensorContainer.s: src/IntelliFireUI/src/sensorContainer.cpp.s
+.PHONY : src/IntelliFireUI/src/sensorContainer.s
+
+# target to generate assembly for a file
+src/IntelliFireUI/src/sensorContainer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/IntelliFireUI/src/sensorContainer.cpp.s
+.PHONY : src/IntelliFireUI/src/sensorContainer.cpp.s
+
 src/UltraSonicSensor.o: src/UltraSonicSensor.cpp.o
 .PHONY : src/UltraSonicSensor.o
 
@@ -386,6 +692,78 @@ src/UltraSonicSensor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/UltraSonicSensorLib.dir/build.make CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.s
 .PHONY : src/UltraSonicSensor.cpp.s
 
+src/ads1115rpi.o: src/ads1115rpi.cpp.o
+.PHONY : src/ads1115rpi.o
+
+# target to build an object file
+src/ads1115rpi.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/src/ads1115rpi.cpp.o
+.PHONY : src/ads1115rpi.cpp.o
+
+src/ads1115rpi.i: src/ads1115rpi.cpp.i
+.PHONY : src/ads1115rpi.i
+
+# target to preprocess a source file
+src/ads1115rpi.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/src/ads1115rpi.cpp.i
+.PHONY : src/ads1115rpi.cpp.i
+
+src/ads1115rpi.s: src/ads1115rpi.cpp.s
+.PHONY : src/ads1115rpi.s
+
+# target to generate assembly for a file
+src/ads1115rpi.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ADS1115Lib.dir/build.make CMakeFiles/ADS1115Lib.dir/src/ads1115rpi.cpp.s
+.PHONY : src/ads1115rpi.cpp.s
+
+src/fireDetector.o: src/fireDetector.cpp.o
+.PHONY : src/fireDetector.o
+
+# target to build an object file
+src/fireDetector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.o
+.PHONY : src/fireDetector.cpp.o
+
+src/fireDetector.i: src/fireDetector.cpp.i
+.PHONY : src/fireDetector.i
+
+# target to preprocess a source file
+src/fireDetector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.i
+.PHONY : src/fireDetector.cpp.i
+
+src/fireDetector.s: src/fireDetector.cpp.s
+.PHONY : src/fireDetector.s
+
+# target to generate assembly for a file
+src/fireDetector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/fireDetector.cpp.s
+.PHONY : src/fireDetector.cpp.s
+
+src/pumpControl.o: src/pumpControl.cpp.o
+.PHONY : src/pumpControl.o
+
+# target to build an object file
+src/pumpControl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.o
+.PHONY : src/pumpControl.cpp.o
+
+src/pumpControl.i: src/pumpControl.cpp.i
+.PHONY : src/pumpControl.i
+
+# target to preprocess a source file
+src/pumpControl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.i
+.PHONY : src/pumpControl.cpp.i
+
+src/pumpControl.s: src/pumpControl.cpp.s
+.PHONY : src/pumpControl.s
+
+# target to generate assembly for a file
+src/pumpControl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IntelliFireUI.dir/build.make CMakeFiles/IntelliFireUI.dir/src/pumpControl.cpp.s
+.PHONY : src/pumpControl.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -393,13 +771,32 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... ADS1115Lib_autogen"
+	@echo "... ADS1115Lib_autogen_timestamp_deps"
+	@echo "... ADS1115ManagerLib_autogen"
+	@echo "... ADS1115ManagerLib_autogen_timestamp_deps"
 	@echo "... IntelliFireUI_autogen"
 	@echo "... IntelliFireUI_autogen_timestamp_deps"
 	@echo "... UltraSonicSensorLib_autogen"
 	@echo "... UltraSonicSensorLib_autogen_timestamp_deps"
+	@echo "... cam2opencv_autogen"
+	@echo "... cam2opencv_autogen_timestamp_deps"
+	@echo "... ADS1115Lib"
+	@echo "... ADS1115ManagerLib"
 	@echo "... IntelliFireUI"
 	@echo "... UltraSonicSensorLib"
+	@echo "... cam2opencv"
+	@echo "... ADS1115Lib_autogen/mocs_compilation.o"
+	@echo "... ADS1115Lib_autogen/mocs_compilation.i"
+	@echo "... ADS1115Lib_autogen/mocs_compilation.s"
+	@echo "... ADS1115ManagerLib_autogen/mocs_compilation.o"
+	@echo "... ADS1115ManagerLib_autogen/mocs_compilation.i"
+	@echo "... ADS1115ManagerLib_autogen/mocs_compilation.s"
 	@echo "... IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.o"
 	@echo "... IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.i"
 	@echo "... IntelliFireUI_autogen/NNXPG6CFGU/qrc_resources.s"
@@ -409,21 +806,42 @@ help:
 	@echo "... UltraSonicSensorLib_autogen/mocs_compilation.o"
 	@echo "... UltraSonicSensorLib_autogen/mocs_compilation.i"
 	@echo "... UltraSonicSensorLib_autogen/mocs_compilation.s"
+	@echo "... cam2opencv_autogen/mocs_compilation.o"
+	@echo "... cam2opencv_autogen/mocs_compilation.i"
+	@echo "... cam2opencv_autogen/mocs_compilation.s"
+	@echo "... src/IRSensor.o"
+	@echo "... src/IRSensor.i"
+	@echo "... src/IRSensor.s"
+	@echo "... src/IntelliFireUI/libcam2opencv.o"
+	@echo "... src/IntelliFireUI/libcam2opencv.i"
+	@echo "... src/IntelliFireUI/libcam2opencv.s"
 	@echo "... src/IntelliFireUI/main.o"
 	@echo "... src/IntelliFireUI/main.i"
 	@echo "... src/IntelliFireUI/main.s"
 	@echo "... src/IntelliFireUI/mainwindow.o"
 	@echo "... src/IntelliFireUI/mainwindow.i"
 	@echo "... src/IntelliFireUI/mainwindow.s"
-	@echo "... src/IntelliFireUI/sensorContainer.o"
-	@echo "... src/IntelliFireUI/sensorContainer.i"
-	@echo "... src/IntelliFireUI/sensorContainer.s"
+	@echo "... src/IntelliFireUI/src/ads1115manager.o"
+	@echo "... src/IntelliFireUI/src/ads1115manager.i"
+	@echo "... src/IntelliFireUI/src/ads1115manager.s"
 	@echo "... src/IntelliFireUI/src/keyLogger.o"
 	@echo "... src/IntelliFireUI/src/keyLogger.i"
 	@echo "... src/IntelliFireUI/src/keyLogger.s"
+	@echo "... src/IntelliFireUI/src/sensorContainer.o"
+	@echo "... src/IntelliFireUI/src/sensorContainer.i"
+	@echo "... src/IntelliFireUI/src/sensorContainer.s"
 	@echo "... src/UltraSonicSensor.o"
 	@echo "... src/UltraSonicSensor.i"
 	@echo "... src/UltraSonicSensor.s"
+	@echo "... src/ads1115rpi.o"
+	@echo "... src/ads1115rpi.i"
+	@echo "... src/ads1115rpi.s"
+	@echo "... src/fireDetector.o"
+	@echo "... src/fireDetector.i"
+	@echo "... src/fireDetector.s"
+	@echo "... src/pumpControl.o"
+	@echo "... src/pumpControl.i"
+	@echo "... src/pumpControl.s"
 .PHONY : help
 
 

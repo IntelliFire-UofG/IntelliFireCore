@@ -70,9 +70,10 @@ include CMakeFiles/UltraSonicSensorLib.dir/progress.make
 include CMakeFiles/UltraSonicSensorLib.dir/flags.make
 
 UltraSonicSensorLib_autogen/timestamp: /usr/lib/qt5/bin/moc
+UltraSonicSensorLib_autogen/timestamp: /usr/lib/qt5/bin/uic
 UltraSonicSensorLib_autogen/timestamp: CMakeFiles/UltraSonicSensorLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target UltraSonicSensorLib"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen.dir/AutogenInfo.json Release
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target UltraSonicSensorLib"
+	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/UltraSonicSensorLib_autogen.dir/AutogenInfo.json RelWithDebInfo
 	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/timestamp
 
 CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o: CMakeFiles/UltraSonicSensorLib.dir/flags.make
@@ -103,19 +104,35 @@ CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/UltraSonicSensor.cpp -o CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.s
 
+CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o: CMakeFiles/UltraSonicSensorLib.dir/flags.make
+CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o: /home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp
+CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o: CMakeFiles/UltraSonicSensorLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o -MF CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o.d -o CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o -c /home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp
+
+CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp > CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.i
+
+CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp -o CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.s
+
 # Object files for target UltraSonicSensorLib
 UltraSonicSensorLib_OBJECTS = \
 "CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o"
+"CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o" \
+"CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o"
 
 # External object files for target UltraSonicSensorLib
 UltraSonicSensorLib_EXTERNAL_OBJECTS =
 
 libUltraSonicSensorLib.a: CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o
 libUltraSonicSensorLib.a: CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o
+libUltraSonicSensorLib.a: CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o
 libUltraSonicSensorLib.a: CMakeFiles/UltraSonicSensorLib.dir/build.make
 libUltraSonicSensorLib.a: CMakeFiles/UltraSonicSensorLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libUltraSonicSensorLib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libUltraSonicSensorLib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/UltraSonicSensorLib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/UltraSonicSensorLib.dir/link.txt --verbose=$(VERBOSE)
 

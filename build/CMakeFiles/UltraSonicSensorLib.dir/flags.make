@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DQT_CORE_LIB -DQT_NO_DEBUG
 
-CXX_INCLUDES = -I/home/misaelrivera/IntelliFire/IntelliFireCore/build -I/home/misaelrivera/IntelliFire/IntelliFireCore -I/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/include -I/home/misaelrivera/IntelliFire/IntelliFireCore/include -I/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+CXX_INCLUDES = -I/home/misaelrivera/IntelliFire/IntelliFireCore/build -I/home/misaelrivera/IntelliFire/IntelliFireCore -I/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/include -I/home/misaelrivera/IntelliFire/IntelliFireCore/include -I/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/include -I/usr/include/libcamera -I/usr/include/opencv4 -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++14 -fPIC
+CXX_FLAGS = -Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wno-unused-parameter -O2 -g -DNDEBUG -std=gnu++17 -fPIC
 

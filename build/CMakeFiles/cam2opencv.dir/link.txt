@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcam2opencv.a CMakeFiles/cam2opencv.dir/cam2opencv_autogen/mocs_compilation.cpp.o CMakeFiles/cam2opencv.dir/src/IntelliFireUI/libcam2opencv.cpp.o
+/usr/bin/ranlib libcam2opencv.a

@@ -69,9 +69,10 @@ include CMakeFiles/IntelliFireUI_autogen.dir/progress.make
 CMakeFiles/IntelliFireUI_autogen: IntelliFireUI_autogen/timestamp
 
 IntelliFireUI_autogen/timestamp: /usr/lib/qt5/bin/moc
+IntelliFireUI_autogen/timestamp: /usr/lib/qt5/bin/uic
 IntelliFireUI_autogen/timestamp: CMakeFiles/IntelliFireUI_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC for target IntelliFireUI"
-	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json Release
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target IntelliFireUI"
+	/usr/bin/cmake -E cmake_autogen /home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/IntelliFireUI_autogen.dir/AutogenInfo.json RelWithDebInfo
 	/usr/bin/cmake -E touch /home/misaelrivera/IntelliFire/IntelliFireCore/build/IntelliFireUI_autogen/timestamp
 
 IntelliFireUI_autogen: CMakeFiles/IntelliFireUI_autogen

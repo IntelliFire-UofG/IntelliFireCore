@@ -3,7 +3,9 @@ UltraSonicSensorLib_autogen/timestamp: \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/build/UltraSonicSensorLib_autogen/moc_predefs.h \
+	/home/misaelrivera/IntelliFire/IntelliFireCore/include/IRSensor.h \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/include/UltraSonicSensor.h \
+	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IRSensor.cpp \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/src/IntelliFireUI/resources.qrc \
 	/home/misaelrivera/IntelliFire/IntelliFireCore/src/UltraSonicSensor.cpp \
 	/usr/include/assert.h \
@@ -294,6 +296,10 @@ UltraSonicSensorLib_autogen/timestamp: \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake \
 	/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig-version.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVConfig.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules-release.cmake \
+	/usr/lib/x86_64-linux-gnu/cmake/opencv4/OpenCVModules.cmake \
 	/usr/share/cmake-3.28/Modules/CMakeCXXCompiler.cmake.in \
 	/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp \
 	/usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake \
@@ -362,6 +368,10 @@ UltraSonicSensorLib_autogen/timestamp: \
 	/usr/share/cmake-3.28/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
 	/usr/share/cmake-3.28/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
 	/usr/share/cmake-3.28/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
+	/usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake \
+	/usr/share/cmake-3.28/Modules/FindPackageMessage.cmake \
+	/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake \
+	/usr/share/cmake-3.28/Modules/GNUInstallDirs.cmake \
 	/usr/share/cmake-3.28/Modules/Internal/FeatureTesting.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/Linux-Determine-CXX.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake \

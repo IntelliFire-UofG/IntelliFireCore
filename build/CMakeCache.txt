@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//Dependencies for the target
+ADS1115Lib_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libgpiod.so;
+
+//Dependencies for the target
+ADS1115ManagerLib_LIB_DEPENDS:STATIC=general;Qt5::Core;general;ADS1115Lib;
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -77,8 +83,56 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/home/misaelrivera/IntelliFire/IntelliFireCore/build/CMakeFiles/pkgRedirects
 
+//User executables (bin)
+CMAKE_INSTALL_BINDIR:PATH=bin
+
+//Read-only architecture-independent data (DATAROOTDIR)
+CMAKE_INSTALL_DATADIR:PATH=
+
+//Read-only architecture-independent data root (share)
+CMAKE_INSTALL_DATAROOTDIR:PATH=share
+
+//Documentation root (DATAROOTDIR/doc/PROJECT_NAME)
+CMAKE_INSTALL_DOCDIR:PATH=
+
+//C header files (include)
+CMAKE_INSTALL_INCLUDEDIR:PATH=include
+
+//Info documentation (DATAROOTDIR/info)
+CMAKE_INSTALL_INFODIR:PATH=
+
+//Object code libraries (lib)
+CMAKE_INSTALL_LIBDIR:PATH=lib
+
+//Program executables (libexec)
+CMAKE_INSTALL_LIBEXECDIR:PATH=libexec
+
+//Locale-dependent data (DATAROOTDIR/locale)
+CMAKE_INSTALL_LOCALEDIR:PATH=
+
+//Modifiable single-machine data (var)
+CMAKE_INSTALL_LOCALSTATEDIR:PATH=var
+
+//Man documentation (DATAROOTDIR/man)
+CMAKE_INSTALL_MANDIR:PATH=
+
+//C header files for non-gcc (/usr/include)
+CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
+
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
+
+//Run-time variable data (LOCALSTATEDIR/run)
+CMAKE_INSTALL_RUNSTATEDIR:PATH=
+
+//System admin executables (sbin)
+CMAKE_INSTALL_SBINDIR:PATH=sbin
+
+//Modifiable architecture-independent data (com)
+CMAKE_INSTALL_SHAREDSTATEDIR:PATH=com
+
+//Read-only single-machine data (etc)
+CMAKE_INSTALL_SYSCONFDIR:PATH=etc
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
@@ -116,7 +170,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_DESCRIPTION:STATIC=
+CMAKE_PROJECT_DESCRIPTION:STATIC=IntelliFire Core with UI, camera preview, and sensor management
 
 //Value Computed by CMake
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
@@ -201,6 +255,15 @@ IntelliFireCore_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 IntelliFireCore_SOURCE_DIR:STATIC=/home/misaelrivera/IntelliFire/IntelliFireCore
 
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/opencv4
+
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //The directory containing a CMake configuration file for Qt5Core.
 Qt5Core_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Core
 
@@ -212,6 +275,15 @@ Qt5Widgets_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets
 
 //Dependencies for the target
 UltraSonicSensorLib_LIB_DEPENDS:STATIC=general;Qt5::Core;general;/usr/lib/x86_64-linux-gnu/libgpiod.so;
+
+//Dependencies for the target
+cam2opencv_LIB_DEPENDS:STATIC=general;opencv_calib3d;general;opencv_core;general;opencv_dnn;general;opencv_features2d;general;opencv_flann;general;opencv_highgui;general;opencv_imgcodecs;general;opencv_imgproc;general;opencv_ml;general;opencv_objdetect;general;opencv_photo;general;opencv_stitching;general;opencv_video;general;opencv_videoio;general;opencv_alphamat;general;opencv_aruco;general;opencv_barcode;general;opencv_bgsegm;general;opencv_bioinspired;general;opencv_ccalib;general;opencv_cvv;general;opencv_datasets;general;opencv_dnn_objdetect;general;opencv_dnn_superres;general;opencv_dpm;general;opencv_face;general;opencv_freetype;general;opencv_fuzzy;general;opencv_hdf;general;opencv_hfs;general;opencv_img_hash;general;opencv_intensity_transform;general;opencv_line_descriptor;general;opencv_mcc;general;opencv_optflow;general;opencv_phase_unwrapping;general;opencv_plot;general;opencv_quality;general;opencv_rapid;general;opencv_reg;general;opencv_rgbd;general;opencv_saliency;general;opencv_shape;general;opencv_stereo;general;opencv_structured_light;general;opencv_superres;general;opencv_surface_matching;general;opencv_text;general;opencv_tracking;general;opencv_videostab;general;opencv_viz;general;opencv_wechat_qrcode;general;opencv_ximgproc;general;opencv_xobjdetect;general;opencv_xphoto;
+
+//Path to a library.
+pkgcfg_lib_LIBCAMERA_camera:FILEPATH=/usr/lib/x86_64-linux-gnu/libcamera.so
+
+//Path to a library.
+pkgcfg_lib_LIBCAMERA_camera-base:FILEPATH=/usr/lib/x86_64-linux-gnu/libcamera-base.so
 
 
 ########################
@@ -283,8 +355,40 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/misaelrivera/IntelliFire/IntelliFireCore
+//ADVANCED property for variable: CMAKE_INSTALL_BINDIR
+CMAKE_INSTALL_BINDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_DATADIR
+CMAKE_INSTALL_DATADIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_DATAROOTDIR
+CMAKE_INSTALL_DATAROOTDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_DOCDIR
+CMAKE_INSTALL_DOCDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_INCLUDEDIR
+CMAKE_INSTALL_INCLUDEDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_INFODIR
+CMAKE_INSTALL_INFODIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_LIBDIR
+CMAKE_INSTALL_LIBDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_LIBEXECDIR
+CMAKE_INSTALL_LIBEXECDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_LOCALEDIR
+CMAKE_INSTALL_LOCALEDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_LOCALSTATEDIR
+CMAKE_INSTALL_LOCALSTATEDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_MANDIR
+CMAKE_INSTALL_MANDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_OLDINCLUDEDIR
+CMAKE_INSTALL_OLDINCLUDEDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_RUNSTATEDIR
+CMAKE_INSTALL_RUNSTATEDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_SBINDIR
+CMAKE_INSTALL_SBINDIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_SHAREDSTATEDIR
+CMAKE_INSTALL_SHAREDSTATEDIR-ADVANCED:INTERNAL=1
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=1
+//ADVANCED property for variable: CMAKE_INSTALL_SYSCONFDIR
+CMAKE_INSTALL_SYSCONFDIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MAKE_PROGRAM
@@ -347,6 +451,58 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.6.0()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
+LIBCAMERA_CFLAGS:INTERNAL=-I/usr/include/libcamera
+LIBCAMERA_CFLAGS_I:INTERNAL=
+LIBCAMERA_CFLAGS_OTHER:INTERNAL=
+LIBCAMERA_FOUND:INTERNAL=1
+LIBCAMERA_INCLUDEDIR:INTERNAL=/usr/include
+LIBCAMERA_INCLUDE_DIRS:INTERNAL=/usr/include/libcamera
+LIBCAMERA_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lcamera;-lcamera-base
+LIBCAMERA_LDFLAGS_OTHER:INTERNAL=
+LIBCAMERA_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBCAMERA_LIBRARIES:INTERNAL=camera;camera-base
+LIBCAMERA_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBCAMERA_LIBS:INTERNAL=
+LIBCAMERA_LIBS_L:INTERNAL=
+LIBCAMERA_LIBS_OTHER:INTERNAL=
+LIBCAMERA_LIBS_PATHS:INTERNAL=
+LIBCAMERA_MODULE_NAME:INTERNAL=libcamera
+LIBCAMERA_PREFIX:INTERNAL=/usr
+LIBCAMERA_STATIC_CFLAGS:INTERNAL=-I/usr/include/libcamera
+LIBCAMERA_STATIC_CFLAGS_I:INTERNAL=
+LIBCAMERA_STATIC_CFLAGS_OTHER:INTERNAL=
+LIBCAMERA_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/libcamera
+LIBCAMERA_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lcamera;-lcamera-base
+LIBCAMERA_STATIC_LDFLAGS_OTHER:INTERNAL=
+LIBCAMERA_STATIC_LIBDIR:INTERNAL=
+LIBCAMERA_STATIC_LIBRARIES:INTERNAL=camera;camera-base
+LIBCAMERA_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBCAMERA_STATIC_LIBS:INTERNAL=
+LIBCAMERA_STATIC_LIBS_L:INTERNAL=
+LIBCAMERA_STATIC_LIBS_OTHER:INTERNAL=
+LIBCAMERA_STATIC_LIBS_PATHS:INTERNAL=
+LIBCAMERA_VERSION:INTERNAL=0.2.0
+LIBCAMERA_libcamera_INCLUDEDIR:INTERNAL=
+LIBCAMERA_libcamera_LIBDIR:INTERNAL=
+LIBCAMERA_libcamera_PREFIX:INTERNAL=
+LIBCAMERA_libcamera_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
+//CMAKE_INSTALL_PREFIX during last run
+_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
+__pkg_config_arguments_LIBCAMERA:INTERNAL=REQUIRED;IMPORTED_TARGET;libcamera
+__pkg_config_checked_LIBCAMERA:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBCAMERA_camera
+pkgcfg_lib_LIBCAMERA_camera-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBCAMERA_camera-base
+pkgcfg_lib_LIBCAMERA_camera-base-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 

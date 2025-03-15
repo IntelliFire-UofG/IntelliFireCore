@@ -4,6 +4,8 @@ file(REMOVE_RECURSE
   "UltraSonicSensorLib_autogen"
   "CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o"
   "CMakeFiles/UltraSonicSensorLib.dir/UltraSonicSensorLib_autogen/mocs_compilation.cpp.o.d"
+  "CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o"
+  "CMakeFiles/UltraSonicSensorLib.dir/src/IRSensor.cpp.o.d"
   "CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o"
   "CMakeFiles/UltraSonicSensorLib.dir/src/UltraSonicSensor.cpp.o.d"
   "UltraSonicSensorLib_autogen/mocs_compilation.cpp"
