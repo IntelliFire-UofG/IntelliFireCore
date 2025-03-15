@@ -41,30 +41,32 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 ---
 ```bash
 📂 IntelliFireCore
- ├── 📂 SupportCodes           # Extra support codes for reference/testing
- │   ├── LM393_SupportCode_README.md
- │   ├── LM393_SupportCode_Read.cpp
- │   ├── LN298N_SupportCode_README.md
- │   ├── LN298_SupportCode_Motor.cpp
- │
  ├── 📂 include                # Header files (Interface definitions)
- │   ├── LM393FlameSensor.h    # Flame sensor class definition
+ │   ├── ads1115rpi.h          # ADS1115 class definition
+ │   ├── basicMotion.h         # Motor control class definition
+ │   ├── eventLoop.h           # Event loop handling
+ │   ├── fireDetector.h        # Event handler for detecting fire
+ │   ├── IRSensor.h            # IR sensor class definition
  │   ├── LN298MotorControl.h   # Motor control class definition
- │   ├── eventHandler.h        # Event handler for buttons, callbacks
  │   ├── pumpControl.h         # Fire extinguishing pump control
+ │   ├── UltraSonicSensor.h    # Ultrasonic sensor class definition
  │
  ├── 📂 src                    # Implementation files
- │   ├── 📂 IntellifireUI                # Graphical UI visualization for sensor data
- │   ├── LM393FlameSensor.cpp  # Implementation of flame sensor handling
- │   ├── LN298MotorControl.cpp # Implementation of motor driver logic
- │   ├── eventHandler.cpp      # Implementation of event-driven interactions
+ │   ├── 📂 IntelliFireUI      # Graphical UI visualization for sensor data
+ │   ├── ads1115manager.cpp    # ADS1115 manager implementation
+ │   ├── ads1115rpi.cpp        # ADS1115 implementation
+ │   ├── basicMotion.cpp       # Basic motion control implementation
+ │   ├── eventLoop.cpp         # Event loop implementation
+ │   ├── fireDetector.cpp      # Fire detector implementation
+ │   ├── IRSensor.cpp          # IR sensor implementation
+ │   ├── keyLogger.cpp         # Key logger implementation
+ │   ├── libcam2opencv.cpp     # Camera to OpenCV implementation
+ │   ├── LN298MotorControl.cpp # Motor control implementation
  │   ├── main.cpp              # Main entry point, event-driven execution
+ │   ├── mainwindow.cpp        # Main window implementation
  │   ├── pumpControl.cpp       # Pump activation logic
- │
- ├── 📂 tests                  # Unit tests
- │   ├── testMotor.cpp         # Test suite for motor control
- │   ├── testPump.cpp          # Test suite for pump activation
- │   ├── testSensor.cpp        # Test suite for flame sensor readings
+ │   ├── sensorContainer.cpp   # Sensor container implementation
+ │   ├── UltraSonicSensor.cpp  # Ultrasonic sensor implementation
  │
  ├── CMakeLists.txt            # CMake build configuration
  ├── CODE_REVISION_GUIDELINES.md  # Internal development guidelines
@@ -88,13 +90,17 @@ L298N Motor Driver
 git clone [https://github.com/IntelliFire-UofG/IntelliFireCore.git]
 
 # Navigate to project directory
-cd src
+cd IntelliFireCore
 
-# Compile the project
+# Create a build folder
+mkdir build && cd build
+
+# Compile the project with CMake and Make
+cmake ..
 make
 
 # Run the executable
-./intellifire
+./IntelliFireCore
 
 ```
 
