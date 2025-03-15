@@ -17,8 +17,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     QLabel       *image;
     void updateImage(const cv::Mat &mat);
+
     KeyLogger *getKeyLogger();  // Make KeyLogger accessible
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
     struct MyCallback : Libcam2OpenCV::Callback {
         MainWindow* mainwindow = nullptr;
@@ -49,8 +51,10 @@ private:
 
     QLabel *keyDisplayLabel;
     KeyLogger *keyLogger;
-
     void updateKeyDisplay(QString key);
+
+    QLabel *pumpStatusLabel;
+    void updatePumpStatus();
 
 };
 
