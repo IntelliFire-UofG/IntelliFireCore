@@ -6,7 +6,7 @@
 #include <QDebug>
 #include "sensorContainer.h"
 #include "ads1115manager.h" 
-#include "pumpControl.h"
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -103,30 +103,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
     // Connect pump status signal to update function
-    connect(PumpController::getInstance(), &PumpController::pumpStatusChanged,
-    this, &MainWindow::updatePumpStatus);
-
-    // Call updatePumpStatus initially
-    updatePumpStatus();
+    pump_control = new PumpControl();
+    connect(pump_control, &PumpControl::pumpStatusChanged,this, &MainWindow::updatePumpStatus);
+    pump_control->start();
 
 }
-
 
 KeyLogger* MainWindow::getKeyLogger()
 {
     return keyLogger;
 }
 
-void MainWindow::updatePumpStatus() {
-    // Assume we have a class "PumpController" that provides the status
-    bool isPumpActive = PumpController::getInstance()->isPumpActive();
-
-    if (isPumpActive) {
-        pumpStatusLabel->setText("Pump Status: Pump Activated");
-    } else {
-        pumpStatusLabel->setText("Pump Status: Pump Deactivated");
-    }
-}
 
 void MainWindow::createSliders()
 {
@@ -199,11 +186,8 @@ connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContain
 adsManager->start();
 } 
 
-void MainWindow::updatePumpStatus() {
-    // Assume we have a class "PumpController" that provides the status
-    bool isPumpActive = PumpController::getInstance()->isPumpActive(); // This must be changed to the actual class and method
-
-    if (isPumpActive) {
+void MainWindow::updatePumpStatus(float pump_status) {
+    if (pump_status == true) {
         pumpStatusLabel->setText("Pump Status: Pump Activated");
     } else {
         pumpStatusLabel->setText("Pump Status: Pump Deactivated");

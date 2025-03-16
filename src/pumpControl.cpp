@@ -1,6 +1,6 @@
 #include "pumpControl.h"
 
-PumpControl::PumpControl()
+PumpControl::PumpControl(QObject *parent): QObject(parent) 
 {
     fire_range_detector_0.registerCallback(this);
     fire_range_detector_1.registerCallback(this);
@@ -38,13 +38,17 @@ void PumpControl::fireDetected(unsigned int id, int event_type)
             fire_detected[id] = true;
     }
     activate_pump = fire_detected[0] && fire_detected [1];
-    if (activate_pump) {
-        gpiod_line_set_value(pump_out, 1);
-    }
-    else 
+    if (prev_pump_status != activate_pump )
     {
-        gpiod_line_set_value(pump_out, 0);
+        if (activate_pump == true)
+        {
+            gpiod_line_set_value(pump_out, 1);
+        }
+        else 
+        {
+            gpiod_line_set_value(pump_out, 0);
+        }
+        emit pumpStatusChanged(activate_pump);
+        prev_pump_status = activate_pump;
     }
-    
-
 }
