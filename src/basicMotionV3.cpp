@@ -1,7 +1,6 @@
 #include "../include/LN298MotorControlV3.h"
 #include <atomic>
 #include <thread>
-
 // Function Declarations
 void keyboardListener(std::atomic<char>& lastKey);
 void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
@@ -18,9 +17,4 @@ int basicMotion() {
 
     keyboardThread.detach();
     return 0;
-}
-
-// Add the main() function
-int main() {
-    return basicMotion();
 }
