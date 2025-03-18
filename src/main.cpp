@@ -52,6 +52,7 @@
 
 #include <libgpio.h>
 #include <atomic>
+#include <memory>
 
 // #define LEFT_PWM 12
 // #define LEFT_IN1 17
@@ -65,15 +66,48 @@
 // #define BUTTON_BACKWARD 7
 // #define BUTTON_STOP 8
 
+void keyboardListener(std::atomic<char>& lastKey);
+void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
+
+// this function is responisble to run basicMotion in a separate thread
+void basicMotionThreaded(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Motor> rightMotor, std::atomic<bool>& running) {
+    std::atomic<char> lastKey;
+    lastKey.store('\0');
+
+    // Start keyboard listener thread
+    std::thread keyboardThread(keyboardListener, std::ref(lastKey));
+    
+    // Run keyboard control (this blocks until 'q' is pressed or another exit condition)
+    keyboardControl(*leftMotor, *rightMotor, std::ref(lastKey));
+    
+    // When keyboardControl returns, set running to false to signal other threads
+    running.store(false);
+    
+    // Wait for keyboard thread
+    if (keyboardThread.joinable()) {
+        keyboardThread.detach(); // Using detach since the original code uses it
+    }
+}
+
 int main() {
     std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
     
-    // call basicMotion function to allow button movement
-    /*CODE REVIEW: March 12th -> basicMotion won't be returned and just instantiated. */
-    basicMotion();
+    std::shared_ptr<Motor> leftMotor = std::make_shared<Motor>(12, 17, 27);
+    std::shared_ptr<Motor> rightMotor = std::make_shared<Motor>(13, 22, 23);
 
+    std::atomic<bool> running(true);
+    
+    std::thread basicMotionThreaded(basicMotionThreaded, leftMotor, rightMotor, std::ref(running));
+
+    while (running.load()){
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    if (basicMotionThreaded.joinable()) {
+        basicMotionThreaded.join();
+    }
     // Initialize event handler
-    EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
+    // EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
 
     // Initialize ADC Reader for flame sensors
     ADCReader adcReader(0x48);  // I2C address for ADS1015/ADS1115 
