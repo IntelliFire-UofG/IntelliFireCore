@@ -28,8 +28,8 @@ public:
 private Q_SLOTS:
     void handleSpeedButton();
     void handleParamButton();
-    // void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
-    // void updateKeyDisplay(KeyEventInfo keyInfo);
+    void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
+    void updateKeyDisplay(KeyEventInfo keyInfo);
     void updatePumpStatus(float pump_status);
 
 private:
