@@ -8,6 +8,7 @@
 #include "keyLogger.h"
 #include "libcam2opencv.h"
 #include "pumpControl.h"
+#include "ledindicator.h"
 
 class MainWindow : public QMainWindow
 {
@@ -56,6 +57,8 @@ private:
     QLabel *pumpStatusLabel;
     
     PumpControl *pump_control;
+
+    LedIndicator *ledIndicator;
 
 };
 

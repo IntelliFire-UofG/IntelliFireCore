@@ -31,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Left side - Sensor grid
     QGridLayout *sensorGrid = new QGridLayout;
 
+    // Pump Indicator
+    ledIndicator = new LedIndicator();
+
     // Stored pointers for each sensor container
     SensorContainer *container_1 = new SensorContainer(1);
     SensorContainer *container_2 = new SensorContainer(2);
@@ -84,12 +87,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pumpStatusLabel = new QLabel("Pump Status: Unknown");
     pumpStatusLabel->setStyleSheet("font-size: 24px; color: #ff4500;");
 
+    // Pump Indicator
+    ledIndicator = new LedIndicator();
+
     // Combine everything
     QVBoxLayout *rightLayout = new QVBoxLayout;
     rightLayout->addWidget(keyLogger);
     rightLayout->addWidget(keyDisplayLabel);
-    rightLayout->addWidget(pumpStatusLabel);
-    
+    //rightLayout->addWidget(pumpStatusLabel);
+    rightLayout->addWidget(ledIndicator);
+
     mainLayout->addLayout(rightLayout);
     mainLayout->addLayout(sensorAndCameraLayout); //camera 
 
@@ -107,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(pump_control, &PumpControl::pumpStatusChanged,this, &MainWindow::updatePumpStatus);
     pump_control->start();
 
+    
 }
 
 KeyLogger* MainWindow::getKeyLogger()
@@ -184,7 +192,9 @@ adsManager->start();
 void MainWindow::updatePumpStatus(float pump_status) {
     if (pump_status == true) {
         pumpStatusLabel->setText("Pump Status: Pump Activated");
+        ledIndicator->setState(true);
     } else {
         pumpStatusLabel->setText("Pump Status: Pump Deactivated");
+        ledIndicator->setState(false);
     }
 }

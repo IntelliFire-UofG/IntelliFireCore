@@ -122,11 +122,13 @@ add_executable(IntelliFireUI
     src/IntelliFireUI/mainwindow.cpp
     src/IntelliFireUI/src/sensorContainer.cpp
     src/IntelliFireUI/src/keyLogger.cpp
+    src/IntelliFireUI/src/ledindicator.cpp
     src/fireDetector.cpp
     src/IntelliFireUI/resources.qrc
     src/IntelliFireUI/include/mainwindow.h
     src/IntelliFireUI/include/sensorContainer.h
     src/IntelliFireUI/include/keyLogger.h
+    src/IntelliFireUI/include/ledindicator.h
 )
 
 # Linking all required libraries
