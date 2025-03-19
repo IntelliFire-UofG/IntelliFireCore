@@ -167,7 +167,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    keyLogger->keyPressEvent(event);
+    keyLogger->keyReleaseEvent(event);
 }
 
 void MainWindow::handleSpeedButton() {}
