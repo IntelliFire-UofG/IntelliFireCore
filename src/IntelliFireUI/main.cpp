@@ -1,11 +1,23 @@
 #include <QApplication>
 #include "./include/mainwindow.h"
-
+#include <QProcess>
+#include <QDebug>
+// #include "ads1115manager.h" // Waiting for sensor to implement this
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    
+
+    QProcess mediaMtxProcess;
+    mediaMtxProcess.setWorkingDirectory("/home/mo/mediamtx_folder");
+    mediaMtxProcess.start("./mediamtx");
+
+    if (!mediaMtxProcess.waitForStarted()) {
+        qDebug() << "Failed to start MediaMTX!";
+    } else {
+        qDebug() << "MediaMTX started successfully.";
+    }
+
     // Set global styles
     app.setStyleSheet(R"(
         QWidget {
@@ -23,8 +35,8 @@ int main(int argc, char *argv[])
             background: #006cbd;
         }
     )");
+    
     MainWindow mainWindow;
     mainWindow.show();
     return app.exec();
-    
 }
