@@ -1,77 +1,25 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5)
+project(IntelliFire VERSION 1.0)
 
-project(IntelliFireCore
-    DESCRIPTION "IntelliFire Core with UI, camera preview, and sensor management"
-    LANGUAGES CXX
-)
-
-#------------------------------------------------------------------------------
-# General Settings
-#------------------------------------------------------------------------------
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wno-unused-parameter")
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "RelWithDebInfo")
-endif()
+# Define source files
+set(SOURCES
+    src/main.cpp
+    src/LN298MotorControlV3.cpp
+    src/basicMotionV3.cpp
+    # Add other source files
+)
 
-#------------------------------------------------------------------------------
-# Enable Qt's Automatic Processing
-#------------------------------------------------------------------------------
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-#------------------------------------------------------------------------------
-# Find Required Packages
-#------------------------------------------------------------------------------
-find_package(PkgConfig REQUIRED)
-find_package(OpenCV REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-
-# libcamera library
-pkg_check_modules(LIBCAMERA REQUIRED IMPORTED_TARGET libcamera)
-message(STATUS "libcamera library found:")
-message(STATUS "    version: ${LIBCAMERA_VERSION}")
-message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
-message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
-
-# OpenCV info
-message(STATUS "OpenCV:")
-message(STATUS "    version: ${OpenCV_VERSION}")
-message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-
-# Locate libgpiod for UltraSonicSensor library
-find_library(GPIOD_LIB gpiod)
-if(NOT GPIOD_LIB)
-  message(FATAL_ERROR "Could not find libgpiod library")
-endif()
-
-#------------------------------------------------------------------------------
-# Include Directories
-#------------------------------------------------------------------------------
+# Define include directories
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include
-    ${LIBCAMERA_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-#------------------------------------------------------------------------------
-# Build UltraSonicSensorLib as a Static Library
-#------------------------------------------------------------------------------
-add_library(UltraSonicSensorLib STATIC
-    src/UltraSonicSensor.cpp
-    src/IRSensor.cpp
-    include/UltraSonicSensor.h
-    include/IRSensor.h
-)
-
-target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(UltraSonicSensorLib PRIVATE Qt5::Core ${GPIOD_LIB})
+# Create executable
+add_executable(IntelliFire ${SOURCES})
 
 #------------------------------------------------------------------------------
 # Build ADS1115Lib as a static library
@@ -143,9 +91,7 @@ target_link_libraries(IntelliFireUI
     PkgConfig::LIBCAMERA
 )
 
-#------------------------------------------------------------------------------
-# Install Rules (Optional)
-#------------------------------------------------------------------------------
-include(GNUInstallDirs)
-install(TARGETS IntelliFireUI RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS UltraSonicSensorLib cam2opencv ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+# Print status
+message(STATUS "Configuring Autonomous Fire Truck Control System")
+message(STATUS "Using libgpiod: ${LIBGPIOD_LIBRARY}")
