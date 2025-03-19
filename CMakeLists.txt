@@ -130,3 +130,13 @@ target_link_libraries(IntelliFireUI
 include(GNUInstallDirs)
 install(TARGETS IntelliFireUI RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(TARGETS UltraSonicSensorLib ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+#------------------------------------------------------------------------------
+# Build mediamtx_http_scanner as a Separate Executable
+#------------------------------------------------------------------------------
+find_package(CURL REQUIRED)
+
+add_executable(mediamtx_http_scanner mediamtx_scanner/mediamtx_http_scanner.cpp)
+
+# No need for target_include_directories since there are no custom headers
+target_link_libraries(mediamtx_http_scanner PRIVATE CURL::libcurl)
