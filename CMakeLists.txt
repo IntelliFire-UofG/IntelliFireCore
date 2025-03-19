@@ -21,23 +21,76 @@ include_directories(
 # Create executable
 add_executable(IntelliFire ${SOURCES})
 
-# Find and link required packages
-find_library(LIBGPIOD_LIBRARY NAMES gpiod)
-if(NOT LIBGPIOD_LIBRARY)
-    message(FATAL_ERROR "libgpiod not found, please install it")
-endif()
-
-# Link libraries
-target_link_libraries(IntelliFire
-    ${LIBGPIOD_LIBRARY}
-    pthread
+#------------------------------------------------------------------------------
+# Build ADS1115Lib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115Lib STATIC
+    src/ads1115rpi.cpp
+    include/ads1115rpi.h
 )
 
-# Add compiler warnings
-target_compile_options(IntelliFire PRIVATE -Wall -Wextra)
+target_include_directories(ADS1115Lib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(ADS1115Lib PRIVATE ${GPIOD_LIB})
 
-# Installation (optional)
-install(TARGETS IntelliFire DESTINATION bin)
+#------------------------------------------------------------------------------
+# Build ADS1115ManagerLib as a static library
+#------------------------------------------------------------------------------
+add_library(ADS1115ManagerLib STATIC
+    src/IntelliFireUI/src/ads1115manager.cpp
+    src/IntelliFireUI/include/ads1115manager.h
+)
+
+target_include_directories(ADS1115ManagerLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
+target_link_libraries(ADS1115ManagerLib PRIVATE Qt5::Core ADS1115Lib)
+
+#------------------------------------------------------------------------------
+# Build ADS1115ManagerLib as a static library
+#------------------------------------------------------------------------------
+add_library(PumpControlLib STATIC
+    src/pumpControl.cpp
+    include/pumpControl.h
+)
+
+target_include_directories(PumpControlLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
+target_link_libraries(PumpControlLib PRIVATE Qt5::Core ${GPIOD_LIB})
+
+#------------------------------------------------------------------------------
+# Build cam2opencv as a Static Library
+#------------------------------------------------------------------------------
+add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
+target_include_directories(cam2opencv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(cam2opencv PkgConfig::LIBCAMERA ${OpenCV_LIBS})
+target_compile_options(cam2opencv PRIVATE ${LIBCAMERA_CFLAGS_OTHER})
+
+#------------------------------------------------------------------------------
+# IntelliFire UI Executable (with Camera and Sensor Support)
+#------------------------------------------------------------------------------
+add_executable(IntelliFireUI
+    src/IntelliFireUI/main.cpp
+    src/IntelliFireUI/mainwindow.cpp
+    src/IntelliFireUI/src/sensorContainer.cpp
+    src/IntelliFireUI/src/keyLogger.cpp
+    src/fireDetector.cpp
+    src/IntelliFireUI/resources.qrc
+    src/IntelliFireUI/include/mainwindow.h
+    src/IntelliFireUI/include/sensorContainer.h
+    src/IntelliFireUI/include/keyLogger.h
+)
+
+# Linking all required libraries
+target_link_libraries(IntelliFireUI
+    Qt5::Widgets
+    UltraSonicSensorLib
+    ADS1115Lib 
+    ADS1115ManagerLib
+    PumpControlLib
+    cam2opencv
+    qwt-qt5
+    ${OpenCV_LIBS}
+    ${GPIOD_LIB}
+    PkgConfig::LIBCAMERA
+)
+
 
 # Print status
 message(STATUS "Configuring Autonomous Fire Truck Control System")

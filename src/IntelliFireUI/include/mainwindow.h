@@ -7,6 +7,7 @@
 #include "sensorContainer.h"
 #include "keyLogger.h"
 #include "libcam2opencv.h"
+#include "pumpControl.h"
 
 class MainWindow : public QMainWindow
 {
@@ -17,8 +18,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     QLabel       *image;
     void updateImage(const cv::Mat &mat);
+
     KeyLogger *getKeyLogger();  // Make KeyLogger accessible
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
     struct MyCallback : Libcam2OpenCV::Callback {
         MainWindow* mainwindow = nullptr;
@@ -36,7 +39,9 @@ public:
 private Q_SLOTS:
     void handleSpeedButton();
     void handleParamButton();
+    void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
     void updateKeyDisplay(KeyEventInfo keyInfo);
+    void updatePumpStatus(float pump_status);
 
 private:
     // void setupUI();
@@ -48,8 +53,11 @@ private:
 
     QLabel *keyDisplayLabel;
     KeyLogger *keyLogger;
-
     void updateKeyDisplay(QString key);
+
+    QLabel *pumpStatusLabel;
+    
+    PumpControl *pump_control;
 
 };
 

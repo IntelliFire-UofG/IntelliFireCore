@@ -4,6 +4,9 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QDebug>
+#include "sensorContainer.h"
+#include "ads1115manager.h" 
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -33,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     SensorContainer *container_2 = new SensorContainer(2);
     SensorContainer *container_3 = new SensorContainer(3);
     SensorContainer *container_4 = new SensorContainer(4);
-    //SensorContainer *container_5 = new SensorContainer(5);
-    //SensorContainer *container_6 = new SensorContainer(6);
+    SensorContainer *container_5 = new SensorContainer(5);
+    SensorContainer *container_6 = new SensorContainer(6);
     
     // Sensor containers mapped into layout
     sensorGrid->addWidget(container_1, 0, 0); // Flame Sensor 1
@@ -69,28 +72,48 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // ✅ Now call `createSliders()` after setting up `mainLayout`
     createSliders();
 
+    // Initialize and start ADS1115Manager
+    initializeADS1115(container_1, container_2, container_3, container_4);
+
     // Key Logger
     keyLogger = new KeyLogger;
     keyDisplayLabel = new QLabel("Key Pressed: None");
-    keyDisplayLabel->setStyleSheet("font-size: 16px; color: #0078d4;");
+    keyDisplayLabel->setStyleSheet("font-size: 24px; color: #0078d4;");
+
+    // Pump Status Label
+    pumpStatusLabel = new QLabel("Pump Status: Unknown");
+    pumpStatusLabel->setStyleSheet("font-size: 24px; color: #ff4500;");
 
     // Combine everything
     QVBoxLayout *rightLayout = new QVBoxLayout;
     rightLayout->addWidget(keyLogger);
     rightLayout->addWidget(keyDisplayLabel);
+    rightLayout->addWidget(pumpStatusLabel);
+    
     mainLayout->addLayout(rightLayout);
     mainLayout->addLayout(sensorAndCameraLayout); //camera 
 
-     //start camera
-     camera.start();
+    //start camera
+    camera.start();
     
     // Register key press callback
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
         updateKeyDisplay(keyInfo);
     });
 
-    
+
+    // Connect pump status signal to update function
+    pump_control = new PumpControl();
+    connect(pump_control, &PumpControl::pumpStatusChanged,this, &MainWindow::updatePumpStatus);
+    pump_control->start();
+
 }
+
+KeyLogger* MainWindow::getKeyLogger()
+{
+    return keyLogger;
+}
+
 
 void MainWindow::createSliders()
 {
@@ -129,13 +152,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     keyLogger->keyPressEvent(event);
 }
 
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    keyLogger->keyPressEvent(event);
+}
+
 void MainWindow::handleSpeedButton() {}
 void MainWindow::handleParamButton() {}
-
-KeyLogger* MainWindow::getKeyLogger()
-{
-    return keyLogger;
-}
 
 void MainWindow::updateImage(const cv::Mat &mat) {
     const QImage frame(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
@@ -146,7 +169,7 @@ void MainWindow::updateImage(const cv::Mat &mat) {
     update();
 
 }
-/* 
+ 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
     SensorContainer *container_3, SensorContainer *container_4)
 {
@@ -154,11 +177,19 @@ void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer
 ADS1115Manager *adsManager = new ADS1115Manager(this);
 
 // Connect the newSensorValue signal to each container's updateSensorValue slot
-connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::updateSensorValue);
-connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::updateSensorValue);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::sensorValueUpdated);
+connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::sensorValueUpdated);
 
 // Start reading sensor values from ADS1115
 adsManager->start();
-} */
+} 
+
+void MainWindow::updatePumpStatus(float pump_status) {
+    if (pump_status == true) {
+        pumpStatusLabel->setText("Pump Status: Pump Activated");
+    } else {
+        pumpStatusLabel->setText("Pump Status: Pump Deactivated");
+    }
+}

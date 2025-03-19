@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "./include/mainwindow.h"
-// #include "ads1115manager.h" // Waiting for sensor to implement this
+
 
 int main(int argc, char *argv[])
 {
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
             background: #006cbd;
         }
     )");
-    
     MainWindow mainWindow;
     mainWindow.show();
     return app.exec();
+    
 }
