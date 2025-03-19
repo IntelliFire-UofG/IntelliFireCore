@@ -96,6 +96,17 @@ target_include_directories(ADS1115ManagerLib PRIVATE ${CMAKE_SOURCE_DIR}/src/Int
 target_link_libraries(ADS1115ManagerLib PRIVATE Qt5::Core ADS1115Lib)
 
 #------------------------------------------------------------------------------
+# Build ADS1115ManagerLib as a static library
+#------------------------------------------------------------------------------
+add_library(PumpControlLib STATIC
+    src/pumpControl.cpp
+    include/pumpControl.h
+)
+
+target_include_directories(PumpControlLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
+target_link_libraries(PumpControlLib PRIVATE Qt5::Core ${GPIOD_LIB})
+
+#------------------------------------------------------------------------------
 # Build cam2opencv as a Static Library
 #------------------------------------------------------------------------------
 add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
@@ -112,7 +123,6 @@ add_executable(IntelliFireUI
     src/IntelliFireUI/src/sensorContainer.cpp
     src/IntelliFireUI/src/keyLogger.cpp
     src/fireDetector.cpp
-    src/pumpControl.cpp
     src/IntelliFireUI/resources.qrc
     src/IntelliFireUI/include/mainwindow.h
     src/IntelliFireUI/include/sensorContainer.h
@@ -125,6 +135,7 @@ target_link_libraries(IntelliFireUI
     UltraSonicSensorLib
     ADS1115Lib 
     ADS1115ManagerLib
+    PumpControlLib
     cam2opencv
     qwt-qt5
     ${OpenCV_LIBS}

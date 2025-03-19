@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "./include/mainwindow.h"
-#include "pumpControl.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
             background: #006cbd;
         }
     )");
-    PumpControl pump_control;
-    pump_control.start();
     MainWindow mainWindow;
     mainWindow.show();
     return app.exec();

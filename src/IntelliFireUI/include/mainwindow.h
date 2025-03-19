@@ -7,6 +7,7 @@
 #include "sensorContainer.h"
 #include "keyLogger.h"
 #include "libcam2opencv.h"
+#include "pumpControl.h"
 
 class MainWindow : public QMainWindow
 {
@@ -40,6 +41,7 @@ private Q_SLOTS:
     void handleParamButton();
     void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
     void updateKeyDisplay(KeyEventInfo keyInfo);
+    void updatePumpStatus(float pump_status);
 
 private:
     // void setupUI();
@@ -54,7 +56,8 @@ private:
     void updateKeyDisplay(QString key);
 
     QLabel *pumpStatusLabel;
-    void updatePumpStatus();
+    
+    PumpControl *pump_control;
 
 };
 
