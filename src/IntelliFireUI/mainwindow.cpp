@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Left side - Sensor grid
     QGridLayout *sensorGrid = new QGridLayout;
 
-    Stored pointers for each sensor container
+    //Stored pointers for each sensor container
     SensorContainer *container_1 = new SensorContainer(1);
     SensorContainer *container_2 = new SensorContainer(2);
     SensorContainer *container_3 = new SensorContainer(3);
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     SensorContainer *container_5 = new SensorContainer(5);
     SensorContainer *container_6 = new SensorContainer(6);
     
-    Sensor containers mapped into layout
+    //Sensor containers mapped into layout
     sensorGrid->addWidget(container_1, 0, 0); // Flame Sensor 1
     sensorGrid->addWidget(container_2, 0, 1); // Flame Sensor 2
     sensorGrid->addWidget(container_3, 1, 0); // Flame Sensor 3
