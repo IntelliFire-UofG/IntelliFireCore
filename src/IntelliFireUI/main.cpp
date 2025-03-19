@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QProcess mediaMtxProcess;
-    mediaMtxProcess.setWorkingDirectory("/home/mo/mediamtx_folder");
+    mediaMtxProcess.setWorkingDirectory("../mediamtx_folder");
     mediaMtxProcess.start("./mediamtx");
 
     if (!mediaMtxProcess.waitForStarted()) {
