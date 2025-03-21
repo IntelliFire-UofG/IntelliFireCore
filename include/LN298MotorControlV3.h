@@ -18,7 +18,7 @@
  * This class provides methods to control motor movement through the L298N motor driver,
  * allowing forward, backward, stop, and turning operations.
  *
- * @author Misael Rivera
+ * @author Abdul-Fattah Abdulateef 
  * @date 2025-02-01
  */
 class Motor {
