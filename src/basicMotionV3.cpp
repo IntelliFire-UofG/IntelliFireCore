@@ -7,7 +7,7 @@ void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& las
 
 int basicMotion() {
     Motor leftMotor(12, 17, 27);                      
-    Motor rightMotor(13, 22, 23);
+    Motor rightMotor(13, 23, 22);
 
     std::atomic<char> lastKey;
     lastKey.store('\0');
