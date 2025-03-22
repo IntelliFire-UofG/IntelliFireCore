@@ -107,6 +107,33 @@ make
 ## 📸 **Demo & Screenshots**
 (Add images or GIFs showing the system in action!)
 
+---
+
+## 📟 **RPi GPIOs Table**
+
+> [!IMPORTANT]
+> Make sure of connecting the following properly, if not ask the team through our different channels.
+> 
+| IntelliFire Feature | # GPIO |
+| :---------------- | :---:|
+| Left Motor PWM    | 12 |
+| Left Motor FWD    | 17 |
+| Left Motor BWD    | 27 |
+| Right Motor PWM   | 13 |
+| Right Motor FWD   | 23 |
+| Right Motor BWD   | 22 |
+| ADS1115 Data R.   | 5 |
+| ADS1115 I2C SDA   | 2 |
+| ADS1115 I2C SCL   | 3 |
+| L393M Flame 1     | 9 |
+| L393M Flame 2     | 10 |
+| Pump              | 11 |
+| Ultrasonic Echo   | 24 |
+| Ultrasonic Trig   | 25 |
+| IR Presence       | 16 |
+
+---
+
 ## 🤝 **Contributing**
 Contributions are welcome! Please open an issue or submit a pull request.
 
