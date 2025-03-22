@@ -5,9 +5,9 @@
 #include "fireDetector.h"
 
 #define GPIO_CHIP    4
-#define SENSOR_PIN_0 22
-#define SENSOR_PIN_1 26
-#define PUMP_PIN     27
+#define SENSOR_PIN_0 9
+#define SENSOR_PIN_1 10
+#define PUMP_PIN     11
 
 class PumpControl : public QObject, public FireDetector::FireDetectorCallbackInterface
 {
