@@ -27,22 +27,12 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #------------------------------------------------------------------------------
 # Find Required Packages
 #------------------------------------------------------------------------------
-find_package(PkgConfig REQUIRED)
-find_package(OpenCV REQUIRED)
+
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-# libcamera library
-pkg_check_modules(LIBCAMERA REQUIRED IMPORTED_TARGET libcamera)
-message(STATUS "libcamera library found:")
-message(STATUS "    version: ${LIBCAMERA_VERSION}")
-message(STATUS "    libraries: ${LIBCAMERA_LINK_LIBRARIES}")
-message(STATUS "    include path: ${LIBCAMERA_INCLUDE_DIRS}")
 
-# OpenCV info
-message(STATUS "OpenCV:")
-message(STATUS "    version: ${OpenCV_VERSION}")
-message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 # Locate libgpiod for UltraSonicSensor library
 find_library(GPIOD_LIB gpiod)
@@ -56,8 +46,7 @@ endif()
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include
-    ${LIBCAMERA_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS}
+    
 )
 
 #------------------------------------------------------------------------------
@@ -106,17 +95,9 @@ add_library(PumpControlLib STATIC
 target_include_directories(PumpControlLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
 target_link_libraries(PumpControlLib PRIVATE Qt5::Core ${GPIOD_LIB})
 
-#------------------------------------------------------------------------------
-# Build cam2opencv as a Static Library
-#------------------------------------------------------------------------------
-add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
-target_include_directories(cam2opencv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(cam2opencv PkgConfig::LIBCAMERA ${OpenCV_LIBS})
-target_compile_options(cam2opencv PRIVATE ${LIBCAMERA_CFLAGS_OTHER})
 
-#------------------------------------------------------------------------------
-# IntelliFire UI Executable (with Camera and Sensor Support)
-#------------------------------------------------------------------------------
+
+
 add_executable(IntelliFireUI
     src/IntelliFireUI/main.cpp
     src/IntelliFireUI/mainwindow.cpp
@@ -136,11 +117,11 @@ target_link_libraries(IntelliFireUI
     ADS1115Lib 
     ADS1115ManagerLib
     PumpControlLib
-    cam2opencv
+    
     qwt-qt5
-    ${OpenCV_LIBS}
+    
     ${GPIOD_LIB}
-    PkgConfig::LIBCAMERA
+    
 )
 
 #------------------------------------------------------------------------------
@@ -148,4 +129,14 @@ target_link_libraries(IntelliFireUI
 #------------------------------------------------------------------------------
 include(GNUInstallDirs)
 install(TARGETS IntelliFireUI RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS UltraSonicSensorLib cam2opencv ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS UltraSonicSensorLib ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+#------------------------------------------------------------------------------
+# Build mediamtx_http_scanner as a Separate Executable
+#------------------------------------------------------------------------------
+find_package(CURL REQUIRED)
+
+add_executable(mediamtx_http_scanner mediamtx_scanner/mediamtx_http_scanner.cpp)
+
+# No need for target_include_directories since there are no custom headers
+target_link_libraries(mediamtx_http_scanner PRIVATE CURL::libcurl)
