@@ -6,6 +6,10 @@
 #include <QDebug>
 #include <QTimer>
 
+#define ULTRASONIC_ECHO 24 
+#define ULTRASONIC_TRIGGER 25
+#define IR_PRESENCE 16
+
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     : QWidget(parent), sensorNumber(containerNumber), ultrasonicSensor(new UltraSonicSensor(this))
 {
@@ -33,17 +37,18 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 
     switch (containerNumber) {
         case 5:  // **Ultrasonic Sensor**
+
             title->setText("Ultrasonic Sensor Distance:");
             ultrasonicSensor = new UltraSonicSensor(this);
             connect(ultrasonicSensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
-            ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
+            ultrasonicSensor->start("/dev/gpiochip0", ULTRASONIC_TRIGGER, ULTRASONIC_ECHO);
             break;
 
         case 6:  // **IR Sensor**
             title->setText("IR Sensor Status:");
             irSensor = new IRSensor();
             irSensor->registerCallback(this);
-            irSensor->start("/dev/gpiochip0", 12); // Adjust GPIO pin as needed
+            irSensor->start("/dev/gpiochip0", IR_PRESENCE); // Adjust GPIO pin as needed
             break;
 
         default:  // **Flame Sensor (or other)**
