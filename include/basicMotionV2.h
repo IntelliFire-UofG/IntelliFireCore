@@ -10,4 +10,13 @@
  * @return int Status code (0 for success)
  */
 int basicMotion();
+
+/**
+ * @brief Stops both motors when called from external components
+ * 
+ * This function can be called by other parts of the system (like flame detection)
+ * to immediately stop all motors in an emergency situation.
+ */
+void stopMotors();
+
 #endif
