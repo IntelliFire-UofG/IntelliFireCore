@@ -49,7 +49,6 @@
 
 #include <iostream>
 #include <thread>
-
 #include <libgpio.h>
 #include <atomic>
 #include <memory>
@@ -69,59 +68,30 @@
 void keyboardListener(std::atomic<char>& lastKey);
 void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
 
+extern int basicMotion();
+extern void stopMotors();
 // this function is responisble to run basicMotion in a separate thread
-void basicMotionThreaded(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Motor> rightMotor, std::atomic<bool>& running) {
-    std::atomic<char> lastKey;
-    lastKey.store('\0');
-
-    // Start keyboard listener thread
-    std::thread keyboardThread(keyboardListener, std::ref(lastKey));
-    
-    // Run keyboard control (this blocks until 'q' is pressed or another exit condition)
-    keyboardControl(*leftMotor, *rightMotor, std::ref(lastKey));
-    
-    // When keyboardControl returns, set running to false to signal other threads
+void basicMotionThreaded(std::atomic<bool>& running) {
+    basicMotion();
     running.store(false);
-    
-    // Wait for keyboard thread
-    if (keyboardThread.joinable()) {
-        keyboardThread.detach(); // Using detach since the original code uses it
-    }
 }
 
 int main() {
-    std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
+    std::cout << "🔥 Autonomous Fire Truck System Initializing..." << std::endl;
     
-    std::shared_ptr<Motor> leftMotor = std::make_shared<Motor>(12, 17, 27);
-    std::shared_ptr<Motor> rightMotor = std::make_shared<Motor>(13, 22, 23);
-
+    // Flag to indicate if the system is running
     std::atomic<bool> running(true);
     
-    std::thread basicMotionThreaded(basicMotionThreaded, leftMotor, rightMotor, std::ref(running));
-
-    while (running.load()){
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-
-    if (basicMotionThreaded.joinable()) {
-        basicMotionThreaded.join();
-    }
-    // Initialize event handler
-    // EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
+    // Start basicMotion in a separate thread
+    std::thread basicMotionThreaded(basicMotionThreaded, std::ref(running));
 
     // Initialize ADC Reader for flame sensors
     ADCReader adcReader(0x48);  // I2C address for ADS1015/ADS1115 
 
-    /*
-    This is considered for further use
-    // Initialize Display Manager for real-time visualization
-    // DisplayManager displayManager;
-    */
-
     // Register ADC callback to react to fire detection
     adcReader.registerFlameCallback([&](int channel, int value) {
         std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
-        motorController.stop();  // Example response: Stop if flame is detected
+        stopMotors();  // Stop motors when flame is detected
     });
 
     // Start Event Loop (Runs in Separate Thread)
@@ -129,5 +99,21 @@ int main() {
     std::thread eventThread(&EventLoop::run, &eventLoop);
 
     std::cout << "✅ System Running..." << std::endl;
-    eventThread.join();  // Keep main thread alive
+    
+    // Main thread waits for basicMotion thread to finish
+    while (running.load()){
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    if (basicMotionThreaded.joinable()) {
+        basicMotionThreaded.join();
+    }
+    
+    // Clean up event thread
+    eventLoop.stop();
+    if (eventThread.joinable()) {
+        eventThread.join();
+    }
+    
+    return 0;
 }
