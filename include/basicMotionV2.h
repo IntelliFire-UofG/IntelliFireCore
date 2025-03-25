@@ -1,5 +1,9 @@
 #ifndef BASIC_MOTION_V2_H
 #define BASIC_MOTION_V2_H
+#include <atomic>
+#include <thread>
+#include <memory>
+
 /**
  * @brief Initializes and runs the keyboard-controlled motion system for the fire truck
  * 
