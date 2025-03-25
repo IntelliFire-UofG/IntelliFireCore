@@ -43,6 +43,13 @@ public:
      */
     Motor(int pwm_channel, int in1_pin, int in2_pin, int frequency = 100);
 
+        /**
+     * @brief Moves the motor in forward direction.
+     * 
+     * @param speed Speed percentage (0-100, default 100)
+     */
+    void moveForward(int speed = 100);
+
     /**
      * @brief Moves the motor in backward direction.
      * 
