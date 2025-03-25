@@ -1,10 +1,9 @@
 #include "../include/LN298MotorControlV3.h"
-#include <atomic>
-#include <thread>
+#include "../include/basicMotionV2.h"
+
 // Function Declarations
 void keyboardListener(std::atomic<char>& lastKey);
 void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
-
 
 // Global motor instances for access by other system components
 std::shared_ptr<Motor> leftMotorInstance = nullptr;
