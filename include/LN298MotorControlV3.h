@@ -1,140 +1,91 @@
-#ifndef LN298MOTORCONTROLV2_H
-#define LN298MOTORCONTROLV2_H
+#ifndef LN298MOTORCONTROLV3_H
+#define LN298MOTORCONTROLV3_H
 
 #include <iostream>
-#include <gpiod.h>
-#include <thread>
-#include <atomic>
-#include <chrono>
-#include <termios.h>
-#include <unistd.h>
-#include "rpi_pwm.h"
+#include <gpiod.h>       // GPIO library for controlling pins on Raspberry Pi
+#include <thread>        // For handling threading operations
+#include <atomic>        // For thread-safe variables (used for keyboard control)
+#include <chrono>        // For time-based operations (e.g., delays)
+#include <termios.h>     // For handling terminal I/O settings for keyboard input
+#include <unistd.h>      // For low-level I/O operations
+#include "rpi_pwm.h"     // Include your PWM handling class for motor control
 
-#define CHIP_NAME "gpiochip0" // Raspberry Pi 5 GPIO chip
+#define CHIP_NAME "gpiochip0" // Raspberry Pi 5 GPIO chip name used by libgpiod
 
 /**
- * @class Motor
- * @brief Controls DC motors using the L298N motor driver via GPIO pins.
- *
- * This class provides methods to control motor movement through the L298N motor driver,
- * allowing forward, backward, stop, and turning operations.
- *
- * @author Abdul-Fattah Abdulateef 
- * @date 2025-02-01
+ * Motor Class
+ * This class provides a simple interface for controlling a motor using the L298N motor driver.
+ * It supports basic operations like moving forward, backward, stopping, and adjusting speed via PWM.
  */
 class Motor {
 private:
-    gpiod_chip *chip;     ///< GPIO chip interface
-    gpiod_line *in1;      ///< Input 1 GPIO line
-    gpiod_line *in2;      ///< Input 2 GPIO line
-    int pwm_channel;      ///< PWM channel for speed control
-    RPI_PWM pwm;          ///< PWM controller instance
-    int current_speed;    ///< Current speed percentage (0-100)
-    bool is_running;      ///< Flag indicating if motor is active
+    gpiod_chip* chip;     // Pointer to GPIO chip for accessing GPIO lines
+    RPI_PWM pwm;          // PWM object used for generating PWM signals for motor speed control
+    int in1_pin;          // GPIO pin for motor IN1 (controls motor direction)
+    int in2_pin;          // GPIO pin for motor IN2 (controls motor direction)
+    int pwm_channel;      // PWM channel used for controlling motor speed
+    int dutyCycle;        // Initial duty cycle value for PWM (default: 75%)
 
 public:
     /**
-     * @brief Constructs a Motor object connected to specific GPIO pins.
+     * Constructor: Initializes the motor with specified PWM channel, GPIO pins, and duty cycle.
      * 
-     * @param pwm_channel PWM channel for speed control (2 or 3 on Raspberry Pi 5)
-     * @param in1_pin GPIO pin number for Input 1
-     * @param in2_pin GPIO pin number for Input 2
-     * @param frequency PWM frequency in Hz (default 100)
+     * @param pwm_channel The PWM channel used for speed control (e.g., 0, 1)
+     * @param in1_pin GPIO pin number for IN1
+     * @param in2_pin GPIO pin number for IN2
+     * @param dutyCycle Initial duty cycle for PWM signal (default: 75%)
      */
-    Motor(int pwm_channel, int in1_pin, int in2_pin, int frequency = 100);
-
-        /**
-     * @brief Moves the motor in forward direction.
-     * 
-     * @param speed Speed percentage (0-100, default 100)
-     */
-    void moveForward(int speed = 100);
+    Motor(int pwm_channel, int in1_pin, int in2_pin, int dutyCycle = 75);
 
     /**
-     * @brief Moves the motor in backward direction.
-     * 
-     * @param speed Speed percentage (0-100, default 100)
+     * moveForward: Sets the motor to move forward.
+     * Activates the IN1 pin, deactivates the IN2 pin, and starts PWM signal.
      */
-    void moveBackward(int speed = 100);
+    void moveForward();
 
     /**
-     * @brief Stops the motor by cutting power.
+     * moveBackward: Sets the motor to move backward.
+     * Activates the IN2 pin, deactivates the IN1 pin, and starts PWM signal.
+     */
+    void moveBackward();
+
+    /**
+     * stop: Stops the motor by deactivating both IN1 and IN2 pins.
+     * Optionally stops the PWM signal if desired.
      */
     void stop();
 
     /**
-     * @brief Executes a left turn operation.
+     * setSpeed: Adjusts the motor speed by modifying the PWM duty cycle.
      * 
-     * @param speed Speed percentage (0-100, default 100)
-     */
-    void turnLeft(int speed = 100);
-
-    /**
-     * @brief Executes a right turn operation.
-     * 
-     * @param speed Speed percentage (0-100, default 100)
-     */
-    void turnRight(int speed = 100);
-
-    /**
-     * @brief Sets the motor speed.
-     * 
-     * @param speed Speed percentage (0-100)
+     * @param speed New speed value (0 to 100, representing percentage of max speed)
      */
     void setSpeed(int speed);
 
     /**
-     * @brief Gets the current motor speed.
-     * 
-     * @return Current speed percentage (0-100)
-     */
-    int getSpeed() const;
-
-    /**
-     * @brief Gradually increases motor speed.
-     * 
-     * @param target_speed Target speed percentage (0-100)
-     * @param step_size Speed increment per step (default 5)
-     * @param delay_ms Delay between steps in milliseconds (default 50)
-     */
-    void accelerate(int target_speed, int step_size = 5, int delay_ms = 50);
-
-    /**
-     * @brief Gradually decreases motor speed.
-     * 
-     * @param target_speed Target speed percentage (0-100)
-     * @param step_size Speed decrement per step (default 5)
-     * @param delay_ms Delay between steps in milliseconds (default 50)
-     */
-    void decelerate(int target_speed, int step_size = 5, int delay_ms = 50);
-
-    /**
-     * @brief Destructor that releases GPIO and PWM resources.
+     * Destructor: Cleans up resources, ensuring the motor is properly stopped and GPIO pins are released.
      */
     ~Motor();
 };
 
 /**
- * @brief Listens for keyboard input in a separate thread.
+ * keyboardListener: Continuously monitors keyboard input and updates the last key pressed.
+ * Uses atomic variables for thread safety when accessed by other threads.
  * 
- * This function runs in a separate thread and monitors keyboard input,
- * storing the last key pressed in an atomic variable.
- * 
- * @param lastKey Atomic reference to store the most recent key pressed
+ * @param lastKey Atomic character variable to store the last pressed key.
+ * @param keyPressed Atomic boolean variable to indicate if a key was pressed.
  */
-void keyboardListener(std::atomic<char>& lastKey);
+void keyboardListener(std::atomic<char>& lastKey, std::atomic<bool>& keyPressed);
 
 /**
- * @brief Controls motors based on keyboard input.
+ * keyboardControl: Handles motor control based on keyboard input.
+ * Uses 'w', 's', 'a', 'd' keys for movement control and 'x' for stopping the motors.
  * 
- * This function interprets keyboard commands and translates them
- * into motor movements (W: forward, S: backward, A: left, D: right).
- * Also supports speed control with number keys.
- * 
- * @param leftMotor Reference to the left motor object
- * @param rightMotor Reference to the right motor object
- * @param lastKey Atomic reference containing the last key pressed
+ * @param leftMotor Reference to the left motor object.
+ * @param rightMotor Reference to the right motor object.
+ * @param lastKey Atomic character representing the last pressed key.
+ * @param keyPressed Atomic boolean flag indicating if a key was pressed.
  */
-void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
+void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey, std::atomic<bool>& keyPressed);
 
 #endif // LN298MOTORCONTROLV3_H

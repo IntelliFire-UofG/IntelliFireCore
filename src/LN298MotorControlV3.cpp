@@ -1,311 +1,122 @@
 #include "../include/LN298MotorControlV3.h"
-#include <atomic>  // Fix atomic variable errors
-#include <thread>  // Fix thread-related errors
-#include <unistd.h> // Required for STDIN_FILENO
-#include <atomic>   // Required for std::atomic
-#include <condition_variable>
-#include <chrono>
-#include <fcntl.h>
-#include <sys/select.h>
+#include "rpi_pwm.h"
+#include <iostream>
+#include <cstdlib>
+#include <atomic>
+#include <thread>
+#include <termios.h>
+#include <unistd.h>
 
-std::mutex mtx;
-std::condition_variable cv;
-bool keyChanged = false;
+// Motor Constructor: Initializes the motor with given parameters.
+Motor::Motor(int pwm_channel, int in1_pin, int in2_pin, int dutyCycle) {
 
-
-Motor::Motor(int pwm_channel, int in1_pin, int in2_pin, int frequency) {
-    chip = gpiod_chip_open_by_name(CHIP_NAME);
-    if (!chip) {
-        std::cerr << "? Error: Unable to open GPIO chip!" << std::endl;
-        exit(1);
+    // Initialize the PWM signal on the given PWM channel with 100 Hz frequency and the specified duty cycle
+    if (pwm.start(pwm_channel, 100, dutyCycle) < 0) {  // Frequency = 100Hz (Good for DC motors)
+        std::cerr << "Failed to initialize PWM on channel " << pwm_channel << std::endl;
+        exit(1);  // Exit if initialization fails
     }
-    in1 = gpiod_chip_get_line(chip, in1_pin);
-    in2 = gpiod_chip_get_line(chip, in2_pin);
-
-    if (!in1 || !in2) {
-        std::cerr << "? Error: Unable to access GPIO pins!" << std::endl;
-        gpiod_chip_close(chip);
-        exit(1);
-    }
-    gpiod_line_request_output(in1, "motor_in1", 0);
-    gpiod_line_request_output(in2, "motor_in2", 0);
-
-    this->pwm_channel = pwm_channel;
-
-    if (pwm.start(pwm_channel, frequency) < 0) {
-        std::cerr << "? Error: Failed to initialize PWM on channel" << pwm_channel << std::endl;
-        std::cerr << " Make sure 'dtoverlay=pwm-2chan' is added to /boot/firmware/config.txt" << std::endl;
-        exit(1);
-    }
-
-    current_speed = 0;
-    pwm.setDutyCycle(0);
-    is_running = false;
-
-    std::cout<< "?? Motor initialized with PWM on channel " << pwm_channel << " at " << frequency << "Hz" << std::endl;
+    
+    // Store motor control pin numbers and duty cycle
+    this->in1_pin = in1_pin;
+    this->in2_pin = in2_pin;
+    this->dutyCycle = dutyCycle;
 }
 
+// Function to move the motor forward
+void Motor::moveForward() {
+    pwm.setDutyCycle(75);  // Set PWM duty cycle to 75% for forward movement (High speed)
 
-void Motor::moveForward(int speed) {
-    // stop();
-    gpiod_line_set_value(in1, 1);
-    gpiod_line_set_value(in2, 0);
-    // gpiod_line_set_value(pwm, 1);
-
-    setSpeed(speed);
-    is_running = true;
-    std::cout << "?? Moving Forward at " << current_speed << "% speed" << std::endl;
+    // Set motor direction using GPIO pins: IN1=1, IN2=0
+    std::system(("gpioset gpiochip0 " + std::to_string(in1_pin) + "=1").c_str());
+    std::system(("gpioset gpiochip0 " + std::to_string(in2_pin) + "=0").c_str());
 }
 
-void Motor::moveBackward(int speed) {
-    // stop();
-    gpiod_line_set_value(in1, 0);
-    gpiod_line_set_value(in2, 1);
-    // gpiod_line_set_value(pwm, 1);
+// Function to move the motor backward
+void Motor::moveBackward() {
+    pwm.setDutyCycle(75);  // Set PWM duty cycle to 75% for backward movement (High speed)
 
-    setSpeed(speed);
-    is_running = true;
-    std::cout << "?? Moving Backward at " << current_speed << "% speed" << std::endl;
+    // Set motor direction using GPIO pins: IN1=0, IN2=1
+    std::system(("gpioset gpiochip0 " + std::to_string(in1_pin) + "=0").c_str());
+    std::system(("gpioset gpiochip0 " + std::to_string(in2_pin) + "=1").c_str());
 }
 
+// Function to stop the motor
 void Motor::stop() {
-    gpiod_line_set_value(in1, 0);
-    gpiod_line_set_value(in2, 0);
-    // gpiod_line_set_value(pwm, 0);
-
-    setSpeed(0);
-    is_running = false;
-    std::cout << "?? Motor Stopped" << std::endl;
+    pwm.setDutyCycle(0);  // Set PWM duty cycle to 0% to stop the motor (No power)
+    
+    // Set motor control pins to 0 (both low) to stop the motor
+    std::system(("gpioset gpiochip0 " + std::to_string(in1_pin) + "=0").c_str());
+    std::system(("gpioset gpiochip0 " + std::to_string(in2_pin) + "=0").c_str());
 }
 
-void Motor::turnLeft(int speed) {
-    // stop();
-    gpiod_line_set_value(in1, 1);
-    gpiod_line_set_value(in2, 0);
-    // gpiod_line_set_value(pwm, 1);
-
-    setSpeed(0);
-    is_running = false;
-
-    std::cout << "?? Turning Left at " << current_speed << "% speed" << std::endl;
-}
-
-void Motor::turnRight(int speed) {
-    // stop();
-    gpiod_line_set_value(in1, 1);
-    gpiod_line_set_value(in2, 0);
-    // gpiod_line_set_value(pwm, 1);
-
-    setSpeed(speed);
-    is_running = true;
-    std::cout << "?? Turning Right at " << current_speed << "% speed" << std::endl;
-}
-
+// Function to adjust motor speed by changing the duty cycle
 void Motor::setSpeed(int speed) {
-    if (speed < 0) speed = 0;
-    if (speed > 100) speed = 100;
-
-    current_speed = speed;
-    pwm.setDutyCycle(speed);
-}
-int Motor::getSpeed() const {
-    return current_speed;
+    dutyCycle = speed;  // Update duty cycle
+    pwm.setDutyCycle(dutyCycle);  // Apply the new duty cycle
 }
 
-void Motor::accelerate(int target_speed, int step_size, int delay_ms) {
-    // Clamp target speed
-    if (target_speed > 100) target_speed = 100;
-    if (target_speed < 0) target_speed = 0;
-    
-    // Only accelerate if target is higher than current
-    if (current_speed < target_speed) {
-        for (int speed = current_speed; speed <= target_speed; speed += step_size) {
-            setSpeed(speed);
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
-        }
-        // Ensure we hit the exact target speed
-        setSpeed(target_speed);
-    } else {
-        // If already at or above target, just set the speed directly
-        setSpeed(target_speed);
-    }
-}
-
-void Motor::decelerate(int target_speed, int step_size, int delay_ms) {
-    // Clamp target speed
-    if (target_speed > 100) target_speed = 100;
-    if (target_speed < 0) target_speed = 0;
-    
-    // Only decelerate if target is lower than current
-    if (current_speed > target_speed) {
-        for (int speed = current_speed; speed >= target_speed; speed -= step_size) {
-            setSpeed(speed);
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
-        }
-        // Ensure we hit the exact target speed
-        setSpeed(target_speed);
-    } else {
-        // If already at or below target, just set the speed directly
-        setSpeed(target_speed);
-    }
-}
-
+// Motor Destructor: Stops the motor and cleans up resources
 Motor::~Motor() {
-
-    pwm.stop();
-    // gpiod_line_release(pwm);
-    gpiod_line_release(in1);
-    gpiod_line_release(in2);
-    gpiod_chip_close(chip);
-
-    std::cout << "?? Motor resources released" << std::endl;
+    pwm.stop();  // Stop the PWM signal
 }
 
-void keyboardListener(std::atomic<char>& lastKey) {
+// Function to listen for keyboard inputs
+void keyboardListener(std::atomic<char>& lastKey, std::atomic<bool>& keyPressed) {
     struct termios oldt, newt;
-    char ch;
-    fd_set readfds;
-    struct timeval timeout;
-
-    // Save old terminal settings
-    tcgetattr(STDIN_FILENO, &oldt);
+    tcgetattr(STDIN_FILENO, &oldt);  // Save current terminal settings
     newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
+    newt.c_lflag &= ~(ICANON | ECHO);  // Disable canonical mode and echoing
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-    // Set stdin to non-blocking
-    int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
-    fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
-
+    char ch;
     while (true) {
-        FD_ZERO(&readfds);
-        FD_SET(STDIN_FILENO, &readfds);
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 50000;  // Check every 50ms
-
-        if (select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout) > 0) {
-            if (read(STDIN_FILENO, &ch, 1) > 0) {
-                {
-                    std::lock_guard<std::mutex> lock(mtx);
-                    lastKey.store(ch);
-                    keyChanged = true;
-                }
-                cv.notify_one();
-            }
-        } else {
-            // If we had a key pressed previously and no key now, store null character
-            char current = lastKey.load();
-            if (current != '\0') {
-                {
-                    std::lock_guard<std::mutex> lock(mtx);
-                    lastKey.store('\0');
-                    keyChanged = true;
-                }
-                cv.notify_one();
-            }
-        }
+        ch = getchar();  // Read a character from standard input
+        lastKey.store(ch);  // Store the character
+        keyPressed.store(true);  // Signal that a key was pressed
     }
 
-    // Restore old terminal settings
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);  // Restore original terminal settings
 }
 
-void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey) {
-    std::cout << "?? Control instructions:" << std::endl;
-    std::cout << "  W/A/S/D: Move forward/left/backward/right" << std::endl;
-    std::cout << "  1-9: Set speed (10-90%)" << std::endl;
-    std::cout << "  +/-: Increase/decrease speed by 10%" << std::endl;
-    std::cout << "  Q: Quit" << std::endl;
-
-    char prevKey = '\0';  // Track previous key state
-    bool motorRunning = false;
-    int currentSpeed = 70; // Default speed 70%
+// Function to control the motors using keyboard inputs
+void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey, std::atomic<bool>& keyPressed) {
+    std::cout << "Use W/A/S/D to control the motors. Press Q to quit." << std::endl;
 
     while (true) {
-        // Wait for key change with timeout
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait_for(lock, std::chrono::milliseconds(100), []{ return keyChanged; });
-        
-        // Reset key changed flag
-        keyChanged = false;
-        
-        // Get current key
-        char key = lastKey.load();
+        char key = lastKey.load();  // Read the last pressed key
 
-        // Handle speed control with number keys
-        if (key >= '1' && key <= '9') {
-            currentSpeed = (key - '0') * 10; // Convert key '1'-'9' to speed 10%-90%
-            std::cout << "?? Speed set to " << currentSpeed << "%" << std::endl;
-            
-            // Update speed if motors are running
-            if (leftMotor.getSpeed() > 0) {
-                leftMotor.setSpeed(currentSpeed);
-            }
-            if (rightMotor.getSpeed() > 0) {
-                rightMotor.setSpeed(currentSpeed);
-            }
-            continue;
-        }
-        
-        // Handle speed increase/decrease with +/- keys
-        if (key == '+' || key == '=') { // '=' is the unshifted '+' on many keyboards
-            currentSpeed = std::min(100, currentSpeed + 10);
-            std::cout << "?? Speed increased to " << currentSpeed << "%" << std::endl;
-            
-            // Update speed if motors are running
-            if (leftMotor.getSpeed() > 0) {
-                leftMotor.setSpeed(currentSpeed);
-            }
-            if (rightMotor.getSpeed() > 0) {
-                rightMotor.setSpeed(currentSpeed);
-            }
-            continue;
-        }
-        
-        if (key == '-' || key == '_') { // '_' is the shifted '-' on many keyboards
-            currentSpeed = std::max(10, currentSpeed - 10);
-            std::cout << "?? Speed decreased to " << currentSpeed << "%" << std::endl;
-            
-            // Update speed if motors are running
-            if (leftMotor.getSpeed() > 0) {
-                leftMotor.setSpeed(currentSpeed);
-            }
-            if (rightMotor.getSpeed() > 0) {
-                rightMotor.setSpeed(currentSpeed);
-            }
-            continue;
-        }
+        if (keyPressed.load()) {  // If a key was pressed
+            switch (key) {
+                case 'w':  // Move both motors forward
+                    leftMotor.moveForward();
+                    rightMotor.moveForward();
+                    break;
+                
+                case 's':  // Move both motors backward
+                    leftMotor.moveBackward();
+                    rightMotor.moveBackward();
+                    break;
+                
+                case 'a':  // Turn left by stopping the left motor and moving the right motor forward
+                    leftMotor.stop();
+                    rightMotor.moveForward();
+                    break;
+                
+                case 'd':  // Turn right by stopping the right motor and moving the left motor forward
+                    leftMotor.moveForward();
+                    rightMotor.stop();
+                    break;
+                
+                case 'x':  // Stop both motors (Emergency Stop)
+                    leftMotor.stop();
+                    rightMotor.stop();
+                    break;
 
-        // Handle movement keys only if they changed
-        if (key != prevKey) {
-            prevKey = key;
-
-            if (key == 'w') {
-                leftMotor.moveForward(currentSpeed);
-                rightMotor.moveForward(currentSpeed);
-                motorRunning = true;
-            } else if (key == 's') {
-                leftMotor.moveBackward(currentSpeed);
-                rightMotor.moveBackward(currentSpeed);
-                motorRunning = true;
-            } else if (key == 'a') {
-                leftMotor.moveForward(currentSpeed);
-                rightMotor.moveBackward(currentSpeed);
-                motorRunning = true;
-            } else if (key == 'd') {
-                leftMotor.moveBackward(currentSpeed);
-                rightMotor.moveForward(currentSpeed);
-                motorRunning = true;
-            } else if (key == '\0' && motorRunning) {
-                leftMotor.stop();
-                rightMotor.stop();
-                motorRunning = false;
-            } else if (key == 'q') {
-                std::cout << "?? Exiting..." << std::endl;
-                leftMotor.stop();
-                rightMotor.stop();
-                return;
+                case 'q':  // Quit the program
+                    std::cout << "Exiting..." << std::endl;
+                    return;
             }
+            keyPressed.store(false);  // Reset key press status
         }
     }
 }
