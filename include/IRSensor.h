@@ -4,9 +4,10 @@
 #include <gpiod.h>
 #include <thread>
 #include <vector>
+#include <atomic>
+#include <mutex>
 #include <stdio.h>
 
-// Enable debug messages if not defined otherwise.
 #ifndef NDEBUG
 #define DEBUG
 #endif
@@ -15,61 +16,31 @@
 
 class IRSensor {
 public:
-    /**
-     * Destructor that ensures the sensor stops on exit.
-     **/
-    ~IRSensor() {
-        stop();
-    }
+    IRSensor() = default;
+    ~IRSensor();  // destructor will handle cleanup
 
-    // Callback interface similar to GPIOPin.
     struct IRSensorCallbackInterface {
-        /**
-         * Called when a new event is available.
-         * Must be implemented by the client.
-         * \param e The event (rising or falling edge).
-         **/
         virtual void hasEvent(gpiod_line_event& e) = 0;
+        virtual ~IRSensorCallbackInterface() = default;
     };
 
-    /**
-     * Registers a callback interface.
-     **/
-    void registerCallback(IRSensorCallbackInterface* ci) {
-        callbacks.push_back(ci);
-    }
+    void registerCallback(IRSensorCallbackInterface* ci);
 
-    /**
-     * Starts listening on the IR sensor.
-     * \param chipPath Path to the GPIO chip.
-     * \param pin Pin number for the sensor.
-     **/
     void start(const char* chipPath, int pin);
-
-    /**
-     * Stops listening to the sensor.
-     **/
     void stop();
 
 private:
-    // Notifies all registered callbacks of a new event.
     void irEvent(gpiod_line_event& event);
-
-    // Worker thread function.
     void worker();
 
-    // gpiod objects.
     gpiod_chip* chip = nullptr;
     gpiod_line* sensor_line = nullptr;
 
-    // Thread.
     std::thread thr;
+    std::atomic<bool> running{false};
 
-    // Running flag.
-    bool running = false;
-
-    // Vector of callback interfaces.
     std::vector<IRSensorCallbackInterface*> callbacks;
+    std::mutex callback_mutex;
 };
 
 #endif // __IR_SENSOR_H__

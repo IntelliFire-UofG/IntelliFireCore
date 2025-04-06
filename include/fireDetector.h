@@ -3,54 +3,47 @@
 
 #include <iostream>
 #include <thread>
-#include <gpiod.h>
 #include <vector>
+#include <atomic>
+#include <mutex>
+#include <gpiod.h>
 
-// enable debug messages and error messages to stderr
 #ifndef NDEBUG
 #define DEBUG
 #endif
 
 class FireDetector {
 public:
-    /**
-     * @brief Constructor for FireDetector
-     */
     FireDetector();
+    ~FireDetector();
 
     struct FireDetectorCallbackInterface {
-	    /**
-	     * Called when a new sample is available.
-	     * This needs to be implemented in a derived
-	     * class by the client. Defined as abstract.
-	     * \param sample Voltage from the selected channel.
-	     **/
-	virtual void fireDetected(unsigned int sensor_id, int event_type) = 0;
+        virtual void fireDetected(unsigned int sensor_id, int event_type) = 0;
+        virtual ~FireDetectorCallbackInterface() = default;
     };
 
-    void registerCallback(FireDetectorCallbackInterface* ci) {
-        fire_callback_interfaces.push_back(ci);
-    }
-
+    void registerCallback(FireDetectorCallbackInterface* ci);
     void start(unsigned int id, unsigned int chip, unsigned int line);
-
     void stop();
 
-    void worker();
-
-    enum EventType{
+    enum EventType {
         RISING_EDGE = 0,
         FALLING_EDGE
     };
 
 private:
+    void worker();
+
     std::vector<FireDetectorCallbackInterface*> fire_callback_interfaces;
-    struct gpiod_chip *gpio_chip = nullptr;
-    struct gpiod_line *gpio_line =  nullptr;
+    std::mutex callback_mutex;
+
+    gpiod_chip* gpio_chip = nullptr;
+    gpiod_line* gpio_line = nullptr;
 
     std::thread thr;
-    bool running = false;
-    unsigned int id;
+    std::atomic<bool> running{false};
+
+    unsigned int id = 0;
 };
 
 #endif // __FIREDETECTOR_H

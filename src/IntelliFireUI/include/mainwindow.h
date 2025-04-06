@@ -3,62 +3,49 @@
 
 #include <QMainWindow>
 #include <QSlider>
-#include <QKeyEvent>
+#include <QLabel>
+#include <memory>
+
 #include "sensorContainer.h"
 #include "keyLogger.h"
-#include "libcam2opencv.h"
 #include "pumpControl.h"
 
-class MainWindow : public QMainWindow
-{
+/**
+ * @class MainWindow
+ * @brief Main UI window of the IntelliFire system.
+ */
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    
     explicit MainWindow(QWidget *parent = nullptr);
-    QLabel       *image;
-    void updateImage(const cv::Mat &mat);
+    ~MainWindow();
 
-    KeyLogger *getKeyLogger();  // Make KeyLogger accessible
+    KeyLogger* getKeyLogger();  // Exposed for access
+
+protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
-
-    struct MyCallback : Libcam2OpenCV::Callback {
-        MainWindow* mainwindow = nullptr;
-        virtual void hasFrame(const cv::Mat &frame, const libcamera::ControlList &) {
-            if (nullptr != mainwindow) {
-                mainwindow->updateImage(frame);
-            }
-        }
-    };
-    
-    Libcam2OpenCV camera;
-    MyCallback myCallback; 
-
 
 private Q_SLOTS:
     void handleSpeedButton();
     void handleParamButton();
-    void initializeADS1115(SensorContainer *container_1, SensorContainer *container_2, SensorContainer *container_3, SensorContainer *container_4);
+    void initializeADS1115(SensorContainer *c1, SensorContainer *c2,
+                           SensorContainer *c3, SensorContainer *c4);
     void updateKeyDisplay(KeyEventInfo keyInfo);
     void updatePumpStatus(float pump_status);
 
 private:
-    // void setupUI();
     void createSliders();
-    // void createSensorGrid();
-    
-    QSlider *speedSlider;
-    QSlider *paramSlider;
 
-    QLabel *keyDisplayLabel;
-    KeyLogger *keyLogger;
-    void updateKeyDisplay(QString key);
+    QSlider *speedSlider = nullptr;
+    QSlider *paramSlider = nullptr;
 
-    QLabel *pumpStatusLabel;
-    
-    PumpControl *pump_control;
+    QLabel *keyDisplayLabel = nullptr;
+    QLabel *pumpStatusLabel = nullptr;
 
+    std::unique_ptr<KeyLogger> keyLogger;
+    std::unique_ptr<PumpControl> pump_control;
 };
 
 #endif // MAINWINDOW_H
