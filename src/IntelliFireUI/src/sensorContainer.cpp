@@ -5,9 +5,10 @@
 #include <QPixmap>
 #include <QDebug>
 #include <QTimer>
+#include <iostream>
 
 SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
-    : QWidget(parent), sensorNumber(containerNumber), ultrasonicSensor(new UltraSonicSensor(this))
+    : QWidget(parent), sensorNumber(containerNumber), ultrasonicSensor(nullptr), irSensor(nullptr)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     
@@ -34,17 +35,37 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
     switch (containerNumber) {
         case 5:  // **Ultrasonic Sensor**
             title->setText("Ultrasonic Sensor Distance:");
+            
             ultrasonicSensor = new UltraSonicSensor(this);
             connect(ultrasonicSensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
-            ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
+            try {
+                ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
+                
+            } catch (const std::exception& e) {
+                qWarning() << "Failed to start ultrasonic sensor:" << e.what();
+                
+                value_label->setText("Sensor error");
+            }
             break;
+        
+            // ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
+            // break;
 
         case 6:  // **IR Sensor**
             title->setText("IR Sensor Status:");
             irSensor = new IRSensor();
             irSensor->registerCallback(this);
-            irSensor->start("/dev/gpiochip0", 12); // Adjust GPIO pin as needed
-            break;
+            try {
+                std::cout<<"IR"<<std::endl;
+                irSensor->start("/dev/gpiochip0", 12);
+                
+            } catch (const std::exception& e) {
+                qWarning() << "Failed to start IR sensor:" << e.what();
+                
+                value_label->setText("Sensor error");
+            }
+            // irSensor->start("/dev/gpiochip0", 12); // Adjust GPIO pin as needed
+             break;
 
         default:  // **Flame Sensor (or other)**
             title->setText(QString("Flame Sensor Value: %1").arg(containerNumber));
@@ -71,7 +92,9 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
 }
 
 SensorContainer::~SensorContainer() {
+    
     if (irSensor) {
+        
         irSensor->stop();
         delete irSensor;
     }
@@ -82,6 +105,7 @@ SensorContainer::~SensorContainer() {
 
 // **Callback for IR sensor**
 void SensorContainer::hasEvent(gpiod_line_event& e) {
+    
     QString message;
     if (e.event_type == GPIOD_LINE_EVENT_FALLING_EDGE) {
         message = "Obstacle Detected!";
