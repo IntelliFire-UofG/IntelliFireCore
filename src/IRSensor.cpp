@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 #include <string.h>
+#include <stdexcept>
 
 // This start() method mirrors the GPIOPin::start() method.
 // It opens the chip and line using the given chip path and pin number.
@@ -19,7 +20,7 @@ void IRSensor::start(const char* chipPath, int pin) {
 #ifdef DEBUG
         fprintf(stderr, "GPIO chip could not be accessed.\n");
 #endif
-        throw "GPIO chip error.";
+    throw std::runtime_error ("GPIO chip error.");
     }
     
     sensor_line = gpiod_chip_get_line(chip, pin);
