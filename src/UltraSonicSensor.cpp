@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <QMetaObject>
+#include <stdexcept>
+
 
 void UltraSonicSensor::start(const char* chipPath, int triggerPin, int echoPin) {
 #ifdef DEBUG
@@ -15,7 +17,7 @@ void UltraSonicSensor::start(const char* chipPath, int triggerPin, int echoPin) 
 #ifdef DEBUG
         std::cerr << "Failed to access GPIO chip." << std::endl;
 #endif
-        throw "GPIO chip error.";
+    throw std::runtime_error ("GPIO chip error.");
     }
     
     trigger_line = gpiod_chip_get_line(chip, triggerPin);
