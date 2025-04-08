@@ -38,6 +38,7 @@ public:
          * \param sample Voltage from the selected channel.
          **/
         virtual void fireDetected(unsigned int sensor_id, int event_type) = 0;
+	virtual ~FireDetectorCallbackInterface() = default;
     };
 
     void registerCallback(FireDetectorCallbackInterface* ci) {

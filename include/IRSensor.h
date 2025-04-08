@@ -13,7 +13,9 @@
 #define DEBUG
 #endif
 
-#define ISR_TIMEOUT 1 // sec
+#ifndef ISR_TIMEOUT
+#define ISR_TIMEOUT 1 
+#endif
 
 class IRSensor {
 public:
@@ -31,6 +33,7 @@ public:
     // Callback interface similar to GPIOPin.
     struct IRSensorCallbackInterface {
         virtual void hasEvent(gpiod_line_event& e) = 0;
+	virtual ~IRSensorCallbackInterface() = default;
     };
 
     void registerCallback(IRSensorCallbackInterface* ci) {

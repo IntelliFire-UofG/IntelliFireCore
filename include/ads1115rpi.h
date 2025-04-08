@@ -32,7 +32,9 @@
 
 static const char could_not_open_i2c[] = "Could not open I2C.\n";
 
+#ifndef ISR_TIMEOUT
 #define ISR_TIMEOUT 1000
+#endif
 
 // default address if ADDR is pulled to GND
 #define DEFAULT_ADS1115_ADDRESS 0x48
@@ -109,6 +111,7 @@ public:
 
     struct ADSCallbackInterface {
         virtual void hasADS1115Sample(float sample) = 0;
+	virtual ~ADSCallbackInterface() = default;
     };
 
     void registerCallback(ADSCallbackInterface* ci) {

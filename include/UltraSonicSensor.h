@@ -40,6 +40,7 @@ public:
          * \param distance The measured distance in centimeters.
          **/
         virtual void onDistanceMeasured(float distance) = 0;
+	virtual ~UltraSonicSensorCallbackInterface() = default;
     };
 
     void registerCallback(UltraSonicSensorCallbackInterface* ci) {

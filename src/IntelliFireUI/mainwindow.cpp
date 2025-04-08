@@ -7,6 +7,10 @@
 #include "sensorContainer.h"
 #include "ads1115manager.h"
 
+MainWindow::~MainWindow() {
+    // No manual deletion needed; smart pointers handle cleanup
+}
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setWindowTitle("Welcome to IntelliFire UI");

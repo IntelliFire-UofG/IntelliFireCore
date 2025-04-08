@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     // Launch MediaMTX server process
     QScopedPointer<QProcess> mediaMtxProcess(new QProcess);
     mediaMtxProcess->setWorkingDirectory("../mediamtx_folder");
-    mediaMtxProcess->start("./mediamtx");
+    mediaMtxProcess->start("./mediamtx", QStringList());
 
     if (!mediaMtxProcess->waitForStarted()) {
         qDebug() << "❌ Failed to start MediaMTX!";
