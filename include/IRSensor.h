@@ -4,10 +4,11 @@
 #include <gpiod.h>
 #include <thread>
 #include <vector>
+#include <stdio.h>
 #include <atomic>
 #include <mutex>
-#include <stdio.h>
 
+// Enable debug messages if not defined otherwise.
 #ifndef NDEBUG
 #define DEBUG
 #endif
@@ -17,14 +18,25 @@
 class IRSensor {
 public:
     IRSensor() = default;
-    ~IRSensor();  // destructor will handle cleanup
 
+    ~IRSensor() {
+        stop();
+    }
+
+    IRSensor(const IRSensor&) = delete;
+    IRSensor& operator=(const IRSensor&) = delete;
+    IRSensor(IRSensor&&) = delete;
+    IRSensor& operator=(IRSensor&&) = delete;
+
+    // Callback interface similar to GPIOPin.
     struct IRSensorCallbackInterface {
         virtual void hasEvent(gpiod_line_event& e) = 0;
-        virtual ~IRSensorCallbackInterface() = default;
     };
 
-    void registerCallback(IRSensorCallbackInterface* ci);
+    void registerCallback(IRSensorCallbackInterface* ci) {
+        std::lock_guard<std::mutex> lock(cb_mutex);
+        callbacks.push_back(ci);
+    }
 
     void start(const char* chipPath, int pin);
     void stop();
@@ -40,7 +52,7 @@ private:
     std::atomic<bool> running{false};
 
     std::vector<IRSensorCallbackInterface*> callbacks;
-    std::mutex callback_mutex;
+    std::mutex cb_mutex;
 };
 
 #endif // __IR_SENSOR_H__

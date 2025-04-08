@@ -5,6 +5,7 @@
 #include <QSlider>
 #include <QLabel>
 #include <memory>
+#include <mutex>
 
 #include "sensorContainer.h"
 #include "keyLogger.h"
@@ -20,6 +21,12 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    // Rule of Five: Prevent copying
+    MainWindow(const MainWindow&) = delete;
+    MainWindow& operator=(const MainWindow&) = delete;
+    MainWindow(MainWindow&&) = delete;
+    MainWindow& operator=(MainWindow&&) = delete;
 
     KeyLogger* getKeyLogger();  // Exposed for access
 
@@ -46,6 +53,8 @@ private:
 
     std::unique_ptr<KeyLogger> keyLogger;
     std::unique_ptr<PumpControl> pump_control;
+
+    std::mutex ui_mutex;  // Optional: For future-proofing UI thread safety
 };
 
 #endif // MAINWINDOW_H

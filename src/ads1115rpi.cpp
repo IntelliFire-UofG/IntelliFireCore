@@ -1,69 +1,91 @@
 #include "ads1115rpi.h"
+
+#include <stdio.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
-#include <cstring>
-
-ADS1115rpi::~ADS1115rpi() {
-    stop();  // Ensure safe cleanup on destruction
-}
-
-void ADS1115rpi::registerCallback(ADSCallbackInterface* ci) {
-    std::lock_guard<std::mutex> lock(callback_mutex);
-    adsCallbackInterfaces.push_back(ci);
-}
+#include <stdexcept>
 
 void ADS1115rpi::start(ADS1115settings settings) {
     ads1115settings = settings;
 
-    // Open I2C device
-    char device[32];
-    snprintf(device, sizeof(device), "/dev/i2c-%d", settings.i2c_bus);
-    fd_i2c = open(device, O_RDWR);
+    char gpioFilename[20];
+    snprintf(gpioFilename, 19, "/dev/i2c-%d", settings.i2c_bus);
+    fd_i2c = open(gpioFilename, O_RDWR);
     if (fd_i2c < 0) {
-        throw "ADS1115rpi: Could not open I2C device.";
+        char i2copen[] = "Could not open I2C.\n";
+#ifdef DEBUG
+        fprintf(stderr, i2copen);
+#endif
+        throw std::runtime_error(i2copen);
     }
 
     if (ioctl(fd_i2c, I2C_SLAVE, settings.address) < 0) {
-        close(fd_i2c);
-        fd_i2c = -1;
-        throw "ADS1115rpi: Failed to set I2C address.";
+        char i2cslave[] = "Could not access I2C address.\n";
+#ifdef DEBUG
+        fprintf(stderr, i2cslave);
+#endif
+        throw std::runtime_error(i2cslave);
     }
 
-    // Enable ALERT/RDY
+#ifdef DEBUG
+    fprintf(stderr, "Init.\n");
+#endif
+
+    // Enable RDY
     i2c_writeWord(reg_lo_thres, 0x0000);
     i2c_writeWord(reg_hi_thres, 0x8000);
 
-    unsigned config = (1 << 15); // OS=1 (start single conversion)
-    config |= (settings.channel << 12);
-    config |= (settings.pgaGain << 9);
-    config |= (1 << 8); // MODE=1 (single-shot mode)
-    config |= (settings.samplingRate << 5);
-    config |= (3 << 0); // COMP_MODE=traditional, COMP_POL=active low, COMP_LAT=non-latching
+    unsigned r = (0b10000000 << 8); // kick it all off
+    r = r | (1 << 2) | (1 << 3); // data ready active high & latching
+    r = r | (settings.samplingRate << 5);
+    r = r | (settings.pgaGain << 9);
+    r = r | (settings.channel << 12) | 1 << 14; // unipolar
+    i2c_writeWord(reg_config, r);
 
-    i2c_writeWord(reg_config, config);
+#ifdef DEBUG
+    fprintf(stderr, "Receiving data.\n");
+#endif
 
-    // Open GPIO chip
     chipDRDY = gpiod_chip_open_by_number(settings.drdy_chip);
-    if (!chipDRDY) {
-        throw "ADS1115rpi: Failed to open GPIO chip.";
-    }
-
     pinDRDY = gpiod_chip_get_line(chipDRDY, settings.drdy_gpio);
-    if (!pinDRDY) {
-        gpiod_chip_close(chipDRDY);
-        chipDRDY = nullptr;
-        throw "ADS1115rpi: Failed to access ALERT/RDY line.";
+
+    int ret = gpiod_line_request_rising_edge_events(pinDRDY, "Consumer");
+    if (ret < 0) {
+#ifdef DEBUG
+        fprintf(stderr, "Request event notification failed on pin %d and chip %d.\n", settings.drdy_gpio, settings.drdy_chip);
+#endif
+        throw std::runtime_error("Could not request event for IRQ.");
     }
 
-    if (gpiod_line_request_rising_edge_events(pinDRDY, "ADS1115rpi") < 0) {
-        gpiod_chip_close(chipDRDY);
-        chipDRDY = nullptr;
-        pinDRDY = nullptr;
-        throw "ADS1115rpi: Could not request rising edge event.";
-    }
-
-    running = true;
+    running.store(true);
     thr = std::thread(&ADS1115rpi::worker, this);
+}
+
+void ADS1115rpi::setChannel(ADS1115settings::Input channel) {
+    unsigned r = i2c_readWord(reg_config);
+    r = r & (~(3 << 12));
+    r = r | (channel << 12);
+    i2c_writeWord(reg_config, r);
+    ads1115settings.channel = channel;
+}
+
+void ADS1115rpi::dataReady() {
+    float v = (float)i2c_readConversion() / (float)0x7fff * fullScaleVoltage();
+    std::lock_guard<std::mutex> lock(callback_mutex);
+    for (auto& cb : adsCallbackInterfaces) {
+        cb->hasADS1115Sample(v);
+    }
+}
+
+void ADS1115rpi::worker() {
+    while (running.load()) {
+        const struct timespec ts = { 1, 0 };
+        gpiod_line_event_wait(pinDRDY, &ts);
+        struct gpiod_line_event event;
+        gpiod_line_event_read(pinDRDY, &event);
+        dataReady();
+    }
 }
 
 void ADS1115rpi::stop() {
@@ -89,88 +111,46 @@ void ADS1115rpi::stop() {
     }
 }
 
-void ADS1115rpi::setChannel(ADS1115settings::Input channel) {
-    unsigned reg = i2c_readWord(reg_config);
-    reg &= ~(0x03 << 12);  // Clear old channel
-    reg |= (channel << 12);
-    i2c_writeWord(reg_config, reg);
-    ads1115settings.channel = channel;
-}
-
-ADS1115settings ADS1115rpi::getADS1115settings() const {
-    return ads1115settings;
-}
-
-float ADS1115rpi::fullScaleVoltage() {
-    switch (ads1115settings.pgaGain) {
-        case ADS1115settings::FSR4_096: return 4.096f;
-        case ADS1115settings::FSR2_048: return 2.048f;
-        case ADS1115settings::FSR1_024: return 1.024f;
-        case ADS1115settings::FSR0_512: return 0.512f;
-        case ADS1115settings::FSR0_256: return 0.256f;
-        default: return 2.048f;
-    }
-}
-
-void ADS1115rpi::dataReady() {
-    int raw = i2c_readConversion();
-    float voltage = (float)raw / 0x7FFF * fullScaleVoltage();
-
-    std::lock_guard<std::mutex> lock(callback_mutex);
-    for (auto& cb : adsCallbackInterfaces) {
-        if (cb) cb->hasADS1115Sample(voltage);
-    }
-}
-
-void ADS1115rpi::worker() {
-    while (running) {
-        const struct timespec timeout = {1, 0};
-        int r = gpiod_line_event_wait(pinDRDY, &timeout);
-        if (r == 1) {
-            gpiod_line_event event;
-            if (gpiod_line_event_read(pinDRDY, &event) == 0) {
-                dataReady();
-            }
-        }
-    }
-}
-
-// I2C communication helpers
+// i2c read and write protocols
 void ADS1115rpi::i2c_writeWord(uint8_t reg, unsigned data) {
-    uint8_t buf[3];
-    buf[0] = reg;
-    buf[1] = (data >> 8) & 0xFF;
-    buf[2] = data & 0xFF;
-
-    if (write(fd_i2c, buf, 3) != 3) {
-        throw "ADS1115rpi: Failed to write I2C word.";
+    uint8_t tmp[3];
+    tmp[0] = reg;
+    tmp[1] = (char)((data & 0xff00) >> 8);
+    tmp[2] = (char)(data & 0x00ff);
+    long int r = write(fd_i2c, &tmp, 3);
+    if (r < 0) {
+#ifdef DEBUG
+        fprintf(stderr, "Could not write word to %02x. ret=%ld.\n", ads1115settings.address, r);
+#endif
+        throw std::runtime_error("Could not write to i2c.");
     }
 }
 
 unsigned ADS1115rpi::i2c_readWord(uint8_t reg) {
-    uint8_t cmd = reg;
-    if (write(fd_i2c, &cmd, 1) != 1) {
-        throw "ADS1115rpi: Failed to write I2C register address.";
+    uint8_t tmp[2];
+    tmp[0] = reg;
+    write(fd_i2c, &tmp, 1);
+    long int r = read(fd_i2c, tmp, 2);
+    if (r < 0) {
+#ifdef DEBUG
+        fprintf(stderr, "Could not read word from %02x. ret=%ld.\n", ads1115settings.address, r);
+#endif
+        throw std::runtime_error("Could not read from i2c.");
     }
-
-    uint8_t buf[2];
-    if (read(fd_i2c, buf, 2) != 2) {
-        throw "ADS1115rpi: Failed to read I2C word.";
-    }
-
-    return (buf[0] << 8) | buf[1];
+    return (((unsigned)(tmp[0])) << 8) | ((unsigned)(tmp[1]));
 }
 
 int ADS1115rpi::i2c_readConversion() {
-    uint8_t cmd = 0x00; // Conversion register
-    if (write(fd_i2c, &cmd, 1) != 1) {
-        throw "ADS1115rpi: Failed to write conversion register.";
+    const int reg = 0;
+    char tmp[2];
+    tmp[0] = reg;
+    write(fd_i2c, &tmp, 1);
+    long int r = read(fd_i2c, tmp, 2);
+    if (r < 0) {
+#ifdef DEBUG
+        fprintf(stderr, "Could not read ADC value. ret=%ld.\n", r);
+#endif
+        throw std::runtime_error("Could not read ADC conversion value.");
     }
-
-    uint8_t buf[2];
-    if (read(fd_i2c, buf, 2) != 2) {
-        throw "ADS1115rpi: Failed to read ADC conversion.";
-    }
-
-    return (int16_t)((buf[0] << 8) | buf[1]);
+    return ((int)(tmp[0]) << 8) | (int)(tmp[1]);
 }

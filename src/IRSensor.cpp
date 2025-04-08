@@ -1,60 +1,79 @@
 #include "../include/IRSensor.h"
+
+#include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include <string.h>
 #include <errno.h>
-
-IRSensor::~IRSensor() {
-    stop();
-}
-
-void IRSensor::registerCallback(IRSensorCallbackInterface* ci) {
-    std::lock_guard<std::mutex> lock(callback_mutex);
-    callbacks.push_back(ci);
-}
+#include <string.h>
+#include <stdexcept>
 
 void IRSensor::start(const char* chipPath, int pin) {
 #ifdef DEBUG
-    fprintf(stderr, "IRSensor: Initializing on pin %d\n", pin);
+    fprintf(stderr, "Init.\n");
 #endif
-
-    stop(); // Ensure any previous thread is shut down
 
     chip = gpiod_chip_open(chipPath);
-    if (!chip) {
+    if (chip == nullptr) {
 #ifdef DEBUG
-        fprintf(stderr, "IRSensor: Failed to open GPIO chip %s\n", chipPath);
+        fprintf(stderr, "GPIO chip could not be accessed.\n");
 #endif
-        throw "IRSensor: Could not open GPIO chip.";
+        throw std::runtime_error("GPIO chip error.");
     }
 
     sensor_line = gpiod_chip_get_line(chip, pin);
-    if (!sensor_line) {
+    if (sensor_line == nullptr) {
+#ifdef DEBUG
+        fprintf(stderr, "GPIO line could not be accessed.\n");
+#endif
         gpiod_chip_close(chip);
         chip = nullptr;
-#ifdef DEBUG
-        fprintf(stderr, "IRSensor: Failed to get GPIO line %d\n", pin);
-#endif
-        throw "IRSensor: Could not get GPIO line.";
+        throw std::runtime_error("GPIO line error.");
     }
 
-    if (gpiod_line_request_both_edges_events(sensor_line, "IRSensor") < 0) {
+    int ret = gpiod_line_request_both_edges_events(sensor_line, "Consumer");
+    if (ret < 0) {
+#ifdef DEBUG
+        fprintf(stderr, "Request event notification failed on pin %d.\n", pin);
+#endif
+        gpiod_line_release(sensor_line);
         gpiod_chip_close(chip);
         chip = nullptr;
         sensor_line = nullptr;
-#ifdef DEBUG
-        fprintf(stderr, "IRSensor: Failed to request both edge events on pin %d\n", pin);
-#endif
-        throw "IRSensor: Could not request events.";
+        throw std::runtime_error("Could not request event for IRQ.");
     }
 
     running = true;
     thr = std::thread(&IRSensor::worker, this);
 }
 
+void IRSensor::irEvent(gpiod_line_event& event) {
+    std::lock_guard<std::mutex> lock(cb_mutex);
+    for (auto& cb : callbacks) {
+        cb->hasEvent(event);
+    }
+}
+
+void IRSensor::worker() {
+    while (running) {
+        const timespec ts = { ISR_TIMEOUT, 0 };
+        int r = gpiod_line_event_wait(sensor_line, &ts);
+        if (r == 1) {
+            gpiod_line_event event;
+            if (gpiod_line_event_read(sensor_line, &event) == 0) {
+                irEvent(event);
+            }
+        } else if (r < 0) {
+#ifdef DEBUG
+            fprintf(stderr, "GPIO error while waiting for event.\n");
+#endif
+        }
+    }
+}
+
 void IRSensor::stop() {
-    if (!running.exchange(false)) return;
+    if (!running) return;
+    running = false;
 
     if (thr.joinable()) {
         thr.join();
@@ -68,31 +87,5 @@ void IRSensor::stop() {
     if (chip) {
         gpiod_chip_close(chip);
         chip = nullptr;
-    }
-}
-
-void IRSensor::irEvent(gpiod_line_event& event) {
-    std::lock_guard<std::mutex> lock(callback_mutex);
-    for (auto& cb : callbacks) {
-        if (cb) {
-            cb->hasEvent(event);
-        }
-    }
-}
-
-void IRSensor::worker() {
-    while (running) {
-        const struct timespec ts = { ISR_TIMEOUT, 0 };
-        int wait_result = gpiod_line_event_wait(sensor_line, &ts);
-        if (wait_result == 1) {
-            gpiod_line_event event;
-            if (gpiod_line_event_read(sensor_line, &event) == 0) {
-                irEvent(event);
-            }
-        } else if (wait_result < 0) {
-#ifdef DEBUG
-            fprintf(stderr, "IRSensor: Error waiting for GPIO event.\n");
-#endif
-        }
     }
 }

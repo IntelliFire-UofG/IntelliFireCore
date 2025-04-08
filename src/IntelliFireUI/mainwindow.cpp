@@ -4,33 +4,38 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QDebug>
+#include "sensorContainer.h"
 #include "ads1115manager.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+{
     setWindowTitle("Welcome to IntelliFire UI");
     resize(1000, 800);
 
     QWidget *centralWidget = new QWidget;
     setCentralWidget(centralWidget);
+
     QHBoxLayout *mainLayout = new QHBoxLayout(centralWidget);
 
-    // Left: Sensor Grid
     QGridLayout *sensorGrid = new QGridLayout;
-    SensorContainer *container_1 = new SensorContainer(1);
-    SensorContainer *container_2 = new SensorContainer(2);
-    SensorContainer *container_3 = new SensorContainer(3);
-    SensorContainer *container_4 = new SensorContainer(4);
-    SensorContainer *container_5 = new SensorContainer(5);
-    SensorContainer *container_6 = new SensorContainer(6);
 
-    sensorGrid->addWidget(container_1, 0, 0);
-    sensorGrid->addWidget(container_2, 0, 1);
-    sensorGrid->addWidget(container_3, 1, 0);
-    sensorGrid->addWidget(container_4, 1, 1);
-    sensorGrid->addWidget(container_5, 2, 0);
-    sensorGrid->addWidget(container_6, 2, 1);
+    // Smart pointers ensure cleanup
+    auto container_1 = std::make_unique<SensorContainer>(1);
+    auto container_2 = std::make_unique<SensorContainer>(2);
+    auto container_3 = std::make_unique<SensorContainer>(3);
+    auto container_4 = std::make_unique<SensorContainer>(4);
+    auto container_5 = std::make_unique<SensorContainer>(5);
+    auto container_6 = std::make_unique<SensorContainer>(6);
 
-    QVBoxLayout *leftLayout = new QVBoxLayout;
+    sensorGrid->addWidget(container_1.get(), 0, 0);
+    sensorGrid->addWidget(container_2.get(), 0, 1);
+    sensorGrid->addWidget(container_3.get(), 1, 0);
+    sensorGrid->addWidget(container_4.get(), 1, 1);
+    sensorGrid->addWidget(container_5.get(), 2, 0);
+    sensorGrid->addWidget(container_6.get(), 2, 1);
+
+    QVBoxLayout *sliderLayout = new QVBoxLayout;
+
     QLabel *subtitle = new QLabel("Device: IntelliFire Pro v2.0");
     subtitle->setStyleSheet(R"(
         QLabel {
@@ -41,21 +46,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         }
     )");
 
+    QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->addWidget(subtitle);
     leftLayout->addLayout(sensorGrid);
-    mainLayout->addLayout(leftLayout);
 
-    // Right: UI controls
-    QVBoxLayout *sliderLayout = new QVBoxLayout;
+    mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(sliderLayout);
+
     createSliders();
 
-    // Key logger
+    initializeADS1115(container_1.get(), container_2.get(), container_3.get(), container_4.get());
+
     keyLogger = std::make_unique<KeyLogger>();
     keyDisplayLabel = new QLabel("Key Pressed: None");
     keyDisplayLabel->setStyleSheet("font-size: 24px; color: #0078d4;");
 
-    // Pump label
     pumpStatusLabel = new QLabel("Pump Status: Unknown");
     pumpStatusLabel->setStyleSheet("font-size: 24px; color: #ff4500;");
 
@@ -63,27 +68,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     rightLayout->addWidget(keyLogger.get());
     rightLayout->addWidget(keyDisplayLabel);
     rightLayout->addWidget(pumpStatusLabel);
+
     mainLayout->addLayout(rightLayout);
 
-    // Connect key events
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
         updateKeyDisplay(keyInfo);
     });
 
-    // ADS1115 connection
-    initializeADS1115(container_1, container_2, container_3, container_4);
-
-    // Pump controller
     pump_control = std::make_unique<PumpControl>();
-    connect(pump_control.get(), &PumpControl::pumpStatusChanged,
-            this, &MainWindow::updatePumpStatus);
+    connect(pump_control.get(), &PumpControl::pumpStatusChanged, this, &MainWindow::updatePumpStatus);
     pump_control->start();
-}
 
-MainWindow::~MainWindow() {
-    if (pump_control) {
-        pump_control->stop();
-    }
+    // Containers must be kept alive
+    container_1.release();
+    container_2.release();
+    container_3.release();
+    container_4.release();
+    container_5.release();
+    container_6.release();
 }
 
 KeyLogger* MainWindow::getKeyLogger() {
@@ -91,7 +93,10 @@ KeyLogger* MainWindow::getKeyLogger() {
 }
 
 void MainWindow::createSliders() {
-    if (!centralWidget() || !centralWidget()->layout()) return;
+    if (!centralWidget() || !centralWidget()->layout()) {
+        qDebug() << "Error: centralWidget() or layout() is NULL!";
+        return;
+    }
 
     QVBoxLayout *sliderLayout = qobject_cast<QVBoxLayout*>(centralWidget()->layout()->itemAt(1)->layout());
     if (!sliderLayout) return;
@@ -123,30 +128,21 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     keyLogger->keyReleaseEvent(event);
 }
 
-void MainWindow::handleSpeedButton() {
-    // Reserved for future control logic
-}
+void MainWindow::handleSpeedButton() {}
+void MainWindow::handleParamButton() {}
 
-void MainWindow::handleParamButton() {
-    // Reserved for future parameter control
-}
+void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
+                                   SensorContainer *container_3, SensorContainer *container_4) {
+    auto *adsManager = new ADS1115Manager(this);
 
-void MainWindow::initializeADS1115(SensorContainer *c1, SensorContainer *c2,
-                                   SensorContainer *c3, SensorContainer *c4) {
-    ADS1115Manager *adsManager = new ADS1115Manager(this);
-
-    connect(adsManager, &ADS1115Manager::newSensorValue, c1, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, c2, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, c3, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, c4, &SensorContainer::sensorValueUpdated);
+    connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::sensorValueUpdated);
+    connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::sensorValueUpdated);
+    connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::sensorValueUpdated);
+    connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::sensorValueUpdated);
 
     adsManager->start();
 }
 
 void MainWindow::updatePumpStatus(float pump_status) {
-    if (pump_status) {
-        pumpStatusLabel->setText("Pump Status: Pump Activated");
-    } else {
-        pumpStatusLabel->setText("Pump Status: Pump Deactivated");
-    }
+    pumpStatusLabel->setText(pump_status ? "Pump Status: Pump Activated" : "Pump Status: Pump Deactivated");
 }

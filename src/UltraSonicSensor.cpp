@@ -1,57 +1,97 @@
 #include "UltraSonicSensor.h"
+
+#include <iostream>
 #include <unistd.h>
 #include <sys/time.h>
 #include <QMetaObject>
-
-UltraSonicSensor::UltraSonicSensor(QObject *parent)
-    : QObject(parent) {
-}
-
-UltraSonicSensor::~UltraSonicSensor() {
-    stop();  // Ensure safe cleanup on destruction
-}
-
-void UltraSonicSensor::registerCallback(UltraSonicSensorCallbackInterface* ci) {
-    std::lock_guard<std::mutex> lock(callback_mutex);
-    callbacks.push_back(ci);
-}
+#include <stdexcept>
 
 void UltraSonicSensor::start(const char* chipPath, int triggerPin, int echoPin) {
-    stop(); // Stop any previous thread and cleanup
-
 #ifdef DEBUG
-    std::cerr << "UltraSonicSensor: Initializing on pins TRIG=" << triggerPin << ", ECHO=" << echoPin << std::endl;
+    std::cerr << "Initializing UltraSonic Sensor..." << std::endl;
 #endif
 
     chip = gpiod_chip_open(chipPath);
     if (!chip) {
-        throw "UltraSonicSensor: Failed to open GPIO chip.";
+#ifdef DEBUG
+        std::cerr << "Failed to access GPIO chip." << std::endl;
+#endif
+        throw std::runtime_error("GPIO chip error.");
     }
 
     trigger_line = gpiod_chip_get_line(chip, triggerPin);
     echo_line = gpiod_chip_get_line(chip, echoPin);
 
     if (!trigger_line || !echo_line) {
-        gpiod_chip_close(chip);
-        chip = nullptr;
-        throw "UltraSonicSensor: Failed to get GPIO lines.";
-    }
-
-    if (gpiod_line_request_output(trigger_line, "UltraSonicTrigger", 0) < 0 ||
-        gpiod_line_request_input(echo_line, "UltraSonicEcho") < 0) {
+#ifdef DEBUG
+        std::cerr << "Failed to access GPIO lines." << std::endl;
+#endif
         gpiod_chip_close(chip);
         chip = nullptr;
         trigger_line = nullptr;
         echo_line = nullptr;
-        throw "UltraSonicSensor: Failed to request GPIO lines.";
+        throw std::runtime_error("GPIO line error.");
+    }
+
+    if (gpiod_line_request_output(trigger_line, "Consumer", 0) < 0 ||
+        gpiod_line_request_input(echo_line, "Consumer") < 0) {
+#ifdef DEBUG
+        std::cerr << "Failed to request GPIO lines." << std::endl;
+#endif
+        gpiod_line_release(trigger_line);
+        gpiod_line_release(echo_line);
+        gpiod_chip_close(chip);
+        chip = nullptr;
+        trigger_line = nullptr;
+        echo_line = nullptr;
+        throw std::runtime_error("GPIO request error.");
     }
 
     running = true;
     thr = std::thread(&UltraSonicSensor::worker, this);
 }
 
+void UltraSonicSensor::measureDistance() {
+    // Send trigger pulse
+    gpiod_line_set_value(trigger_line, 1);
+    usleep(10);
+    gpiod_line_set_value(trigger_line, 0);
+
+    struct timeval start = {}, end = {};
+
+    // Wait for echo high
+    while (gpiod_line_get_value(echo_line) == 0) {
+        gettimeofday(&start, NULL);
+    }
+
+    // Wait for echo low
+    while (gpiod_line_get_value(echo_line) == 1) {
+        gettimeofday(&end, NULL);
+    }
+
+    double timeElapsed = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_usec - start.tv_usec);
+    float distance = (timeElapsed * SOUND_SPEED) / (2 * 1e6);
+
+    {
+        std::lock_guard<std::mutex> lock(cb_mutex);
+        for (auto& cb : callbacks) {
+            cb->onDistanceMeasured(distance);
+        }
+    }
+
+    QMetaObject::invokeMethod(this, "measuredDistance", Qt::QueuedConnection, Q_ARG(float, distance));
+}
+
+void UltraSonicSensor::worker() {
+    while (running) {
+        measureDistance();
+        usleep(100000); // 100ms delay
+    }
+}
+
 void UltraSonicSensor::stop() {
-    if (!running.exchange(false)) return;
+    if (!running) return;
+    running = false;
 
     if (thr.joinable()) {
         thr.join();
@@ -70,44 +110,5 @@ void UltraSonicSensor::stop() {
     if (chip) {
         gpiod_chip_close(chip);
         chip = nullptr;
-    }
-}
-
-void UltraSonicSensor::measureDistance() {
-    // Trigger pulse
-    gpiod_line_set_value(trigger_line, 1);
-    usleep(10);
-    gpiod_line_set_value(trigger_line, 0);
-
-    struct timeval start = {0}, end = {0};
-
-    // Wait for echo start
-    while (gpiod_line_get_value(echo_line) == 0 && running) {
-        gettimeofday(&start, nullptr);
-    }
-
-    // Wait for echo end
-    while (gpiod_line_get_value(echo_line) == 1 && running) {
-        gettimeofday(&end, nullptr);
-    }
-
-    // Time difference in microseconds
-    double timeElapsed = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_usec - start.tv_usec);
-    float distance = (timeElapsed * SOUND_SPEED) / (2 * 1e6);  // in cm
-
-    {
-        std::lock_guard<std::mutex> lock(callback_mutex);
-        for (auto& cb : callbacks) {
-            if (cb) cb->onDistanceMeasured(distance);
-        }
-    }
-
-    QMetaObject::invokeMethod(this, "measuredDistance", Qt::QueuedConnection, Q_ARG(float, distance));
-}
-
-void UltraSonicSensor::worker() {
-    while (running) {
-        measureDistance();
-        usleep(100000); // 100ms sampling interval
     }
 }
