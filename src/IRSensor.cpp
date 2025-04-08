@@ -7,10 +7,12 @@
 #include <errno.h>
 #include <string.h>
 #include <stdexcept>
+#include <QDebug>
 
 // This start() method mirrors the GPIOPin::start() method.
 // It opens the chip and line using the given chip path and pin number.
 void IRSensor::start(const char* chipPath, int pin) {
+    try{
 #ifdef DEBUG
     fprintf(stderr, "Init.\n");
 #endif
@@ -30,7 +32,7 @@ void IRSensor::start(const char* chipPath, int pin) {
 #endif
         gpiod_chip_close(chip);
         chip = NULL;
-        throw "GPIO line error.";
+        throw std::runtime_error ("GPIO line error.");
     }
     
     int ret = gpiod_line_request_both_edges_events(sensor_line, "Consumer");
@@ -41,18 +43,36 @@ void IRSensor::start(const char* chipPath, int pin) {
         gpiod_chip_close(chip);
         chip = NULL;
         sensor_line = NULL;
-        throw "Could not request event for IRQ.";
+        throw std::runtime_error ("Could not request event for IRQ.");
     }
     
     running = true;
-    thr = std::thread(&IRSensor::worker, this);
+    thr = std::thread(&IRSensor::worker, this); 
+
+
+    } catch (const std::exception& ex) {
+        qCritical() << "Exception in IRSensor::start." << ex.what();
+        throw;
+    } catch (...) {
+        qCritical() << "Unknown exception in IRSensor::start.";
+        throw;
+    }
 }
 
 // This method is analogous to GPIOPin::gpioEvent().
 // It notifies all registered callbacks of the new event.
 void IRSensor::irEvent(gpiod_line_event& event) {
+    try{
     for (auto &cb : callbacks) {
         cb->hasEvent(event);
+
+    }
+
+
+    } catch (const std::exception& ex) {
+        qWarning() << "Exception in IRSensor::irEvent." << ex.what();
+    } catch (...) {
+        qWarning() << "Unknown exception in IRSensor::irEvent.";
     }
 }
 
@@ -60,6 +80,7 @@ void IRSensor::irEvent(gpiod_line_event& event) {
 // It waits (with a timeout) for an event on the line, reads it,
 // and then passes it on via irEvent().
 void IRSensor::worker() {
+    try{
     while (running) {
         const timespec ts = { ISR_TIMEOUT, 0 };
         int r = gpiod_line_event_wait(sensor_line, &ts);
@@ -73,13 +94,26 @@ void IRSensor::worker() {
 #endif
         }
     }
+
+
+    } catch (const std::exception& ex) {
+        qCritical() << "Exception in IRSensor::worker." << ex.what();
+    } catch (...) {
+        qCritical() << "Unknown exception in IRSensor::worker.";
+    }
 }
 
 // Finally, stop() stops the worker thread and releases the resources.
 void IRSensor::stop() {
+    try{
     if (!running) return;
     running = false;
     thr.join();
     gpiod_line_release(sensor_line);
     gpiod_chip_close(chip);
+    } catch (const std::exception& ex) {
+        qWarning() << "Exception in IRSensor::stop." << ex.what();
+    } catch (...) {
+        qWarning() << "Unknown exception in IRSensor::stop.";
+    }
 }
