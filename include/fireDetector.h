@@ -6,6 +6,11 @@
 #include <gpiod.h>
 #include <vector>
 
+#define GPIO_CHIP    4
+#define SENSOR_PIN_0 9
+#define SENSOR_PIN_1 10
+#define PUMP_PIN     11
+
 // enable debug messages and error messages to stderr
 #ifndef NDEBUG
 #define DEBUG

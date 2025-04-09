@@ -88,6 +88,7 @@ struct ADS1115settings {
      * Full scale range: 2.048V, 1.024V, 0.512V or 0.256V.
      **/
     enum PGA {
+    FSR6_144 = 0,
     FSR4_096 = 1,
 	FSR2_048 = 2,
 	FSR1_024 = 3,
@@ -202,9 +203,11 @@ private:
 
     float fullScaleVoltage() {
 	switch (ads1115settings.pgaGain) {
+    case ADS1115settings::FSR6_144:
+        return 6.144f;
     case ADS1115settings::FSR4_096:
-	    return 4.096f;
-    case ADS1115settings::FSR2_048:
+        return 4.096f;
+	case ADS1115settings::FSR2_048:
 	    return 2.048f;
 	case ADS1115settings::FSR1_024:
 	    return 1.024f;

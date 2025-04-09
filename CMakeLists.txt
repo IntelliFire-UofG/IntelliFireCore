@@ -4,22 +4,57 @@ project(IntelliFire VERSION 1.0)
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wno-unused-parameter")
 
-# Define source files
-set(SOURCES
-    src/main.cpp
-    src/LN298MotorControlV3.cpp
-    src/basicMotionV3.cpp
-    # Add other source files
-)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+endif()
 
-# Define include directories
+#------------------------------------------------------------------------------
+# Enable Qt's Automatic Processing
+#------------------------------------------------------------------------------
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+#------------------------------------------------------------------------------
+# Find Required Packages
+#------------------------------------------------------------------------------
+
+
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+
+
+
+# Locate libgpiod for UltraSonicSensor library
+find_library(GPIOD_LIB gpiod)
+if(NOT GPIOD_LIB)
+  message(FATAL_ERROR "Could not find libgpiod library")
+endif()
+
+#------------------------------------------------------------------------------
+# Include Directories
+#------------------------------------------------------------------------------
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include
+    
 )
 
-# Create executable
-add_executable(IntelliFire ${SOURCES})
+#------------------------------------------------------------------------------
+# Build UltraSonicSensorLib as a Static Library
+#------------------------------------------------------------------------------
+add_library(UltraSonicSensorLib STATIC
+    src/UltraSonicSensor.cpp
+    src/IRSensor.cpp
+    include/UltraSonicSensor.h
+    include/IRSensor.h
+)
+
+target_include_directories(UltraSonicSensorLib PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(UltraSonicSensorLib PRIVATE Qt5::Core ${GPIOD_LIB})
 
 #------------------------------------------------------------------------------
 # Build ADS1115Lib as a static library
@@ -54,17 +89,9 @@ add_library(PumpControlLib STATIC
 target_include_directories(PumpControlLib PRIVATE ${CMAKE_SOURCE_DIR}/src/IntelliFireUI/include)
 target_link_libraries(PumpControlLib PRIVATE Qt5::Core ${GPIOD_LIB})
 
-#------------------------------------------------------------------------------
-# Build cam2opencv as a Static Library
-#------------------------------------------------------------------------------
-add_library(cam2opencv STATIC src/IntelliFireUI/libcam2opencv.cpp)
-target_include_directories(cam2opencv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(cam2opencv PkgConfig::LIBCAMERA ${OpenCV_LIBS})
-target_compile_options(cam2opencv PRIVATE ${LIBCAMERA_CFLAGS_OTHER})
 
-#------------------------------------------------------------------------------
-# IntelliFire UI Executable (with Camera and Sensor Support)
-#------------------------------------------------------------------------------
+
+
 add_executable(IntelliFireUI
     src/IntelliFireUI/main.cpp
     src/IntelliFireUI/mainwindow.cpp
@@ -84,14 +111,26 @@ target_link_libraries(IntelliFireUI
     ADS1115Lib 
     ADS1115ManagerLib
     PumpControlLib
-    cam2opencv
+    
     qwt-qt5
-    ${OpenCV_LIBS}
+    
     ${GPIOD_LIB}
-    PkgConfig::LIBCAMERA
+    
 )
 
+#------------------------------------------------------------------------------
+# Install Rules (Optional)
+#------------------------------------------------------------------------------
+include(GNUInstallDirs)
+install(TARGETS IntelliFireUI RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS UltraSonicSensorLib ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-# Print status
-message(STATUS "Configuring Autonomous Fire Truck Control System")
-message(STATUS "Using libgpiod: ${LIBGPIOD_LIBRARY}")
+#------------------------------------------------------------------------------
+# Build mediamtx_http_scanner as a Separate Executable
+#------------------------------------------------------------------------------
+find_package(CURL REQUIRED)
+
+add_executable(mediamtx_http_scanner mediamtx_scanner/mediamtx_http_scanner.cpp)
+
+# No need for target_include_directories since there are no custom headers
+target_link_libraries(mediamtx_http_scanner PRIVATE CURL::libcurl)
