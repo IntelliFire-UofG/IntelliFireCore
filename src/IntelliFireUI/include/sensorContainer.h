@@ -35,7 +35,8 @@ public Q_SLOTS:
     void updateUltrasonicUI(int value);
     void updateIRUI(const QString& message);
     void sensorValueUpdated(int id, float value);
-
+Q_SIGNALS:
+    void irMessageReceived(const QString& message);
 private:
     QTimer* timer = nullptr;
     QLabel* title = nullptr;
@@ -46,6 +47,8 @@ private:
     std::unique_ptr<IRSensor> irSensor;
 
     std::mutex ui_mutex; // For safe multi-threaded UI updates
+
+    
 };
 
 #endif // SENSORCONTAINER_H
