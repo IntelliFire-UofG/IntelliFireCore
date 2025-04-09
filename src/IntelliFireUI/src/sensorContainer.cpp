@@ -36,14 +36,14 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             title->setText("Ultrasonic Sensor Distance:");
             ultrasonicSensor = new UltraSonicSensor(this);
             connect(ultrasonicSensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
-            ultrasonicSensor->start("/dev/gpiochip0", 23, 24);
+            ultrasonicSensor->start("/dev/gpiochip0", 25, 24);
             break;
 
         case 6:  // **IR Sensor**
             title->setText("IR Sensor Status:");
             irSensor = new IRSensor();
             irSensor->registerCallback(this);
-            irSensor->start("/dev/gpiochip0", 12); // Adjust GPIO pin as needed
+            irSensor->start("/dev/gpiochip0", 16); // Adjust GPIO pin as needed
             break;
 
         default:  // **Flame Sensor (or other)**
