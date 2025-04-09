@@ -17,9 +17,13 @@ void PumpControl::start()
     pump_out = gpiod_chip_get_line(pump_chip, PUMP_PIN);
 
     gpiod_line_request_output(pump_out, "pump", 0);
-
-    fire_range_detector_0.start(0, GPIO_CHIP, SENSOR_PIN_0);
-    fire_range_detector_1.start(1, GPIO_CHIP, SENSOR_PIN_1);
+    try{
+        fire_range_detector_0.start(0, GPIO_CHIP, SENSOR_PIN_0);
+        fire_range_detector_1.start(1, GPIO_CHIP, SENSOR_PIN_1);
+    }
+    catch (std::runtime_error &e) {
+        printf("Pump Error: %s \n", e.what());
+    }
 }
 
 void PumpControl::stop()

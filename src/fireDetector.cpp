@@ -1,5 +1,5 @@
 #include "fireDetector.h"
-
+#include <stdexcept>
 FireDetector::FireDetector()
 {}
 
@@ -14,8 +14,10 @@ void FireDetector::start(unsigned int id_, unsigned int chip, unsigned int line)
     {
 #ifdef DEBUG
             fprintf(stderr,"Request event notification failed on pin %d and chip %d.\n", GPIO_CHIP, SENSOR_PIN_0);
+            fprintf(stderr,"Fire detector thread won't run.\n" );
 #endif
-            throw "FireDetector: Could not request event for IRQ.";
+            throw std::runtime_error("FireDetector: Could not request event for IRQ.");
+            return;
     }
 
     running = true;
