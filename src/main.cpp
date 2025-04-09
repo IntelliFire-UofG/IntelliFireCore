@@ -40,7 +40,8 @@
  * @date 2025-02-01
  */
 
-#include "../include/LN298MotorControl.h"
+#include "../include/LN298MotorControlV3.h"
+#include '../include/basicMotionV2.h'
 #include "../include/eventHandler.h"
 #include "../include/ADCReader.h" // Consider for further dev
 // #include "DisplayManager.hpp" // Consider for further dev
@@ -48,66 +49,49 @@
 
 #include <iostream>
 #include <thread>
-#include <gpiod.h>
+#include <libgpio.h>
+#include <atomic>
+#include <memory>
 
-# define CHIP_NAME "gpiochip0"
-
-/*
-
-CODE REVIEW -> 19/February/2025
-
-Set a better naming convention
-Update branches
-
-*/
-
-// TODO: Define the pins
-#define ENA 13
-#define IN1 22
-#define IN2 23
-#define ENB 12
-#define IN3 17
-#define IN4 27
+// #define LEFT_PWM 12
+// #define LEFT_IN1 17
+// #define LEFT_IN2 27
+// #define RIGHT_PWM 13
+// #define RIGHT_IN1 22
+// #define RIGHT_IN2 23
 
 
-#define BUTTON_FORWARD 6
-#define BUTTON_BACKWARD 7
-#define BUTTON_STOP 8
+// #define BUTTON_FORWARD 6
+// #define BUTTON_BACKWARD 7
+// #define BUTTON_STOP 8
+
+void keyboardListener(std::atomic<char>& lastKey);
+void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
+
+extern int basicMotion();
+extern void stopMotors();
+// this function is responisble to run basicMotion in a separate thread
+void basicMotionThreaded(std::atomic<bool>& running) {
+    basicMotion();
+    running.store(false);
+}
 
 int main() {
-    std::cout << "🔥 Autonomous Fire Truck System Initializing... 🔥" << std::endl;
-
-    // Initialize MotorRight and MotorLeft controller
-    // MotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4);  // Example GPIO pins
-    MotorController motorRight(ENA, IN1, IN2);
-    MotorController motorLeft(ENB, IN3, IN4);
+    std::cout << "🔥 Autonomous Fire Truck System Initializing..." << std::endl;
     
-    // Create basicMotion objects with pointers and set speed
-    BasicMotion motion(&motorRight, &motorLeft);
-    motion.setSpeed(100);
-
-    // Initialize event handler
-    EventHandler eventHandler(BUTTON_FORWARD, BUTTON_BACKWARD, BUTTON_STOP);  // Button GPIO pins
+    // Flag to indicate if the system is running
+    std::atomic<bool> running(true);
+    
+    // Start basicMotion in a separate thread
+    std::thread basicMotionThreaded(basicMotionThreaded, std::ref(running));
 
     // Initialize ADC Reader for flame sensors
     ADCReader adcReader(0x48);  // I2C address for ADS1015/ADS1115 
 
-    /*
-
-    This is considered for further use
-    // Initialize Display Manager for real-time visualization
-    // DisplayManager displayManager;
-    */
-
-    // Register event-driven callbacks
-    eventHandler.registerForwardCallback([&]() { motorController.moveForward(75); });
-    eventHandler.registerBackwardCallback([&]() { motorController.moveBackward(75); });
-    eventHandler.registerStopCallback([&]() { motorController.stop(); });
-
     // Register ADC callback to react to fire detection
     adcReader.registerFlameCallback([&](int channel, int value) {
         std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
-        motorController.stop();  // Example response: Stop if flame is detected
+        stopMotors();  // Stop motors when flame is detected
     });
 
     // Start Event Loop (Runs in Separate Thread)
@@ -115,7 +99,21 @@ int main() {
     std::thread eventThread(&EventLoop::run, &eventLoop);
 
     std::cout << "✅ System Running..." << std::endl;
-    eventThread.join();  // Keep main thread alive
+    
+    // Main thread waits for basicMotion thread to finish
+    while (running.load()){
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 
+    if (basicMotionThreaded.joinable()) {
+        basicMotionThreaded.join();
+    }
+    
+    // Clean up event thread
+    eventLoop.stop();
+    if (eventThread.joinable()) {
+        eventThread.join();
+    }
+    
     return 0;
 }
