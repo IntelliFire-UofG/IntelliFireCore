@@ -18,7 +18,7 @@ void ADS1115Manager::start() {
     s.drdy_chip = 4; // for RPI1-4 chip = 0. For RPI5 it's chip = 4.
     try{
         ads1115rpi.start(s);
-    }catch (std::runtime_error(&e)) {
+    }catch (std::runtime_error &e) {
         printf("I2C error: %s \n", e.what());
     }
         

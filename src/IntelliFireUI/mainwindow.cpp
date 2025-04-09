@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     initializeADS1115(container_1, container_2, container_3, container_4);
 
     // Key Logger
-    keyLogger = new KeyLogger;
+    keyLogger = new KeyLogger(this);
     keyDisplayLabel = new QLabel("Key Pressed: None");
     keyDisplayLabel->setStyleSheet("font-size: 24px; color: #0078d4;");
 
@@ -94,10 +94,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
     // Connect pump status signal to update function
-    pump_control = new PumpControl();
+    pump_control = new PumpControl(this);
     connect(pump_control, &PumpControl::pumpStatusChanged,this, &MainWindow::updatePumpStatus);
     pump_control->start();
-
 }
 
 KeyLogger* MainWindow::getKeyLogger()
@@ -174,5 +173,12 @@ void MainWindow::updatePumpStatus(float pump_status) {
         pumpStatusLabel->setText("Pump Status: Pump Activated");
     } else {
         pumpStatusLabel->setText("Pump Status: Pump Deactivated");
+    }
+}
+
+MainWindow::~MainWindow()
+{
+    if (pump_control) {
+        pump_control->stop();  
     }
 }

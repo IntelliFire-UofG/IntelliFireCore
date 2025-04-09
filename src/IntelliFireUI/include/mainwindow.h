@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 public:
     
     explicit MainWindow(QWidget *parent = nullptr);
-    
+    ~MainWindow();
 
     KeyLogger *getKeyLogger();  // Make KeyLogger accessible
     void keyPressEvent(QKeyEvent *event) override;
