@@ -1,17 +1,20 @@
 # _**Welcome to IntelliFire UofG Core Repository**_
-# 🚒 Autonomous Fire Truck Control System 🔥  
 
-### **Real-Time Fire Detection & Response System for Raspberry Pi**  
+# 🚒 Autonomous Fire Truck Control System 🔥
+
+### **Real-Time Fire Detection & Response System for Raspberry Pi**
 
 ![Fire Truck](https://img.shields.io/badge/Project-Embedded%20System-blue.svg)  
 ![C++](https://img.shields.io/badge/Language-C%2B%2B-red.svg)  
 ![Raspberry Pi](https://img.shields.io/badge/Platform-Raspberry%20Pi-green.svg)  
 ![License](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)  
 
-## 📌 **Project Description**  
+## 📌 **Project Description**
+
 The **Autonomous Fire Truck Control System** is an **embedded real-time application** designed for **fire detection and autonomous movement**. Running on a **Raspberry Pi** with **Linux**, this system utilizes an **event-driven architecture** to detect flames via **LM393 flame sensors** (connected through an **ADS1015/ADS1115 ADC**) and control **four motors** via an **L298N motor driver**.  
 
-## 🔥 **Main Features:**  
+## 🔥 **Main Features:**
+
 ✅ **Event-driven architecture** (using threads, callbacks, and interrupts).  
 ✅ **Motor control** for movement based on flame detection.  
 ✅ **Real-time sensor data processing** using an ADC.  
@@ -21,7 +24,8 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 
 ---
 
-## 🚀 **How It Works**  
+## 🚀 **How It Works**
+
 1️⃣ **System Initialization** → Motors, sensors, buttons, and display are initialized.  
 2️⃣ **Register Callbacks** → Sensor readings & button presses trigger motor actions.  
 3️⃣ **Start Event Loop** → The system continuously monitors inputs & executes in real time.  
@@ -30,7 +34,8 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 
 ---
 
-## 🛠 **Tech Stack**  
+## 🛠 **Tech Stack**
+
 - **Programming Language**: C++  
 - **Platform**: Raspberry Pi (Linux)  
 - **Architecture**: Object-Oriented Programming (OOP)  
@@ -39,6 +44,7 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 - **Testing**: Unit testing framework  
 
 ---
+
 ```bash
 📂 IntelliFireCore
  ├── 📂 include                # Header files (Interface definitions)
@@ -74,17 +80,30 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
  ├── LICENSE                   # Apache v2.0 License
  ├── README.md                 # Project documentation
 ```
+
 ---
 
 ## 🚦 **Installation & Setup**
+
 ### 1️⃣ Prerequisites
+
 Raspberry Pi with Linux
 C++ compiler (CMake)
 lgpiod (for GPIO control)
 ADS1015/ADS1115 ADC module
 L298N Motor Driver
+
 ### 2️⃣ Build & Run
+
 ```bash
+ssh -X -C your_rpi_username@your_rpi_hostname
+
+sudo apt update
+sudo apt install -y build-essential cmake git pkg-config
+sudo apt install -y qtbase5-dev qttools5-dev qttools5-dev-tools
+sudo apt install -y libgpiod-dev
+sudo apt install -y libcurl4-openssl-dev
+sudo apt install -y libqwt-qt5-dev
 
 # Clone the repository
 git clone [https://github.com/IntelliFire-UofG/IntelliFireCore.git]
@@ -100,22 +119,54 @@ cmake ..
 make
 
 # Run the executable
-./IntelliFireCore
+./IntelliFireUI (on Raspberry Pi via SSH)
 
+./mediamtx_http_scanner (on local machine)
 ```
 
 ## 📸 **Demo & Screenshots**
+
 (Add images or GIFs showing the system in action!)
 
+---
+
+## 📟 **RPi GPIOs Table**
+
+> [!IMPORTANT]
+> Make sure of connecting the following properly, if not ask the team through our different channels.
+
+| IntelliFire Feature | # GPIO |
+|:------------------- |:------:|
+| Left Motor PWM      | 12     |
+| Left Motor FWD      | 17     |
+| Left Motor BWD      | 27     |
+| Right Motor PWM     | 13     |
+| Right Motor FWD     | 23     |
+| Right Motor BWD     | 22     |
+| ADS1115 Data R.     | 5      |
+| ADS1115 I2C SDA     | 2      |
+| ADS1115 I2C SCL     | 3      |
+| L393M Flame 1       | 9      |
+| L393M Flame 2       | 10     |
+| Pump                | 11     |
+| Ultrasonic Echo     | 24     |
+| Ultrasonic Trig     | 25     |
+| IR Presence         | 16     |
+
+---
+
 ## 🤝 **Contributing**
+
 Contributions are welcome! Please open an issue or submit a pull request.
 
 ## 📜 **License**
+
 This project is licensed under the Apache License 2.0.
 You can freely use, modify, and distribute it, but you must provide attribution.
 See the LICENSE file for details.
 
 ## 📞 **Contact & Social Media**
+
 📧 Email: intellifire2025@outlook.com
 💼 Instagram: @intellifire25
 🌎 Github: [https://github.com/IntelliFire-UofG/]

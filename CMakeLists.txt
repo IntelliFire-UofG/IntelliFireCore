@@ -1,13 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5)
+project(IntelliFire VERSION 1.0)
 
-project(IntelliFireCore
-    DESCRIPTION "IntelliFire Core with UI, camera preview, and sensor management"
-    LANGUAGES CXX
-)
-
-#------------------------------------------------------------------------------
-# General Settings
-#------------------------------------------------------------------------------
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wno-unused-parameter")

@@ -36,7 +36,7 @@ static const char could_not_open_i2c[] = "Could not open I2C.\n";
 #define DEFAULT_ADS1115_ADDRESS 0x48
 
 // default GPIO pin for the ALRT/DRY signal
-#define DEFAULT_ALERT_RDY_TO_GPIO 17
+#define DEFAULT_ALERT_RDY_TO_GPIO 5
 
 
 
