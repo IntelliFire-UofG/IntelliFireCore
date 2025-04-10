@@ -13,7 +13,9 @@ int main(int argc, char *argv[])
 
     QProcess cameraCheck;
     cameraCheck.start("libcamera-hello", QStringList() << "--list-cameras");
-    cameraCheck.waitForFinished();
+    if (!cameraCheck.waitForStarted()) {
+        QMessageBox::warning(nullptr, "Camera Error", "Failed to run camera check.");
+    }
     QString result = cameraCheck.readAllStandardOutput();
 
     if (result.contains("No cameras available")) {
