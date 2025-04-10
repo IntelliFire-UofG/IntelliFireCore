@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     if (!cameraCheck.waitForStarted()) {
         QMessageBox::warning(nullptr, "Camera Error", "Failed to run camera check.");
     }
+    cameraCheck.waitForFinished();
     QString result = cameraCheck.readAllStandardOutput();
 
     if (result.contains("No cameras available")) {
