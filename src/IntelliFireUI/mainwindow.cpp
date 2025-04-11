@@ -7,9 +7,6 @@
 #include "sensorContainer.h"
 #include "ads1115manager.h"
 
-MainWindow::~MainWindow() {
-    // No manual deletion needed; smart pointers handle cleanup
-}
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -61,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     initializeADS1115(container_1.get(), container_2.get(), container_3.get(), container_4.get());
 
-    keyLogger = std::make_unique<KeyLogger>();
+    keyLogger = std::make_unique<KeyLogger>(this);
     keyDisplayLabel = new QLabel("Key Pressed: None");
     keyDisplayLabel->setStyleSheet("font-size: 24px; color: #0078d4;");
 
@@ -79,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         updateKeyDisplay(keyInfo);
     });
 
-    pump_control = std::make_unique<PumpControl>();
+    pump_control = std::make_unique<PumpControl>(this);
     connect(pump_control.get(), &PumpControl::pumpStatusChanged, this, &MainWindow::updatePumpStatus);
     pump_control->start();
 
@@ -149,4 +146,11 @@ void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer
 
 void MainWindow::updatePumpStatus(float pump_status) {
     pumpStatusLabel->setText(pump_status ? "Pump Status: Pump Activated" : "Pump Status: Pump Deactivated");
+}
+
+MainWindow::~MainWindow()
+{
+    if (pump_control) {
+        pump_control->stop();  
+    }
 }

@@ -1,5 +1,6 @@
 // ads1115manager.cpp
 #include "ads1115manager.h"
+#include <stdexcept>
 #include <cstdio>
 #include <mutex>
 
@@ -19,8 +20,8 @@ void ADS1115Manager::start() {
 
     try {
         ads1115rpi.start(s);
-    } catch (...) {
-        printf("I2C error\n");
+    }catch (std::runtime_error &e) {
+        printf("I2C error: %s \n", e.what());
     }
 }
 

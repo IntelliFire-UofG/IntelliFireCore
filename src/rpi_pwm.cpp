@@ -63,4 +63,6 @@ int RPI_PWM::writeSYS(std::string filename, int value) const {
     file << value;
     file.close();
     return 0;
+
 }
+

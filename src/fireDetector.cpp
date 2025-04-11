@@ -1,6 +1,5 @@
 #include "fireDetector.h"
 #include <stdexcept>
-
 FireDetector::FireDetector()
 {}
 

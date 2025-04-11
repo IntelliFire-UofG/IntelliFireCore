@@ -56,8 +56,14 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
                 title->setText("IR Sensor Status:");
                 try {
                     irSensor = std::make_unique<IRSensor>();
+                    if (!irSensor) {
+                        qCritical() << "IRSensor initialization failed.";
+                        break;
+                    }
                     irSensor->registerCallback(this);
                     irSensor->start("/dev/gpiochip0", IR_PRESENCE);
+                    connect(this, &SensorContainer::irMessageReceived, this, &SensorContainer::updateIRUI);
+
                 } catch (const std::exception& ex) {
                     qCritical() << "Failed to initialize or start IRSensor:" << ex.what();
                 }
@@ -118,7 +124,7 @@ void SensorContainer::hasEvent(gpiod_line_event& e) {
             message = "Unknown Event!";
             qWarning() << "IR sensor event type unknown:" << e.event_type;
         }
-        updateIRUI(message);
+        emit irMessageReceived(message);  // 🔥 Thread-safe!
     } catch (const std::exception& ex) {
         qWarning() << "Exception in hasEvent:" << ex.what();
     }

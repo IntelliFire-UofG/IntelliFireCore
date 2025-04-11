@@ -69,6 +69,7 @@ struct ADS1115settings {
     SamplingRates samplingRate = FS8HZ;
 
     enum PGA {
+        FSR6_144 = 0,
         FSR4_096 = 1,
         FSR2_048 = 2,
         FSR1_024 = 3,
@@ -140,15 +141,22 @@ private:
     const uint8_t reg_hi_thres = 3;
 
     float fullScaleVoltage() {
-        switch (ads1115settings.pgaGain) {
-            case ADS1115settings::FSR4_096: return 4.096f;
-            case ADS1115settings::FSR2_048: return 2.048f;
-            case ADS1115settings::FSR1_024: return 1.024f;
-            case ADS1115settings::FSR0_512: return 0.512f;
-            case ADS1115settings::FSR0_256: return 0.256f;
-        }
-        assert(1 == 0);
-        return 0;
+	switch (ads1115settings.pgaGain) {
+    case ADS1115settings::FSR6_144:
+        return 6.144f;
+    case ADS1115settings::FSR4_096:
+        return 4.096f;
+	case ADS1115settings::FSR2_048:
+	    return 2.048f;
+	case ADS1115settings::FSR1_024:
+	    return 1.024f;
+	case ADS1115settings::FSR0_512:
+	    return 0.512f;
+	case ADS1115settings::FSR0_256:
+	    return 0.256f;
+	}
+	assert(1 == 0);
+	return 0;
     }
 
     struct gpiod_chip* chipDRDY = nullptr;
