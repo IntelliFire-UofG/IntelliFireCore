@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
+#include <memory>
+#include <mutex>
 #include "../include/UltraSonicSensor.h"
 #include "../include/IRSensor.h"
 
@@ -11,47 +13,39 @@
  * @class SensorContainer
  * @brief UI container for displaying sensor values.
  *
- * This class provides a visual representation of a sensor, including an icon,
- * a title, and a label to show real-time sensor values.
+ * Provides real-time updates and visuals for sensors like Flame, IR, and Ultrasonic.
  */
 class SensorContainer : public QWidget, public IRSensor::IRSensorCallbackInterface {
     Q_OBJECT
 
 public:
-    /**
-     * @brief Constructor for SensorContainer
-     * @param containerNumber The sensor number (1-4) for UI representation
-     * @param parent Optional parent QWidget
-     */
     explicit SensorContainer(int containerNumber, QWidget *parent = nullptr);
     ~SensorContainer();
 
-    // Callback for IR sensor events
+    // Rule of Five safety
+    SensorContainer(const SensorContainer&) = delete;
+    SensorContainer& operator=(const SensorContainer&) = delete;
+    SensorContainer(SensorContainer&&) = delete;
+    SensorContainer& operator=(SensorContainer&&) = delete;
+
+    // Callback from IR sensor
     void hasEvent(gpiod_line_event& e) override;
 
 public Q_SLOTS:
-    /**
-     * @brief Updates the sensor value displayed in the UI.
-     * @param value The new sensor reading
-     */
-    //void updateSensorValue(float value);
-    //void updateUltrasonicSensorValue();
     void updateUltrasonicUI(int value);
     void updateIRUI(const QString& message);
     void sensorValueUpdated(int id, float value);
 
-
-//Q_SIGNALS:
-    //void sensorValueUpdated(int newValue);
-
-
 private:
-    QTimer *timer;
-    QLabel *title;       ///< Title label displaying sensor information
-    QLabel *value_label;  ///< Label showing real-time sensor value
-    int sensorNumber;    ///< Identifier for the sensor
-    UltraSonicSensor *ultrasonicSensor = nullptr;
-    IRSensor *irSensor = nullptr;
+    QTimer* timer = nullptr;
+    QLabel* title = nullptr;
+    QLabel* value_label = nullptr;
+    int sensorNumber = -1;
+
+    std::unique_ptr<UltraSonicSensor> ultrasonicSensor;
+    std::unique_ptr<IRSensor> irSensor;
+
+    std::mutex ui_mutex; // For safe multi-threaded UI updates
 };
 
 #endif // SENSORCONTAINER_H
