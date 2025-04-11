@@ -1,4 +1,3 @@
-
 /**
  * @file main.cpp
  * @brief Autonomous Fire Truck Control System - Entry Point
@@ -40,80 +39,74 @@
  * @date 2025-02-01
  */
 
-#include "../include/LN298MotorControlV3.h"
-#include '../include/basicMotionV2.h'
-#include "../include/eventHandler.h"
-#include "../include/ADCReader.h" // Consider for further dev
-// #include "DisplayManager.hpp" // Consider for further dev
-#include "../include/eventLoop.h" // Consider for further dev
-
-#include <iostream>
-#include <thread>
-#include <libgpio.h>
-#include <atomic>
-#include <memory>
-
-// #define LEFT_PWM 12
-// #define LEFT_IN1 17
-// #define LEFT_IN2 27
-// #define RIGHT_PWM 13
-// #define RIGHT_IN1 22
-// #define RIGHT_IN2 23
-
-
-// #define BUTTON_FORWARD 6
-// #define BUTTON_BACKWARD 7
-// #define BUTTON_STOP 8
-
-void keyboardListener(std::atomic<char>& lastKey);
-void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
-
-extern int basicMotion();
-extern void stopMotors();
-// this function is responisble to run basicMotion in a separate thread
-void basicMotionThreaded(std::atomic<bool>& running) {
-    basicMotion();
-    running.store(false);
-}
-
-int main() {
-    std::cout << "🔥 Autonomous Fire Truck System Initializing..." << std::endl;
-    
-    // Flag to indicate if the system is running
-    std::atomic<bool> running(true);
-    
-    // Start basicMotion in a separate thread
-    std::thread basicMotionThreaded(basicMotionThreaded, std::ref(running));
-
-    // Initialize ADC Reader for flame sensors
-    ADCReader adcReader(0x48);  // I2C address for ADS1015/ADS1115 
-
-    // Register ADC callback to react to fire detection
-    adcReader.registerFlameCallback([&](int channel, int value) {
-        std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
-        stopMotors();  // Stop motors when flame is detected
-    });
-
-    // Start Event Loop (Runs in Separate Thread)
-    EventLoop eventLoop;
-    std::thread eventThread(&EventLoop::run, &eventLoop);
-
-    std::cout << "✅ System Running..." << std::endl;
-    
-    // Main thread waits for basicMotion thread to finish
-    while (running.load()){
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-
-    if (basicMotionThreaded.joinable()) {
-        basicMotionThreaded.join();
-    }
-    
-    // Clean up event thread
-    eventLoop.stop();
-    if (eventThread.joinable()) {
-        eventThread.join();
-    }
-    
-    return 0;
-}
+ #include "../include/LN298MotorControlV3.h"
+ #include "../include/basicMotionV2.h"
+ #include "../include/eventLoop.h"
+ 
+ #include <iostream>
+ #include <thread>
+ #include <libgpio.h>
+ #include <atomic>
+ #include <memory>
+ 
+ void keyboardListener(std::atomic<char>& lastKey);
+ void keyboardControl(Motor &leftMotor, Motor &rightMotor, std::atomic<char>& lastKey);
+ 
+ extern int basicMotion();
+ extern void stopMotors();
+ 
+ void basicMotionThreaded(std::atomic<bool>& running) {
+     basicMotion();
+     running.store(false);
+ }
+ 
+ int main() {
+     std::cout << "🔥 Autonomous Fire Truck System Initializing..." << std::endl;
+ 
+     // Flag to indicate if the system is running
+     std::atomic<bool> running(true);
+ 
+     try {
+         // Start basicMotion in a separate thread
+         std::thread motionThread(basicMotionThreaded, std::ref(running));
+ 
+         // Use smart pointer to manage ADCReader lifetime
+         std::unique_ptr<ADCReader> adcReader = std::make_unique<ADCReader>(0x48);
+ 
+         // Register ADC callback to react to fire detection
+         adcReader->registerFlameCallback([&](int channel, int value) {
+             std::cout << "🔥 Flame detected on sensor " << channel << " with value: " << value << std::endl;
+             stopMotors();
+         });
+ 
+         // Start Event Loop in a separate thread
+         std::unique_ptr<EventLoop> eventLoop = std::make_unique<EventLoop>();
+         std::thread eventThread(&EventLoop::run, eventLoop.get());
+ 
+         std::cout << "✅ System Running..." << std::endl;
+ 
+         while (running.load()) {
+             std::this_thread::sleep_for(std::chrono::milliseconds(100));
+         }
+ 
+         if (motionThread.joinable()) {
+             motionThread.join();
+         }
+ 
+         // Gracefully stop the event loop
+         eventLoop->stop();
+         if (eventThread.joinable()) {
+             eventThread.join();
+         }
+ 
+     } catch (const std::exception& ex) {
+         std::cerr << "❌ Error: " << ex.what() << std::endl;
+         return 1;
+     } catch (...) {
+         std::cerr << "❌ Unknown error occurred." << std::endl;
+         return 1;
+     }
+ 
+     return 0;
+ }
+ 
