@@ -8,6 +8,7 @@
 #include <chrono>        // For time-based operations (e.g., delays)
 #include <termios.h>     // For handling terminal I/O settings for keyboard input
 #include <unistd.h>      // For low-level I/O operations
+#include <fcntl.h>       // For file control options (non-blocking I/O)
 #include "rpi_pwm.h"     // Include your PWM handling class for motor control
 
 #define CHIP_NAME "gpiochip0" // Raspberry Pi 5 GPIO chip name used by libgpiod
@@ -19,7 +20,7 @@
  */
 class Motor {
 private:
-    gpiod_chip* chip;     // Pointer to GPIO chip for accessing GPIO lines
+    // gpiod_chip* chip;     // Pointer to GPIO chip for accessing GPIO lines
     RPI_PWM pwm;          // PWM object used for generating PWM signals for motor speed control
     int in1_pin;          // GPIO pin for motor IN1 (controls motor direction)
     int in2_pin;          // GPIO pin for motor IN2 (controls motor direction)
@@ -71,15 +72,18 @@ public:
 /**
  * keyboardListener: Continuously monitors keyboard input and updates the last key pressed.
  * Uses atomic variables for thread safety when accessed by other threads.
+ * Also detects key releases to enable stop-on-release functionality.
  * 
  * @param lastKey Atomic character variable to store the last pressed key.
  * @param keyPressed Atomic boolean variable to indicate if a key was pressed.
+ * @param running Atomic boolean to control thread execution.
  */
-void keyboardListener(std::atomic<char>& lastKey, std::atomic<bool>& keyPressed);
+void keyboardListener(std::atomic<char>& lastKey, std::atomic<bool>& keyPressed, std::atomic<bool>& running);
 
 /**
  * keyboardControl: Handles motor control based on keyboard input.
  * Uses 'w', 's', 'a', 'd' keys for movement control and 'x' for stopping the motors.
+ * Motors will automatically stop when keys are released.
  * 
  * @param leftMotor Reference to the left motor object.
  * @param rightMotor Reference to the right motor object.
