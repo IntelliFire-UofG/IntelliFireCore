@@ -134,14 +134,29 @@ void MainWindow::handleParamButton() {}
 
 void MainWindow::initializeADS1115(SensorContainer *container_1, SensorContainer *container_2,
                                    SensorContainer *container_3, SensorContainer *container_4) {
-    auto *adsManager = new ADS1115Manager(this);
+    try
+    {  
+        auto *adsManager = new ADS1115Manager(this);
 
-    connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::sensorValueUpdated);
-    connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::sensorValueUpdated);
+        connect(adsManager, &ADS1115Manager::newSensorValue, container_1, &SensorContainer::sensorValueUpdated);
+        connect(adsManager, &ADS1115Manager::newSensorValue, container_2, &SensorContainer::sensorValueUpdated);
+        connect(adsManager, &ADS1115Manager::newSensorValue, container_3, &SensorContainer::sensorValueUpdated);
+        connect(adsManager, &ADS1115Manager::newSensorValue, container_4, &SensorContainer::sensorValueUpdated);
 
-    adsManager->start();
+        adsManager->start();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    catch(const char* e)
+    {
+        std::cerr << e << '\n';
+    }
+    catch(...)  
+    {
+        std::cerr << "Unknown error occurred while initializing ADS1115." << '\n';
+    }
 }
 
 void MainWindow::updatePumpStatus(float pump_status) {

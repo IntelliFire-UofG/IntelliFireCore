@@ -128,8 +128,8 @@ void ADS1115rpi::i2c_writeWord(uint8_t reg, unsigned data) {
 #ifdef DEBUG
         fprintf(stderr, "Could not write word to %02x. ret=%ld.\n", ads1115settings.address, r);
 #endif
-                throw "Could not write to i2c.";
-        }
+        throw "Could not write to i2c.";
+    }
 }
 
 unsigned ADS1115rpi::i2c_readWord(uint8_t reg) {
