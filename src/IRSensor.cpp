@@ -7,8 +7,10 @@
 #include <errno.h>
 #include <string.h>
 #include <stdexcept>
+#include <QDebug>
 
 void IRSensor::start(const char* chipPath, int pin) {
+try{
 #ifdef DEBUG
     fprintf(stderr, "Init.\n");
 #endif
@@ -45,16 +47,42 @@ void IRSensor::start(const char* chipPath, int pin) {
 
     running = true;
     thr = std::thread(&IRSensor::worker, this);
+
+
+//////////////////////////////////////////////
+} catch (const std::exception& ex) {
+    qCritical() << "Exception in IRSensor::start." << ex.what();
+    throw;
+} catch (...) {
+    qCritical() << "Unknown exception in IRSensor::start.";
+    throw;
+}
 }
 
+
 void IRSensor::irEvent(gpiod_line_event& event) {
+try{
+
     std::lock_guard<std::mutex> lock(cb_mutex);
     for (auto& cb : callbacks) {
         cb->hasEvent(event);
     }
+
+
+
+    ///////////////////////
+} catch (const std::exception& ex) {
+    qWarning() << "Exception in IRSensor::irEvent." << ex.what();
+} catch (...) {
+    qWarning() << "Unknown exception in IRSensor::irEvent.";
 }
+}
+// The worker() method follows the same pattern as in GPIOPin.
+// It waits (with a timeout) for an event on the line, reads it,
+// and then passes it on via irEvent().
 
 void IRSensor::worker() {
+try{
     while (running) {
         const timespec ts = { ISR_TIMEOUT, 0 };
         int r = gpiod_line_event_wait(sensor_line, &ts);
@@ -69,9 +97,17 @@ void IRSensor::worker() {
 #endif
         }
     }
+
+    //////////////////////
+} catch (const std::exception& ex) {
+    qCritical() << "Exception in IRSensor::worker." << ex.what();
+} catch (...) {
+    qCritical() << "Unknown exception in IRSensor::worker.";
+}
 }
 
 void IRSensor::stop() {
+try{
     if (!running) return;
     running = false;
 
@@ -88,4 +124,9 @@ void IRSensor::stop() {
         gpiod_chip_close(chip);
         chip = nullptr;
     }
+} catch (const std::exception& ex) {
+    qWarning() << "Exception in IRSensor::stop." << ex.what();
+} catch (...) {
+    qWarning() << "Unknown exception in IRSensor::stop.";
+}
 }
