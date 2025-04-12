@@ -6,6 +6,8 @@
 #include <QDebug>
 #include "sensorContainer.h"
 #include "ads1115manager.h"
+#include "LN298MotorControlV3.h"
+#include "basicMotionV2.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -87,6 +89,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     container_4.release();
     container_5.release();
     container_6.release();
+
+    int result = basicMotion();
 }
 
 KeyLogger* MainWindow::getKeyLogger() {

@@ -25,6 +25,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #------------------------------------------------------------------------------
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+#------------------------------------------------------------------------------
+# Find Required other required Packages
+#------------------------------------------------------------------------------
+find_package(Threads REQUIRED)
 
 #------------------------------------------------------------------------------
 # Find libgpiod for GPIO sensor drivers
@@ -93,6 +97,11 @@ add_executable(IntelliFireUI
     src/IntelliFireUI/include/mainwindow.h
     src/IntelliFireUI/include/sensorContainer.h
     src/IntelliFireUI/include/keyLogger.h
+    src/LN298MotorControlV3.cpp
+    src/basicMotionV3.cpp
+    src/EventLoop.cpp
+    src/rpi_pwm.cpp    # RPI_PWM implementation
+    src/Logger.cpp     # Added Logger implementation
 )
 
 target_link_libraries(IntelliFireUI
@@ -103,6 +112,7 @@ target_link_libraries(IntelliFireUI
     PumpControlLib
     qwt-qt5
     ${GPIOD_LIB}
+    Threads::Threads
 )
 
 #------------------------------------------------------------------------------
