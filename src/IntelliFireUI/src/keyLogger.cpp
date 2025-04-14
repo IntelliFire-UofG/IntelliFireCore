@@ -4,6 +4,7 @@
 KeyLogger::KeyLogger(QWidget *parent) : QWidget(parent) {
     try {
         setFocusPolicy(Qt::StrongFocus);
+        setFocus();
     } catch (const std::exception& ex) {
         qWarning() << "Exception setting focus policy:" << ex.what();
     } catch (...) {
@@ -21,6 +22,9 @@ void KeyLogger::keyPressEvent(QKeyEvent *event) {
             qWarning() << "Null event in keyPressEvent.";
             return;
         }
+
+        if (event->isAutoRepeat())
+        return;  // avoid repeated events if key is held down
 
         QString keyPressed;
 
@@ -60,6 +64,9 @@ void KeyLogger::keyReleaseEvent(QKeyEvent *event) {
             qWarning() << "Null event in keyReleaseEvent.";
             return;
         }
+        
+        if (event->isAutoRepeat())
+        return;  // avoid repeated events if key is held down
 
         QString keyReleased;
 

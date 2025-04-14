@@ -269,38 +269,48 @@ void keyboardControl(Motor &leftMotor, Motor &rightMotor, KeyboardState& state, 
 // Function to control the motors using keyboard inputs
 void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Motor> rightMotor, KeyEventInfo& keyEvent)
 {  
-    printf("Event Type: %d | Key Pressed: %s | KeyCode: %d | Raw Text: %s\n", 
-           int(keyEvent.eventType), keyEvent.keyName.toStdString().c_str(), keyEvent.keyCode, keyEvent.rawText.toStdString().c_str());
-    try {        
+     try {        
         // If key is held, perform the action
         if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
-            if (keyEvent.keyName == Qt::Key_W || keyEvent.keyName == Qt::Key_Up) {  // Move both motors forward
+            if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
                 leftMotor->moveBackward();
                 rightMotor->moveBackward();
+#ifdef DEBUG                
                 printf("Moving forward\n");
-            } else if (keyEvent.keyName == Qt::Key_S || keyEvent.keyName == Qt::Key_Down) {  // Move both motors backward
+#endif
+            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
                 leftMotor->moveForward();
                 rightMotor->moveForward();
+#ifdef DEBUG    
                 printf("Moving backward\n");
-            } else if (keyEvent.keyName == Qt::Key_A || keyEvent.keyName == Qt::Key_Left) {  // Turn left
+#endif
+            } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
                 leftMotor->stop();
                 rightMotor->moveForward();
+#ifdef DEBUG   
                 printf("Turning left\n");
-            } else if (keyEvent.keyName == Qt::Key_D || keyEvent.keyName == Qt::Key_Right) {  // Turn right
+#endif
+            } else if (keyEvent.keyCode == Qt::Key_D || keyEvent.keyCode == Qt::Key_Right) {  // Turn right
                 leftMotor->moveForward();
                 rightMotor->stop();
+#ifdef DEBUG    
                 printf("Turning right\n");
-            } else if (keyEvent.keyName == Qt::Key_X) {  // Stop both motors (Emergency Stop)
+#endif
+            } else if (keyEvent.keyCode == Qt::Key_X) {  // Stop both motors (Emergency Stop)
                 leftMotor->stop();
                 rightMotor->stop();
+#ifdef DEBUG    
                 printf("Stop\n");
+#endif
             }
             
         } else if (keyEvent.eventType == KeyEventType::KEY_RELEASED) {
             // No key held, stop the motors (only if we had an action before)
             leftMotor->stop();
             rightMotor->stop();
+#ifdef DEBUG    
             printf("Stop\n");
+#endif
         }
     }
     catch (const std::exception& e) {
