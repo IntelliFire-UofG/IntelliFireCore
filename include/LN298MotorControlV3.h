@@ -11,6 +11,7 @@
 #include <memory>        // For smart pointers
 #include "rpi_pwm.h"     // Include your PWM handling class for motor control
 #include "Logger.h"      // For logging functionality
+#include "keyLogger.h"   // For keyboard event handling
 
 #define CHIP_NAME "gpiochip0" // Raspberry Pi 5 GPIO chip name used by libgpiod
 
@@ -112,6 +113,18 @@ void keyboardListener(KeyboardState& state);
  * @param logger Shared pointer to the logger for recording events
  */
 void keyboardControl(Motor &leftMotor, Motor &rightMotor, KeyboardState& state, std::shared_ptr<Logger> logger);
+
+/**
+ * keyboardControl: Handles motor control based on keyboard input.
+ * Uses 'w', 's', 'a', 'd' keys for movement control and 'x' for stopping the motors.
+ * Motors will only move while a key is held down and will stop when the key is released.
+ * 
+ * @param leftMotor Reference to the left motor object.
+ * @param rightMotor Reference to the right motor object.
+ * @param key Reference to the KeyboardState struct
+ * @param logger Shared pointer to the logger for recording events
+ */
+void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Motor> rightMotor, KeyEventInfo& keyInfo);
 
 /**
  * setupTerminal: Configures terminal for non-canonical, non-blocking input

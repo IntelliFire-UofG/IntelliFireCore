@@ -4,14 +4,19 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <functional>
-
+enum class KeyEventType {
+    NULL_EVENT,
+    KEY_PRESSED,
+    KEY_RELEASED
+};
 struct KeyEventInfo {
+    KeyEventType eventType = KeyEventType::NULL_EVENT;
     QString keyName;
     int keyCode;
     QString rawText;
 
-    KeyEventInfo(QString name, int code, QString text)
-        : keyName(name), keyCode(code), rawText(text) {}
+    KeyEventInfo(KeyEventType event_type, QString name, int code, QString text)
+        : eventType(event_type), keyName(name), keyCode(code), rawText(text) {}
 };
 
 class KeyLogger : public QWidget {
@@ -37,7 +42,7 @@ public:
      * @param event The key event data.
      */
     void keyReleaseEvent(QKeyEvent *event) override;
-
+   
 private:
     std::function<void(const KeyEventInfo&)> keyCallback;
 };

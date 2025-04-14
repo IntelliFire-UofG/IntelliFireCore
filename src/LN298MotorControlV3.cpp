@@ -1,4 +1,4 @@
-#include "../include/LN298MotorControlV3.h"
+#include "LN298MotorControlV3.h"
 #include "rpi_pwm.h"
 #include <iostream>
 #include <cstdlib>
@@ -11,6 +11,7 @@
 #include <memory>
 #include <stdexcept>
 #include <system_error>
+#include "keyLogger.h"
 
 // Motor Constructor: Initializes the motor with given parameters.
 Motor::Motor(int pwm_channel, int in1_pin, int in2_pin, int dutyCycle, const std::string& name) 
@@ -263,4 +264,50 @@ void keyboardControl(Motor &leftMotor, Motor &rightMotor, KeyboardState& state, 
     leftMotor.stop();
     rightMotor.stop();
     logger->log("Motor control stopped");
+}
+
+// Function to control the motors using keyboard inputs
+void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Motor> rightMotor, KeyEventInfo& keyEvent)
+{  
+    printf("Event Type: %d | Key Pressed: %s | KeyCode: %d | Raw Text: %s\n", 
+           int(keyEvent.eventType), keyEvent.keyName.toStdString().c_str(), keyEvent.keyCode, keyEvent.rawText.toStdString().c_str());
+    try {        
+        // If key is held, perform the action
+        if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
+            if (keyEvent.keyName == Qt::Key_W || keyEvent.keyName == Qt::Key_Up) {  // Move both motors forward
+                leftMotor->moveBackward();
+                rightMotor->moveBackward();
+                printf("Moving forward\n");
+            } else if (keyEvent.keyName == Qt::Key_S || keyEvent.keyName == Qt::Key_Down) {  // Move both motors backward
+                leftMotor->moveForward();
+                rightMotor->moveForward();
+                printf("Moving backward\n");
+            } else if (keyEvent.keyName == Qt::Key_A || keyEvent.keyName == Qt::Key_Left) {  // Turn left
+                leftMotor->stop();
+                rightMotor->moveForward();
+                printf("Turning left\n");
+            } else if (keyEvent.keyName == Qt::Key_D || keyEvent.keyName == Qt::Key_Right) {  // Turn right
+                leftMotor->moveForward();
+                rightMotor->stop();
+                printf("Turning right\n");
+            } else if (keyEvent.keyName == Qt::Key_X) {  // Stop both motors (Emergency Stop)
+                leftMotor->stop();
+                rightMotor->stop();
+                printf("Stop\n");
+            }
+            
+        } else if (keyEvent.eventType == KeyEventType::KEY_RELEASED) {
+            // No key held, stop the motors (only if we had an action before)
+            leftMotor->stop();
+            rightMotor->stop();
+            printf("Stop\n");
+        }
+    }
+    catch (const std::exception& e) {
+        throw("ERROR in motor control: " + std::string(e.what()));
+    }
+    
+    // Make sure motors are stopped before exiting
+    leftMotor->stop();
+    rightMotor->stop();
 }

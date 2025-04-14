@@ -10,6 +10,7 @@
 #include "sensorContainer.h"
 #include "keyLogger.h"
 #include "pumpControl.h"
+#include "LN298MotorControlV3.h"
 
 /**
  * @class MainWindow
@@ -39,7 +40,7 @@ private Q_SLOTS:
     void handleParamButton();
     void initializeADS1115(SensorContainer *c1, SensorContainer *c2,
                            SensorContainer *c3, SensorContainer *c4);
-    void updateKeyDisplay(KeyEventInfo keyInfo);
+    void updateKeyEvent(KeyEventInfo keyInfo);
     void updatePumpStatus(float pump_status);
 
 private:
@@ -53,6 +54,8 @@ private:
 
     std::unique_ptr<KeyLogger> keyLogger;
     std::unique_ptr<PumpControl> pump_control;
+    std::shared_ptr<Motor> motor_left;
+    std::shared_ptr<Motor> motor_right;
 
     std::mutex ui_mutex;  // Optional: For future-proofing UI thread safety
 };

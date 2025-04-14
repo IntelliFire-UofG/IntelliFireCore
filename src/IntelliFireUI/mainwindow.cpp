@@ -6,7 +6,6 @@
 #include <QDebug>
 #include "sensorContainer.h"
 #include "ads1115manager.h"
-#include "LN298MotorControlV3.h"
 #include "basicMotionV2.h"
 
 
@@ -75,12 +74,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->addLayout(rightLayout);
 
     keyLogger->setKeyCallback([this](const KeyEventInfo &keyInfo) {
-        updateKeyDisplay(keyInfo);
+        updateKeyEvent(keyInfo);
     });
 
     pump_control = std::make_unique<PumpControl>(this);
     connect(pump_control.get(), &PumpControl::pumpStatusChanged, this, &MainWindow::updatePumpStatus);
     pump_control->start();
+
+    //Initialize motors
+    motor_left = std::make_shared<Motor>(0, 17, 27, 75, "left");
+    motor_right = std::make_shared<Motor>(1, 22, 23, 75, "rigth");
 
     // Containers must be kept alive
     container_1.release();
@@ -89,8 +92,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     container_4.release();
     container_5.release();
     container_6.release();
-
-    int result = basicMotion();
 }
 
 KeyLogger* MainWindow::getKeyLogger() {
@@ -121,8 +122,15 @@ void MainWindow::createSliders() {
     sliderLayout->addWidget(paramButton);
 }
 
-void MainWindow::updateKeyDisplay(KeyEventInfo keyInfo) {
-    keyDisplayLabel->setText("Key Pressed: " + keyInfo.keyName);
+void MainWindow::updateKeyEvent(KeyEventInfo keyInfo) {
+    try 
+    {
+        keyDisplayLabel->setText("Key Pressed: " + keyInfo.keyName);
+        keyboardEventControl(motor_left, motor_right, keyInfo);
+    } catch (std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

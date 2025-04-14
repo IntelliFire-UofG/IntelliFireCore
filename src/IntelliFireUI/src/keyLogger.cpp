@@ -37,12 +37,12 @@ void KeyLogger::keyPressEvent(QKeyEvent *event) {
             default: keyPressed = event->text();
         }
 
-        KeyEventInfo keyInfo(keyPressed, event->key(), event->text());
+        KeyEventInfo keyInfo(KeyEventType::KEY_PRESSED, keyPressed, event->key(), event->text());
 
         qDebug() << "Key Pressed:" << keyInfo.keyName
                  << "| KeyCode:" << keyInfo.keyCode
                  << "| Raw Text:" << keyInfo.rawText;
-
+        
         if (keyCallback) {
             keyCallback(keyInfo);
         }
@@ -76,7 +76,7 @@ void KeyLogger::keyReleaseEvent(QKeyEvent *event) {
             default: keyReleased = event->text();
         }
 
-        KeyEventInfo keyInfo(keyReleased, event->key(), event->text());
+        KeyEventInfo keyInfo(KeyEventType::KEY_RELEASED, keyReleased, event->key(), event->text());
 
         qDebug() << "Key Released:" << keyInfo.keyName
                  << "| KeyCode:" << keyInfo.keyCode

@@ -1,4 +1,4 @@
-#include "../include/LN298MotorControlV3.h"
+#include "LN298MotorControlV3.h"
 #include <atomic>
 #include <thread>
 #include <iostream>
@@ -46,6 +46,33 @@ int basicMotion() {
         }
         
         logger->log("FireTruck Control System shutdown complete");
+    }
+    catch (const std::exception& e) {
+        logger->log("CRITICAL ERROR: " + std::string(e.what()));
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
+    
+    return 0;
+}
+
+int motionInit(KeyboardState &keyState) {
+    // Initialize the logger
+    auto logger = Logger::getInstance("firetruck_control.log");
+    logger->log("FireTruck Control System starting");
+    
+    try {
+        // Initialize left and right motors with PWM channels, GPIO pins, duty cycle, and names
+        logger->log("Initializing motors");
+        Motor leftMotor(0, 17, 27, 75, "left");    // Left motor: PWM0, IN1=GPIO17, IN2=GPIO27
+        Motor rightMotor(1, 22, 23, 75, "right");  // Right motor: PWM1, IN1=GPIO22, IN2=GPIO23
+        
+        // Run the keyboard control loop
+        keyboardControl(leftMotor, rightMotor, keyState, logger);
+        
+        // Signal the listener thread to exit and wait for it to finish
+        logger->log("Shutting down listener thread");
+        keyState.shouldExit.store(true);
     }
     catch (const std::exception& e) {
         logger->log("CRITICAL ERROR: " + std::string(e.what()));
