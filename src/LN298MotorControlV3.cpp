@@ -302,6 +302,46 @@ void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Moto
     catch (const std::exception& e) {
         throw("ERROR in motor control: " + std::string(e.what()));
     }
+}
+
+// Function to control the motors using keyboard inputs
+void keyboardEventControl(Motor* leftMotor, Motor* rightMotor, KeyEventInfo& keyEvent)
+{  
+     try {        
+        // If key is held, perform the action
+        if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
+            if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
+                leftMotor->moveBackward();
+                rightMotor->moveBackward();
+
+            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
+                leftMotor->moveForward();
+                rightMotor->moveForward();
+
+            } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
+                leftMotor->stop();
+                rightMotor->moveForward();
+
+            } else if (keyEvent.keyCode == Qt::Key_D || keyEvent.keyCode == Qt::Key_Right) {  // Turn right
+                leftMotor->moveForward();
+                rightMotor->stop();
+
+            } else if (keyEvent.keyCode == Qt::Key_X) {  // Stop both motors (Emergency Stop)
+                leftMotor->stop();
+                rightMotor->stop();
+            }
+            
+        } else if (keyEvent.eventType == KeyEventType::KEY_RELEASED) {
+            // No key held, stop the motors (only if we had an action before)
+            leftMotor->stop();
+            rightMotor->stop();
+        }
+    }
+    catch (const std::exception& e) {
+        logger->log("ERROR in motor control: " + std::string(e.what()));
+        throw("ERROR in motor control: " + std::string(e.what()));
+
+    }
     
     // Make sure motors are stopped before exiting
     leftMotor->stop();
