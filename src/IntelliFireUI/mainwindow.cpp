@@ -82,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     pump_control->start();
 
     //Initialize motors
+    auto logger = Logger::getInstance("firetruck_control.log");
+    logger->log("FireTruck Control System starting");
     motor_left = std::make_shared<Motor>(0, 17, 27, 75, "left");
     motor_right = std::make_shared<Motor>(1, 22, 23, 75, "rigth");
 

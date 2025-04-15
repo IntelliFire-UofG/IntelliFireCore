@@ -275,42 +275,28 @@ void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Moto
             if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
                 leftMotor->moveBackward();
                 rightMotor->moveBackward();
-#ifdef DEBUG                
-                printf("Moving forward\n");
-#endif
+
             } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
                 leftMotor->moveForward();
                 rightMotor->moveForward();
-#ifdef DEBUG    
-                printf("Moving backward\n");
-#endif
+
             } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
                 leftMotor->stop();
                 rightMotor->moveForward();
-#ifdef DEBUG   
-                printf("Turning left\n");
-#endif
+
             } else if (keyEvent.keyCode == Qt::Key_D || keyEvent.keyCode == Qt::Key_Right) {  // Turn right
                 leftMotor->moveForward();
                 rightMotor->stop();
-#ifdef DEBUG    
-                printf("Turning right\n");
-#endif
+
             } else if (keyEvent.keyCode == Qt::Key_X) {  // Stop both motors (Emergency Stop)
                 leftMotor->stop();
                 rightMotor->stop();
-#ifdef DEBUG    
-                printf("Stop\n");
-#endif
             }
             
         } else if (keyEvent.eventType == KeyEventType::KEY_RELEASED) {
             // No key held, stop the motors (only if we had an action before)
             leftMotor->stop();
             rightMotor->stop();
-#ifdef DEBUG    
-            printf("Stop\n");
-#endif
         }
     }
     catch (const std::exception& e) {
