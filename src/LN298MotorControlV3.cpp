@@ -273,20 +273,20 @@ void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Moto
         // If key is held, perform the action
         if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
             if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
-                leftMotor->moveBackward();
-                rightMotor->moveBackward();
-
-            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
                 leftMotor->moveForward();
                 rightMotor->moveForward();
 
+            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
+                leftMotor->moveBackward();
+                rightMotor->moveBackward();
+
             } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
-                leftMotor->stop();
+                leftMotor->moveBackward();
                 rightMotor->moveForward();
 
             } else if (keyEvent.keyCode == Qt::Key_D || keyEvent.keyCode == Qt::Key_Right) {  // Turn right
                 leftMotor->moveForward();
-                rightMotor->stop();
+                rightMotor->moveBackward();
 
             } else if (keyEvent.keyCode == Qt::Key_X) {  // Stop both motors (Emergency Stop)
                 leftMotor->stop();
@@ -304,27 +304,27 @@ void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Moto
     }
 }
 
-// Function to control the motors using keyboard inputs
+/*// Function to control the motors using keyboard inputs
 void keyboardEventControl(Motor* leftMotor, Motor* rightMotor, KeyEventInfo& keyEvent)
 {  
      try {        
         // If key is held, perform the action
         if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
             if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
+                leftMotor->moveForward();
+                rightMotor->moveForward();
+
+            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
                 leftMotor->moveBackward();
                 rightMotor->moveBackward();
 
-            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
-                leftMotor->moveForward();
-                rightMotor->moveForward();
-
             } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
-                leftMotor->stop();
-                rightMotor->moveForward();
+                leftMotor->moveForward();
+                rightMotor->moveBackward();
 
             } else if (keyEvent.keyCode == Qt::Key_D || keyEvent.keyCode == Qt::Key_Right) {  // Turn right
-                leftMotor->moveForward();
-                rightMotor->stop();
+                leftMotor->moveBackward();
+                rightMotor->moveForward();
 
             } else if (keyEvent.keyCode == Qt::Key_X) {  // Stop both motors (Emergency Stop)
                 leftMotor->stop();
@@ -338,7 +338,7 @@ void keyboardEventControl(Motor* leftMotor, Motor* rightMotor, KeyEventInfo& key
         }
     }
     catch (const std::exception& e) {
-        logger->log("ERROR in motor control: " + std::string(e.what()));
+        //logger->log("ERROR in motor control: " + std::string(e.what()));
         throw("ERROR in motor control: " + std::string(e.what()));
 
     }
@@ -346,4 +346,4 @@ void keyboardEventControl(Motor* leftMotor, Motor* rightMotor, KeyEventInfo& key
     // Make sure motors are stopped before exiting
     leftMotor->stop();
     rightMotor->stop();
-}
+}*/
