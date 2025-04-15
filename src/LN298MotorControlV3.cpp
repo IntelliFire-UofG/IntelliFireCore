@@ -273,12 +273,12 @@ void keyboardEventControl(std::shared_ptr<Motor> leftMotor, std::shared_ptr<Moto
         // If key is held, perform the action
         if (keyEvent.eventType == KeyEventType::KEY_PRESSED) {
             if (keyEvent.keyCode == Qt::Key_W || keyEvent.keyCode == Qt::Key_Up) {  // Move both motors forward
-                leftMotor->moveForward();
-                rightMotor->moveForward();
-
-            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
                 leftMotor->moveBackward();
                 rightMotor->moveBackward();
+
+            } else if (keyEvent.keyCode == Qt::Key_S || keyEvent.keyCode == Qt::Key_Down) {  // Move both motors backward
+                leftMotor->moveForward();
+                rightMotor->moveForward();
 
             } else if (keyEvent.keyCode == Qt::Key_A || keyEvent.keyCode == Qt::Key_Left) {  // Turn left
                 leftMotor->moveBackward();
