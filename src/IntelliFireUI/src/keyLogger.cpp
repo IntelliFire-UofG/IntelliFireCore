@@ -4,6 +4,7 @@
 KeyLogger::KeyLogger(QWidget *parent) : QWidget(parent) {
     try {
         setFocusPolicy(Qt::StrongFocus);
+        setFocus();
     } catch (const std::exception& ex) {
         qWarning() << "Exception setting focus policy:" << ex.what();
     } catch (...) {
@@ -22,6 +23,9 @@ void KeyLogger::keyPressEvent(QKeyEvent *event) {
             return;
         }
 
+        if (event->isAutoRepeat())
+        return;  // avoid repeated events if key is held down
+
         QString keyPressed;
 
         switch (event->key()) {
@@ -37,12 +41,12 @@ void KeyLogger::keyPressEvent(QKeyEvent *event) {
             default: keyPressed = event->text();
         }
 
-        KeyEventInfo keyInfo(keyPressed, event->key(), event->text());
+        KeyEventInfo keyInfo(KeyEventType::KEY_PRESSED, keyPressed, event->key(), event->text());
 
         qDebug() << "Key Pressed:" << keyInfo.keyName
                  << "| KeyCode:" << keyInfo.keyCode
                  << "| Raw Text:" << keyInfo.rawText;
-
+        
         if (keyCallback) {
             keyCallback(keyInfo);
         }
@@ -60,6 +64,9 @@ void KeyLogger::keyReleaseEvent(QKeyEvent *event) {
             qWarning() << "Null event in keyReleaseEvent.";
             return;
         }
+        
+        if (event->isAutoRepeat())
+        return;  // avoid repeated events if key is held down
 
         QString keyReleased;
 
@@ -76,7 +83,7 @@ void KeyLogger::keyReleaseEvent(QKeyEvent *event) {
             default: keyReleased = event->text();
         }
 
-        KeyEventInfo keyInfo(keyReleased, event->key(), event->text());
+        KeyEventInfo keyInfo(KeyEventType::KEY_RELEASED, keyReleased, event->key(), event->text());
 
         qDebug() << "Key Released:" << keyInfo.keyName
                  << "| KeyCode:" << keyInfo.keyCode

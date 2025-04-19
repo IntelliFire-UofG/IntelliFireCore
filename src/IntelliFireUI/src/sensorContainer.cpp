@@ -1,10 +1,13 @@
 #include "sensorContainer.h"
 #include "UltraSonicSensor.h"
+
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPixmap>
 #include <QDebug>
 #include <QTimer>
+#include <exception>
+#include <mutex>
 
 #define ULTRASONIC_ECHO 24 
 #define ULTRASONIC_TRIGGER 25
@@ -41,7 +44,7 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
                     qCritical() << "UltrasonicSensor initialization failed.";
                     break;
                 }
-                connect(ultrasonicSensor, &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
+                connect(ultrasonicSensor.get(), &UltraSonicSensor::measuredDistance, this, &SensorContainer::updateUltrasonicUI);
                 try {
                     ultrasonicSensor->start("/dev/gpiochip0", ULTRASONIC_TRIGGER, ULTRASONIC_ECHO);
                 } catch (const std::exception& ex) {
@@ -52,13 +55,15 @@ SensorContainer::SensorContainer(int containerNumber, QWidget *parent)
             case 6:  // **IR Sensor**
                 title->setText("IR Sensor Status:");
                 try {
-                    irSensor = new IRSensor();
+                    irSensor = std::make_unique<IRSensor>();
                     if (!irSensor) {
                         qCritical() << "IRSensor initialization failed.";
                         break;
                     }
                     irSensor->registerCallback(this);
                     irSensor->start("/dev/gpiochip0", IR_PRESENCE);
+                    connect(this, &SensorContainer::irMessageReceived, this, &SensorContainer::updateIRUI);
+
                 } catch (const std::exception& ex) {
                     qCritical() << "Failed to initialize or start IRSensor:" << ex.what();
                 }
@@ -97,12 +102,10 @@ SensorContainer::~SensorContainer() {
     try {
         if (irSensor) {
             irSensor->stop();
-            delete irSensor;
-            irSensor = nullptr;
+            irSensor.reset();
         }
         if (ultrasonicSensor) {
-            delete ultrasonicSensor;
-            ultrasonicSensor = nullptr;
+            ultrasonicSensor.reset();
         }
     } catch (const std::exception& ex) {
         qWarning() << "Exception during SensorContainer destruction:" << ex.what();
@@ -121,7 +124,7 @@ void SensorContainer::hasEvent(gpiod_line_event& e) {
             message = "Unknown Event!";
             qWarning() << "IR sensor event type unknown:" << e.event_type;
         }
-        updateIRUI(message);
+        emit irMessageReceived(message);  // 🔥 Thread-safe!
     } catch (const std::exception& ex) {
         qWarning() << "Exception in hasEvent:" << ex.what();
     }

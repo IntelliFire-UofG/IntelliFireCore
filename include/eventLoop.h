@@ -1,22 +1,35 @@
-#ifndef EVENTLOOP_H
-#define EVENTLOOP_H
+#ifndef EVENT_LOOP_H
+#define EVENT_LOOP_H
 
-/**
- * @class EventLoop
- * @brief Manages event-driven execution in a separate thread.
- *
- * The event loop listens for sensor inputs, button presses, and updates the motor state accordingly.
- *
- * @author Your Name
- * @date 2025-01-30
- */
-class EventLoop {
-public:
-    /**
-     * @brief Runs the main event loop.
-     * This function should be executed in a separate thread.
-     */
-    void run();
+#include <atomic>
+#include <functional>
+#include <vector>
+#include <mutex>
+
+class EventLoop{
+    public:
+        EventLoop();
+        ~EventLoop();
+        void run();
+        void stop();
+        int registerCallback(int eventType, std::function<void()> callback);
+        bool removeCallback(int callbackId);
+
+    private:
+        std::atomic<bool> running;
+        std::atomic<int> nextCallbackId;
+
+        struct CallbackInfo {
+            int id;
+            int eventType;
+            std::function<void()> callback;
+
+        };
+
+        std::vector<CallbackInfo> callbacks;
+        std::mutex callbacksMutex;
+
+        void processEvents();
 };
 
-#endif // EVENTLOOP_H
+#endif

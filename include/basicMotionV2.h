@@ -1,9 +1,5 @@
 #ifndef BASIC_MOTION_V2_H
 #define BASIC_MOTION_V2_H
-#include <atomic>
-#include <thread>
-#include <memory>
-
 /**
  * @brief Initializes and runs the keyboard-controlled motion system for the fire truck
  * 
@@ -14,13 +10,4 @@
  * @return int Status code (0 for success)
  */
 int basicMotion();
-
-/**
- * @brief Stops both motors when called from external components
- * 
- * This function can be called by other parts of the system (like flame detection)
- * to immediately stop all motors in an emergency situation.
- */
-void stopMotors();
-
 #endif
