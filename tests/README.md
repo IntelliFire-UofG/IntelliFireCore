@@ -2,6 +2,8 @@
 
 This document outlines the test scenarios for the IntelliFire flame-detection car system. The tests cover functionality, integration, performance, and fail-safe behavior for each major subsystem.
 
+The testing stage was done on the last sprint of our ART (Agile Release Train)
+
 ---
 
 ## 1. Flame Sensor Array (LM393 via ADS1015)
