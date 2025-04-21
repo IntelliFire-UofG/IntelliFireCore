@@ -21,7 +21,7 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 >
 > *Please refer to our [Wiki Page](https://github.com/IntelliFire-UofG/IntelliFireCore/wiki) to recap all the retrospectives from our ART (Agile Release Train)*
 >
-> *Please refer to our [Project Page]([https://github.com/IntelliFire-UofG/IntelliFireCore/wiki](https://github.com/orgs/IntelliFire-UofG/projects/1)) to recap all the User Stories from our ART (Agile Release Train)*
+> *Please refer to our [Project Page](https://github.com/orgs/IntelliFire-UofG/projects/1/views/1) to recap all the User Stories from our ART (Agile Release Train)*
 
 ## 🔥 **Main Features:**
 
