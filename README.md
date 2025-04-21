@@ -16,6 +16,8 @@ The **Autonomous Fire Truck Control System** is an **embedded real-time applicat
 > *Please refer to [Introduction Documentation](https://github.com/IntelliFire-UofG/IntelliFireCore/blob/main/Documentation/Intro.md) if any doubts about functionalities.*
 > 
 > *Please refer to [STL Files](https://github.com/IntelliFire-UofG/IntelliFireCore/tree/main/STL%20Files) if you wish to 3D print the chassis.*
+>
+> *Please refer to [Testing README.md](https://github.com/IntelliFire-UofG/IntelliFireCore/blob/testingBranch/tests/README.md) if you wish to review our QA process and some unitTesting tools done with code (Not automated).
 
 ## 🔥 **Main Features:**
 
