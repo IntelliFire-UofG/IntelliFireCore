@@ -3,6 +3,8 @@
 ## 1. Overview
 **IntelliFire** is a Raspberry Pi 5-based, threaded and event-driven robotic platform programmed in C++. It can be controlled via keyboard input and detects fires using a flame sensor array. The system includes live video streaming, real-time UI over SSH, and automatic flame suppression. It integrates multiple sensors to detect both frontal and rear obstacles and logs all events, movements, and sensor data to a remote console.
 
+Additionally, two ARTs (Agile Release Train) were implemented along the project. The main project components can be defined in the following document [Agile Rituals](https://github.com/IntelliFire-UofG/IntelliFireCore/blob/main/Documentation/ARTRituals.md)
+
 ---
 
 ## 2. Core Components
